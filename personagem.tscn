@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://by4q75nrxtdxj"]
+
+[ext_resource type="Texture2D" uid="uid://ddwvyjf2foe4o" path="res://placeholder/redpill_prog.jpeg" id="1_s304p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvf27"]
+size = Vector2(52, 60)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=385973709]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=344852278]
+scale = Vector2(0.22704083, 0.22704083)
+texture = ExtResource("1_s304p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=426068387]
+shape = SubResource("RectangleShape2D_vvf27")
