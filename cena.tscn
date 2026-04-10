@@ -1,11 +1,33 @@
 [gd_scene format=3 uid="uid://b3gbqyj6pujkq"]
 
 [ext_resource type="PackedScene" uid="uid://by4q75nrxtdxj" path="res://personagem.tscn" id="1_2vsai"]
+[ext_resource type="Script" uid="uid://nq0wgah86c28" path="res://global.gd" id="1_c3sxu"]
+[ext_resource type="Texture2D" uid="uid://dbcftilx587yt" path="res://icon.svg" id="2_828d7"]
 [ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://personagem.gd" id="2_fwo5d"]
+[ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://camera.gd" id="3_mxkdn"]
+[ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_w1627"]
+[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://mira.gd" id="7_yan1i"]
 
 [node name="cena" type="Node2D" unique_id=1523779238]
+script = ExtResource("1_c3sxu")
 
-[node name="CharacterBody2D" parent="." unique_id=385973709 instance=ExtResource("1_2vsai")]
-position = Vector2(113, 76)
+[node name="Icon" type="Sprite2D" parent="." unique_id=216137227]
+position = Vector2(524, 238)
+texture = ExtResource("2_828d7")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1368271444 node_paths=PackedStringArray("personagem")]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("3_mxkdn")
+personagem = NodePath("../personagem")
+
+[node name="personagem" parent="." unique_id=385973709 instance=ExtResource("1_2vsai")]
+position = Vector2(1.4305115e-06, 4.7683716e-07)
 scale = Vector2(1.8865434, 1.8865434)
 script = ExtResource("2_fwo5d")
+
+[node name="mira" type="Sprite2D" parent="." unique_id=2001920730]
+z_index = 2
+scale = Vector2(0.2626967, 0.2626967)
+texture = ExtResource("6_w1627")
+script = ExtResource("7_yan1i")
