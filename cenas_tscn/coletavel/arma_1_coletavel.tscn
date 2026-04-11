@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://qtmaw1vq3qyi"]
+
+[ext_resource type="Script" uid="uid://d0eu72esqt7my" path="res://codigo_gd/arma_1_coletavel.gd" id="1_scok3"]
+[ext_resource type="Texture2D" uid="uid://dr1ereo3cxt3u" path="res://placeholder/arma_do_fluzao_ia_pixelada.png" id="2_h75qb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kwde5"]
+size = Vector2(147, 90)
+
+[node name="arma1_coletavel" type="Area2D" unique_id=1251754849 groups=["arma_coletavel"]]
+scale = Vector2(0.37245747, 0.37245747)
+script = ExtResource("1_scok3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1497235764]
+position = Vector2(2.5, -4)
+shape = SubResource("RectangleShape2D_kwde5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=657883404]
+texture = ExtResource("2_h75qb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

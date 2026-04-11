@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bxg2rsostxiil"]
+
+[ext_resource type="Texture2D" uid="uid://dr1ereo3cxt3u" path="res://placeholder/arma_do_fluzao_ia_pixelada.png" id="1_tnsys"]
+
+[node name="arma1" type="Node2D" unique_id=1469492499]
+scale = Vector2(0.7291855, 0.7291855)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278]
+position = Vector2(16.999998, 9.999999)
+scale = Vector2(0.36003923, 0.36003923)
+texture = ExtResource("1_tnsys")
+
+[node name="sair_bala" type="Marker2D" parent="." unique_id=374399913]
