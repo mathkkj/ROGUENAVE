@@ -1,9 +1,50 @@
+class_name ArmaMeele
 extends Node2D
 
+@export var tempo_entre_golpes: float = 1.0
+@export var tempo_reset_combo: float = .0
+@export var total_golpes: int = 3
+
+var combo_atual: int = 0
+var timer_combo: float = 0.0
+var atacando: bool = false
 
 func _ready() -> void:
-	pass 
-
+	visible = false
 
 func _process(delta: float) -> void:
-	pass
+	if timer_combo > 0.0:
+		timer_combo = max(0.0, timer_combo - delta)
+		if timer_combo <= 0.0 and not atacando:
+			combo_atual = 0
+
+	if Input.is_action_just_pressed("atacar"):
+		_tentar_atacar()
+
+func _tentar_atacar() -> void:
+	if atacando:
+		return
+
+	atacando = true
+	visible = true
+
+	combo_atual += 1
+	if combo_atual > total_golpes:
+		combo_atual = 1
+
+	_executar_golpe(combo_atual)
+
+	timer_combo = tempo_reset_combo
+	await get_tree().create_timer(tempo_entre_golpes).timeout
+
+	atacando = false
+	visible = false
+
+func _executar_golpe(golpe: int) -> void:
+	match golpe:
+		1:
+			print("golpe 1")
+		2:
+			print("golpe 2")
+		3:
+			print("golpe 3")

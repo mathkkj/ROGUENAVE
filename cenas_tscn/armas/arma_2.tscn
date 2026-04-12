@@ -8,18 +8,16 @@ radius = 11.790816
 height = 34.193363
 
 [node name="arma2" type="Node2D" unique_id=1469492499]
+rotation = 0.8044576
 scale = Vector2(1.6962354, 1.6962354)
 script = ExtResource("1_h2t4u")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278]
-position = Vector2(13.559439, 0.5895408)
-rotation = 1.5707964
+[node name="hitbox" type="Area2D" parent="." unique_id=1105355561 groups=["arma"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="hitbox" unique_id=278146278]
 scale = Vector2(0.21927202, 0.21927202)
 texture = ExtResource("1_kgddg")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1105355561 groups=["arma"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1104852946]
-position = Vector2(15.917602, -5.9604645e-08)
-rotation = 4.712389
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1104852946]
+position = Vector2(0, -3.5372448)
 shape = SubResource("CapsuleShape2D_od6sd")

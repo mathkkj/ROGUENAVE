@@ -131,21 +131,48 @@ func _mecanica_dash(delta: float) -> void:
 			pode_dash = true
 
 func _arma_mirar():
-	var posicao_mira
+	var posicao_mira: Vector2
 	
-	if Global.usando_controle == true:
-		var direcao_mira := Input.get_vector("esquerda", "direita", "cima", "baixo")
-		
-		if direcao_mira != Vector2.ZERO:
-			ultima_direcao_mira = direcao_mira.normalized()
-		
+	if Global.usando_controle:
+		var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
+		var dir_dir := Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
+		#variavel do analogico ai
+		var direcao_final: Vector2
+
+		if dir_dir.length() > 0.2: #0.2 esse que é uma DEADZONE
+			direcao_final = dir_dir.normalized()
+		else:
+			direcao_final = dir_esq.normalized()
+
+		if direcao_final != Vector2.ZERO:
+			ultima_direcao_mira = direcao_final
+
 		posicao_mira = pivo_arma.global_position + ultima_direcao_mira * 100
 	else:
 		posicao_mira = get_global_mouse_position()
 
-	
 	var direcao_mira := pivo_arma.global_position.direction_to(posicao_mira)
-	arma.global_position = pivo_arma.global_position + direcao_mira * 60
-	arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
-	arma.show_behind_parent = direcao_mira.y < 0
-	arma.look_at(posicao_mira)
+
+	if arma is ArmaMeele:
+		var lado := Vector2.RIGHT
+		
+		
+		if abs(direcao_mira.x) > abs(direcao_mira.y):
+			lado.x = 1 if direcao_mira.x >= 0 else -1
+			lado.y = 0
+		else:
+			lado.x = 0
+			lado.y = 1 if direcao_mira.y >= 0 else -1
+
+		if lado.x != 0 and lado.y != 0:
+			lado = Vector2(lado.x, lado.y).normalized()
+
+		arma.position = lado * 60
+		arma.rotation = 0
+		arma.scale.y = escala_original_arma.y
+		arma.show_behind_parent = lado.y < 0
+	else:
+		arma.global_position = pivo_arma.global_position + direcao_mira * 60
+		arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
+		arma.show_behind_parent = direcao_mira.y < 0
+		arma.look_at(posicao_mira)

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b7illcrujwx0o"]
+
+[ext_resource type="Script" uid="uid://c0qj4dcsetxrw" path="res://codigo_gd/bala.gd" id="1_hiwyg"]
+[ext_resource type="Texture2D" uid="uid://be84l1qogj1w" path="res://placeholder/IGORMORENO.jpg" id="2_cnl7k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8ckd"]
+
+[node name="Bala" type="Area2D" unique_id=590871982]
+scale = Vector2(0.24447662, 0.16438079)
+script = ExtResource("1_hiwyg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=924036352]
+scale = Vector2(0.08826648, 0.08826648)
+texture = ExtResource("2_cnl7k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=369129319]
+shape = SubResource("RectangleShape2D_y8ckd")
