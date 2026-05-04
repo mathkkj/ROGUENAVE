@@ -3,6 +3,13 @@ extends Area2D
 
 @export var qual_arma_que_coleta : int
 
+var lista_sprites : Array[Texture] = [
+	preload("res://placeholder/arma_do_fluzao_ia_pixelada.png"),
+	preload("res://placeholder/MACHADO_DO_FLUZAO_IA_PIXELADO.png")
+]
+
+func _process(delta: float) -> void:
+	z_index = global_position.y
 func _ready():
 	$CollisionShape2D.set_deferred("disabled", true)
 	await get_tree().physics_frame

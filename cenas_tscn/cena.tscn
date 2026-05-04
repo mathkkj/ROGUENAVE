@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b3gbqyj6pujkq"]
+
+[ext_resource type="Script" uid="uid://nq0wgah86c28" path="res://codigo_gd/global.gd" id="1_q3n0b"]
+[ext_resource type="Texture2D" uid="uid://dbcftilx587yt" path="res://placeholder/icon.svg" id="2_uk6bg"]
+[ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/camera.gd" id="3_iwd25"]
+[ext_resource type="PackedScene" uid="uid://by4q75nrxtdxj" path="res://cenas_tscn/personagem.tscn" id="4_13lfy"]
+[ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_pdimi"]
+[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/mira.gd" id="7_j0gmb"]
+[ext_resource type="Texture2D" uid="uid://be84l1qogj1w" path="res://placeholder/IGORMORENO.jpg" id="8_t3wwm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1627"]
+size = Vector2(53.014732, 64.94514)
+
+[node name="cena" type="Node2D" unique_id=1523779238]
+script = ExtResource("1_q3n0b")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=763547240]
+z_index = 66
+position = Vector2(-192, 46.000004)
+scale = Vector2(1.8865434, 1.8865434)
+texture = ExtResource("2_uk6bg")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1368271444 node_paths=PackedStringArray("personagem")]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("3_iwd25")
+personagem = NodePath("../personagem")
+
+[node name="mira" type="Sprite2D" parent="." unique_id=2001920730]
+z_index = 2
+scale = Vector2(0.2626967, 0.2626967)
+texture = ExtResource("6_pdimi")
+script = ExtResource("7_j0gmb")
+
+[node name="inimigoTestIgor" type="StaticBody2D" parent="." unique_id=355737784 groups=["hurtbox", "inimigos"]]
+position = Vector2(404, 127)
+
+[node name="Sprite2D" type="Sprite2D" parent="inimigoTestIgor" unique_id=2095477280]
+scale = Vector2(0.35072476, 0.35072476)
+texture = ExtResource("8_t3wwm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="inimigoTestIgor" unique_id=1599620763]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_w1627")
+
+[node name="personagem" parent="." unique_id=1587912254 instance=ExtResource("4_13lfy")]
+dash_vel = 1000.0
+classe_personagem = 1
+duracao_golpe = 0.25
+forca_golpe = 500.0

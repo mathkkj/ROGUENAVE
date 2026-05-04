@@ -14,11 +14,15 @@ config/name="RogueNAVE"
 run/main_scene="uid://b3gbqyj6pujkq"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0.19434929, 0.19434926, 0.19434926, 1)
-config/icon="res://icon.svg"
+config/icon="res://placeholder/icon.svg"
 
 [autoload]
 
 Global="*uid://nq0wgah86c28"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [global_group]
 
@@ -103,6 +107,7 @@ atacar={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

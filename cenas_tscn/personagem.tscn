@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://by4q75nrxtdxj"]
+
+[ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem.gd" id="1_d8uwv"]
+[ext_resource type="Texture2D" uid="uid://ddwvyjf2foe4o" path="res://placeholder/redpill_prog.jpeg" id="2_qoi5i"]
+[ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="3_3s2pu"]
+[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/mira.gd" id="4_j50h3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvf27"]
+size = Vector2(52, 60)
+
+[node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
+scale = Vector2(1.8865434, 1.8865434)
+script = ExtResource("1_d8uwv")
+duracao_golpe = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1093763342]
+position = Vector2(-7.5827114e-07, -15.902099)
+scale = Vector2(0.22704083, 0.22704083)
+texture = ExtResource("2_qoi5i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931]
+position = Vector2(-7.582712e-07, -16.43217)
+shape = SubResource("RectangleShape2D_vvf27")
+
+[node name="mira" type="Sprite2D" parent="." unique_id=1591960555]
+z_index = 2
+position = Vector2(-7.582712e-07, -2.5275708e-07)
+scale = Vector2(0.13924766, 0.13924766)
+texture = ExtResource("3_3s2pu")
+script = ExtResource("4_j50h3")
+
+[node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
+position = Vector2(1.9073486e-06, -13.781818)
+scale = Vector2(1.0000001, 1.0000001)
+
+[node name="Label" type="Label" parent="." unique_id=926861963]
+offset_top = 13.78182
+offset_right = 40.0
+offset_bottom = 36.781822
+text = "false"

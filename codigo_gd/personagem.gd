@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var label = $Label
+
 @export var velocidade: float = 350.0
 @export var aceleracao: float = 2750.0
 @export var atrito: float = 1500.0
@@ -8,6 +10,8 @@ extends CharacterBody2D
 @export var DASH_TIMER: float = 0.10
 @export var tempo_recarregamento_dash: float = 1.0
 
+@export_enum("Programador", "Multimidia", "Fullstack") var classe_personagem: int
+
 var pode_dash: bool = true
 var tempo_dash: float = 0.0
 var recarregar_tempo_dash: float = 0.0
@@ -15,164 +19,239 @@ var dash_dir: Vector2 = Vector2.ZERO
 var ultima_direcao_mira: Vector2 = Vector2.RIGHT
 
 var arma = null
-var arma_index_antigo = -1
 var escala_original_arma = Vector2.ONE
+
+
+var tempo_golpe: float = 0.0
+
+@export var duracao_golpe: float = 0.25
+@export var forca_golpe: float = 700.0
+@export var impulso_golpe3: float = 1800.0
+
+var direcao_golpe: Vector2 = Vector2.ZERO
+
+
+#estados
+var esta_andando: bool = false
+var em_dash: bool = false
+var em_golpe: bool = false
 
 @onready var cena_armas : Array[PackedScene] = [ 
 	preload("res://cenas_tscn/armas/arma1.tscn"),
 	preload("res://cenas_tscn/armas/arma_2.tscn")
 ]
 
-@onready var cena_armas_coletaveis : Array[PackedScene] = [
-	preload("res://cenas_tscn/coletavel/arma_1_coletavel.tscn"),
-	preload("res://cenas_tscn/coletavel/arma_2_coletavel.tscn")
-]
-
 @onready var pivo_arma : Marker2D = get_node("pivo_arma")
 
 func _ready() -> void:
+	Global.personagem = self
 	atualizar_arma()
 
 func atualizar_arma():
+	match classe_personagem:
+		0:
+			Global.arma_atual = 0
+		1:
+			Global.arma_atual = 1
+		2:
+			print("arma multidores fullstack")
+	
 	if arma != null:
 		arma.queue_free()
 		arma = null
 	
-	print("arma_atual: ", Global.arma_atual)
-	
 	if Global.arma_atual == null:
-		print("arma_atual está null")
 		return
 	
 	if Global.arma_atual < 0 or Global.arma_atual >= cena_armas.size():
-		print("arma fora da array")
 		return
-	
 	
 	if cena_armas[Global.arma_atual] == null:
-		print("a cena nesse index é null")
 		return
-	
+	 
 	arma = cena_armas[Global.arma_atual].instantiate()
 	add_child(arma)
 	arma.position = pivo_arma.position
-	arma_index_antigo = Global.arma_atual
-	escala_original_arma = arma.scale 
-	print("tentando instanciar arma: ", Global.arma_atual)
+	escala_original_arma = arma.scale
 
-func _dropar_arma():
-	if arma != null and Global.arma_atual != -1 and Input.is_action_just_pressed("dropar"):
-		var drop = cena_armas_coletaveis[Global.arma_atual].instantiate()
-		get_parent().add_child(drop)
-		
-		var direcao_drop = Vector2.RIGHT
-		if Global.usando_controle == true:
-			direcao_drop = ultima_direcao_mira
-		else:
-			direcao_drop = (get_global_mouse_position() - global_position).normalized()
-		
-		drop.global_position = global_position + direcao_drop * 110
-		drop.qual_arma_que_coleta = Global.arma_atual
-		
-		arma.queue_free()
-		arma = null
-		Global.arma_atual = -1
-		arma_index_antigo = -1
+	if arma is ArmaMeele:
+		arma.connect("golpe_executado", _on_golpe_executado)
 
-func _process(delta: float) -> void:
+func obter_direcao_mira_controle() -> Vector2:
+	var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
+	var dir_dir := Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
+
+	var direcao_final := dir_dir if dir_dir.length() > 0.2 else dir_esq
+
+	if direcao_final == Vector2.ZERO:
+		return Vector2.ZERO
+
+	ultima_direcao_mira = direcao_final
+	return ultima_direcao_mira
+
+func _atualizar_ultima_direcao():
+	var direcao: Vector2
 	
 	
-	if Global.arma_atual != arma_index_antigo:
-		atualizar_arma()
-		
+	if Global.usando_controle:
+		direcao = obter_direcao_mira_controle()
+	else:
+		direcao = pivo_arma.global_position.direction_to(get_global_mouse_position())
 	
+	if direcao != Vector2.ZERO:
+		ultima_direcao_mira = direcao
+
+
+func _physics_process(delta: float) -> void:
+	label.text = str(em_golpe)
+	
+	_atualizar_ultima_direcao()
+
 	if arma == null or Global.arma_atual == null:
 		return
-	if arma != null:
-		_arma_mirar()
-	
-	_dropar_arma()
-func _physics_process(delta: float) -> void:
-	var direcao := Input.get_vector("esquerda", "direita", "cima", "baixo")
 
+	em_dash = _mecanica_dash(delta)
+	if em_dash:
+		move_and_slide()
+		z_index = global_position.y
+		return
+
+	if em_golpe:
+		tempo_golpe -= delta
+		
+		var t = 1.0 - (tempo_golpe / duracao_golpe)
+		var velocidade_atual = forca_golpe * (1.0 - t * t)
+		
+		velocity = direcao_golpe * velocidade_atual
+		
+		move_and_slide()
+		z_index = global_position.y
+		
+		if tempo_golpe <= 0.0:
+			em_golpe = false
+		
+		return
+	
+	
+	var direcao := Input.get_vector("esquerda", "direita", "cima", "baixo")
+	esta_andando = direcao != Vector2.ZERO
+	
+	if arma is ArmaMeele and Input.is_action_just_pressed("atacar") and not em_dash and not em_golpe:
+		if Global.usando_controle:
+			if obter_direcao_mira_controle() == Vector2.ZERO:
+				return
+		
+		if arma.has_method("atacar"):
+			arma.atacar()
+		_arma_mirar()
+
+	if not arma is ArmaMeele:
+		_arma_mirar()
+		if Input.is_action_pressed("atirar"):
+			if arma.has_method("atirar"):
+				arma.atirar()
+	
 	if direcao != Vector2.ZERO:
-		#da pra tirar o normalized() se precisar
 		var velocidade_alvo = direcao.normalized() * velocidade
 		velocity = velocity.move_toward(velocidade_alvo, aceleracao * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, atrito * delta)
 	
-	_mecanica_dash(delta)
 	move_and_slide()
-
-func _mecanica_dash(delta: float) -> void:
+	z_index = global_position.y
+	
+func _mecanica_dash(delta: float) -> bool:
 	if pode_dash and Input.is_action_just_pressed("dash"):
 		pode_dash = false
 		tempo_dash = DASH_TIMER
 		recarregar_tempo_dash = tempo_recarregamento_dash
 		
-		#ACHEI RUIM BOTAR O ANALOGICO DIREITO OU O MOUSE PARA A DIREÇÃO DO DASH
-		#if Global.usando_controle == false:
-			#dash_dir = global_position.direction_to(get_global_mouse_position())
-		#else:
-			#dash_dir = Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
 		dash_dir = Input.get_vector("esquerda", "direita", "cima", "baixo")
-		velocity = dash_dir * dash_vel
-
-		#if dash_dir.x != 0:
-			#$Sprite2D.flip_h = dash_dir.x > 0
-
+		velocity = dash_dir.normalized() * dash_vel
+		
+		
 	if tempo_dash > 0.0:
 		tempo_dash = max(0.0, tempo_dash - delta)
+		return true
 	else:
 		if recarregar_tempo_dash > 0.0:
 			recarregar_tempo_dash -= delta
 		else:
+			em_dash = false
 			pode_dash = true
+	
+	return false
+
 
 func _arma_mirar():
 	var posicao_mira: Vector2
 	
 	if Global.usando_controle:
-		var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
-		var dir_dir := Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
-		#variavel do analogico ai
-		var direcao_final: Vector2
-
-		if dir_dir.length() > 0.2: #0.2 esse que é uma DEADZONE
-			direcao_final = dir_dir.normalized()
-		else:
-			direcao_final = dir_esq.normalized()
-
-		if direcao_final != Vector2.ZERO:
-			ultima_direcao_mira = direcao_final
-
+		var direcao_final := obter_direcao_mira_controle()
+		if direcao_final == Vector2.ZERO:
+			return
+		
 		posicao_mira = pivo_arma.global_position + ultima_direcao_mira * 100
 	else:
 		posicao_mira = get_global_mouse_position()
-
+	
 	var direcao_mira := pivo_arma.global_position.direction_to(posicao_mira)
-
+	
 	if arma is ArmaMeele:
-		var lado := Vector2.RIGHT
-		
-		
-		if abs(direcao_mira.x) > abs(direcao_mira.y):
+		var lado := Vector2(global_position)
+		var rotacao = 0
+
+		if direcao_mira != Vector2.ZERO:
+			# define o lado (quina)
 			lado.x = 1 if direcao_mira.x >= 0 else -1
-			lado.y = 0
-		else:
-			lado.x = 0
 			lado.y = 1 if direcao_mira.y >= 0 else -1
+			
+			#rotação baseada na quina
+			#FAZER UM MATCH pra deixar mais otimizado
+			
+			if lado.x == 1 and lado.y == -1:
+				rotacao = -40   # direita cima
+			elif lado.x == 1 and lado.y == 1:
+				rotacao = 40    # direita baixo
+			elif lado.x == -1 and lado.y == 1:
+				rotacao = 140   # esquerda baixo
+			else:
+				rotacao = -140  # esquerda cima
 
-		if lado.x != 0 and lado.y != 0:
-			lado = Vector2(lado.x, lado.y).normalized()
-
-		arma.position = lado * 60
-		arma.rotation = 0
+		arma.position = lado * 40
+		arma.position.normalized()
+		arma.rotation = deg_to_rad(rotacao)
 		arma.scale.y = escala_original_arma.y
 		arma.show_behind_parent = lado.y < 0
 	else:
-		arma.global_position = pivo_arma.global_position + direcao_mira * 60
+		var angulo := direcao_mira.angle()
+		var distancia := 60.0
+		
+		arma.global_position = pivo_arma.global_position + Vector2(cos(angulo), sin(angulo)) * distancia
+		arma.rotation = lerp_angle(arma.rotation, angulo, 18.0 * get_process_delta_time())
 		arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
 		arma.show_behind_parent = direcao_mira.y < 0
-		arma.look_at(posicao_mira)
+		
+		
+
+
+
+func _on_golpe_executado(golpe: int) -> void:
+	em_golpe = true
+	tempo_golpe = duracao_golpe
+
+	direcao_golpe = ultima_direcao_mira.normalized()
+	
+	
+
+	match golpe:
+		1:
+			
+			forca_golpe = 1000
+		2:
+			forca_golpe = 1000
+		3:
+			forca_golpe = 1500
+			
+			
+			#velocity += direcao_golpe * impulso_golpe3

@@ -2,6 +2,8 @@ extends Node
 
 @export var arma_atual = -1
 
+var personagem
+
 var usando_controle = false
 
 func _input(event: InputEvent) -> void:

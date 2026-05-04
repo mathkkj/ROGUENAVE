@@ -1,23 +1,22 @@
 [gd_scene format=3 uid="uid://cauqixfj6xoc3"]
 
 [ext_resource type="Script" uid="uid://dvq6jg652ox1f" path="res://codigo_gd/armas/arma_2.gd" id="1_h2t4u"]
-[ext_resource type="Texture2D" uid="uid://b4nik4nw0eh74" path="res://placeholder/MACHADO_DO_FLUZAO_IA_PIXELADO.png" id="1_kgddg"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_od6sd"]
-radius = 11.790816
-height = 34.193363
+[ext_resource type="Texture2D" uid="uid://bx1hpokuriu3l" path="res://placeholder/New Piskel.png" id="2_h2t4u"]
 
 [node name="arma2" type="Node2D" unique_id=1469492499]
-rotation = 0.8044576
-scale = Vector2(1.6962354, 1.6962354)
+z_index = 1
+scale = Vector2(3, 3.177)
 script = ExtResource("1_h2t4u")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=1105355561 groups=["arma"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="hitbox" unique_id=278146278]
-scale = Vector2(0.21927202, 0.21927202)
-texture = ExtResource("1_kgddg")
+texture_filter = 1
+scale = Vector2(1.6601895, 0.9545983)
+texture = ExtResource("2_h2t4u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1104852946]
-position = Vector2(0, -3.5372448)
-shape = SubResource("CapsuleShape2D_od6sd")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="hitbox" unique_id=697463706]
+scale = Vector2(1.379182, 1.0734161)
+polygon = PackedVector2Array(-2.3999996, -15.4, -5, -14.4, -5, -9.6, 0, 1.2999992, 0, 4.1000004, -7, 10.1, -7, 15.799999, -1.6999998, 14, 1.2000008, 14, 4.200001, 8, 6.3999996, 8, 4, -4.3999996, 4, -7.7)
+
+[node name="Timer" type="Timer" parent="." unique_id=1232833915]
