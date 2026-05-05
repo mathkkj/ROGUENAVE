@@ -198,31 +198,58 @@ func _arma_mirar():
 	var direcao_mira := pivo_arma.global_position.direction_to(posicao_mira)
 	
 	if arma is ArmaMeele:
-		var lado := Vector2(global_position)
-		var rotacao = 0
+		var lado := Vector2.ZERO
+		var rotacao := 0.0
 
-		if direcao_mira != Vector2.ZERO:
-			# define o lado (quina)
-			lado.x = 1 if direcao_mira.x >= 0 else -1
-			lado.y = 1 if direcao_mira.y >= 0 else -1
-			
-			#rotação baseada na quina
-			#FAZER UM MATCH pra deixar mais otimizado
-			
-			if lado.x == 1 and lado.y == -1:
-				rotacao = -40   # direita cima
-			elif lado.x == 1 and lado.y == 1:
-				rotacao = 40    # direita baixo
-			elif lado.x == -1 and lado.y == 1:
-				rotacao = 140   # esquerda baixo
-			else:
-				rotacao = -140  # esquerda cima
+		if direcao_mira == Vector2.ZERO:
+			return
+
+		var angulo := rad_to_deg(direcao_mira.angle())
+		if angulo < 0:
+			angulo += 360.0
+
+		# dividir o circulo em 8 direções
+		match int(round(angulo / 45.0)) % 8:
+			0:
+				# direita
+				lado = Vector2.RIGHT
+				rotacao = 0
+			1:
+				# direita + baixo
+				lado = Vector2(1, 1).normalized()
+				rotacao = 30
+			2:
+				# baixo
+				lado = Vector2.DOWN
+				rotacao = 90
+			3:
+				# esquerda + baixo
+				lado = Vector2(-1, 1).normalized()
+				rotacao = 120
+			4:
+				# esquerda
+				lado = Vector2.LEFT
+				rotacao = 180
+			5:
+				# esquerda + cima
+				lado = Vector2(-1, -1).normalized()
+				rotacao = 220
+			6:
+				# cima
+				lado = Vector2.UP
+				rotacao = 270
+			7:
+				# direita + cima
+				lado = Vector2(1, -1).normalized()
+				rotacao = -50
+		print("eu ataquei para o ", lado)
 
 		arma.position = lado * 40
-		arma.position.normalized()
 		arma.rotation = deg_to_rad(rotacao)
 		arma.scale.y = escala_original_arma.y
 		arma.show_behind_parent = lado.y < 0
+
+	
 	else:
 		var angulo := direcao_mira.angle()
 		var distancia := 60.0

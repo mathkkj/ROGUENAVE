@@ -13,6 +13,7 @@ var atacando: bool = false
 
 func _ready() -> void:
 	visible = false
+	pass
 
 func _process(delta: float) -> void:
 	if timer_combo > 0.0:
