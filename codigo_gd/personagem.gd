@@ -38,6 +38,7 @@ var tempo_atirar = 0
 var esta_andando: bool = false
 var em_dash: bool = false
 var em_golpe: bool = false
+var atirando: bool = false
 
 @onready var cena_armas : Array[PackedScene] = [ 
 	preload("res://cenas_tscn/armas/arma1.tscn"),
@@ -125,7 +126,7 @@ func _physics_process(delta: float) -> void:
 	if tempo_atirar > 0.0:
 		tempo_atirar = tempo_atirar - delta
 	
-	label.text = str(em_golpe)
+	label.text = str(em_golpe, atirando, em_dash)
 	
 	_atualizar_ultima_direcao()
 
@@ -175,6 +176,9 @@ func _physics_process(delta: float) -> void:
 			if arma.has_method("atirar"):
 				arma.atirar()
 				tempo_atirar = cadencia_atirar
+				atirando = true
+		elif tempo_atirar >= 0:
+			atirando = false
 	
 	if direcao != Vector2.ZERO:
 		var velocidade_alvo = direcao.normalized() * velocidade
