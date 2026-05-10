@@ -25,13 +25,14 @@ var escala_original_arma = Vector2.ONE
 
 
 var tempo_golpe: float = 0.0
-
 @export var duracao_golpe: float = 0.25
 @export var forca_golpe: float = 700.0
 @export var impulso_golpe3: float = 1800.0
-
 var direcao_golpe: Vector2 = Vector2.ZERO
 
+
+@export var cadencia_atirar = 0.25
+var tempo_atirar = 0
 
 #estados
 var esta_andando: bool = false
@@ -45,18 +46,32 @@ var em_golpe: bool = false
 
 @onready var pivo_arma : Marker2D = get_node("pivo_arma")
 @onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
+
+#sprite
+@onready var sprite = get_node("AnimatedSprite2D")
+var lista_sprite_frames : Array[SpriteFrames] = [
+	preload("res://tres/spriteframes/prog_sprite_frames.tres"), 
+	preload("res://tres/spriteframes/mult_sprite_frames.tres"),
+	preload("res://tres/spriteframes/full_sprite_frames.tres")
+	]
+
 func _ready() -> void:
 	Global.personagem = self
 	atualizar_arma()
+	
 
 func atualizar_arma():
 	match classe_personagem:
 		0:
 			Global.arma_atual = 0
+			sprite.sprite_frames = lista_sprite_frames[0]
+			
 		1:
 			Global.arma_atual = 1
+			sprite.sprite_frames = lista_sprite_frames[1]
 		2:
 			print("arma multidores fullstack")
+			sprite.sprite_frames = lista_sprite_frames[2]
 	
 	if arma != null:
 		arma.queue_free()
@@ -79,6 +94,7 @@ func atualizar_arma():
 	if arma is ArmaMeele:
 		arma.connect("golpe_executado", _on_golpe_executado)
 		arma.get_node("hitbox").body_entered.connect(_arma_encostou)
+		
 
 func obter_direcao_mira_controle() -> Vector2:
 	var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
@@ -106,6 +122,9 @@ func _atualizar_ultima_direcao():
 
 
 func _physics_process(delta: float) -> void:
+	if tempo_atirar > 0.0:
+		tempo_atirar = tempo_atirar - delta
+	
 	label.text = str(em_golpe)
 	
 	_atualizar_ultima_direcao()
@@ -116,7 +135,7 @@ func _physics_process(delta: float) -> void:
 	em_dash = _mecanica_dash(delta)
 	if em_dash:
 		move_and_slide()
-		z_index = global_position.y
+		#z_index = global_position.y
 		return
 
 	if em_golpe:
@@ -128,7 +147,7 @@ func _physics_process(delta: float) -> void:
 		velocity = direcao_golpe * velocidade_atual
 	
 		move_and_slide()
-		z_index = global_position.y
+		#z_index = global_position.y
 		
 		if tempo_golpe <= 0.0:
 			em_golpe = false
@@ -150,11 +169,12 @@ func _physics_process(delta: float) -> void:
 			arma.atacar()
 		_arma_mirar()
 
-	if not arma is ArmaMeele:
+	if arma is ArmasRanged:
 		_arma_mirar()
-		if Input.is_action_pressed("atirar"):
+		if Input.is_action_pressed("atacar") and tempo_atirar <= 0.0:
 			if arma.has_method("atirar"):
 				arma.atirar()
+				tempo_atirar = cadencia_atirar
 	
 	if direcao != Vector2.ZERO:
 		var velocidade_alvo = direcao.normalized() * velocidade
@@ -173,6 +193,15 @@ func _mecanica_dash(delta: float) -> bool:
 		
 		dash_dir = Input.get_vector("esquerda", "direita", "cima", "baixo")
 		velocity = dash_dir.normalized() * dash_vel
+		var offset = direcao_golpe * 20
+		var explosao = explosao_cena.instantiate()
+		explosao.global_position = global_position + offset
+		
+		##TODO: CRIAR PARTICULA DE DASH 
+		#var particula = explosao.get_node("CPUParticles2D")
+		#particula.direction = -dash_dir.normalized()
+		#explosao.alvo = self
+		#get_tree().current_scene.add_child(explosao)
 		
 		
 	if tempo_dash > 0.0:
@@ -250,6 +279,7 @@ func _arma_mirar():
 		print("eu ataquei para o ", round(lado))
 		
 		arma.position = round(lado) * 40
+		
 		#arma.rotation = deg_to_rad(rotacao)
 		arma.rotation_degrees = rotacao
 		arma.scale.y = escala_original_arma.y
@@ -297,13 +327,32 @@ func _arma_encostou(body):
 		body.aplicar_knockback(direcao_golpe, 900)
 		camera.add_trauma(0.45, round(direcao_golpe))
 		
+		##RECEBER DANO
+		#if body.has_method("receber_dano"):
+			#body.receber_dano(25)
+		
 		#particula
-		var offset = direcao_golpe * 20
-		var explosao = explosao_cena.instantiate()
-		explosao.global_position = body.global_position + offset
+		if body is CharacterBody2D: 
+			var offset = direcao_golpe * 20
+			var explosao = explosao_cena.instantiate()
+			explosao.global_position = body.global_position + offset
+			
+			var particula = explosao.get_node("CPUParticles2D")
+			particula.direction = direcao_golpe
+			explosao.alvo = body
+			get_tree().current_scene.add_child(explosao)
 		
-		var particula = explosao.get_node("CPUParticles2D")
-		particula.direction = direcao_golpe
-		explosao.alvo = body
-		get_tree().current_scene.add_child(explosao)
+#RECEBE O SINAL DA BALA LÁ NO CODIGO DA ARMA
+func _on_bala_acertou(body, direcao, forca):
+	if body.has_method("aplicar_knockback"):
+		body.aplicar_knockback(direcao, forca)
 		
+		if body is CharacterBody2D: 
+			var offset = direcao * 20
+			var explosao = explosao_cena.instantiate()
+			explosao.global_position = body.global_position + offset
+			
+			var particula = explosao.get_node("CPUParticles2D")
+			particula.direction = direcao
+			explosao.alvo = body
+			get_tree().current_scene.add_child(explosao)

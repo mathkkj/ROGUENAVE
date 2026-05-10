@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://d4brryl2lbkda"]
+
+[ext_resource type="Texture2D" uid="uid://d1j1ftfn0xdur" path="res://placeholder/full_placeholder.png" id="1_dgeeo"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dgeeo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

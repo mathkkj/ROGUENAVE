@@ -13,3 +13,4 @@ scale = Vector2(0.36003923, 0.36003923)
 texture = ExtResource("1_tnsys")
 
 [node name="sair_bala" type="Marker2D" parent="." unique_id=374399913]
+position = Vector2(43.88458, 0)

@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var desaceleracao = 2500.0
 @onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 @onready var sprite = get_node("Sprite2D")
-
+@onready var vida = 100
 var knockback_force = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
@@ -13,6 +13,8 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
+	if vida <= 0:
+		queue_free()
 
 func aplicar_knockback(direcao: Vector2, forca) -> void:
 	knockback_force = direcao.normalized() * forca
@@ -20,3 +22,6 @@ func aplicar_knockback(direcao: Vector2, forca) -> void:
 	sprite.modulate = Color(10, 10, 10)
 	await get_tree().create_timer(0.15).timeout
 	sprite.modulate = Color(1, 1, 1)
+
+func receber_dano(dano):
+	vida -= dano

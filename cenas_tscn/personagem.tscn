@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://by4q75nrxtdxj"]
 
 [ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem.gd" id="1_d8uwv"]
-[ext_resource type="Texture2D" uid="uid://ddwvyjf2foe4o" path="res://placeholder/redpill_prog.jpeg" id="2_qoi5i"]
+[ext_resource type="SpriteFrames" uid="uid://d4brryl2lbkda" path="res://tres/spriteframes/full_sprite_frames.tres" id="2_d8uwv"]
 [ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="3_3s2pu"]
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/mira.gd" id="4_j50h3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvf27"]
-size = Vector2(52, 60)
+size = Vector2(47.706295, 47.492302)
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
 scale = Vector2(1.8865434, 1.8865434)
@@ -14,13 +14,15 @@ motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1093763342]
-position = Vector2(-7.5827114e-07, -15.902099)
-scale = Vector2(0.22704083, 0.22704083)
-texture = ExtResource("2_qoi5i")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248]
+position = Vector2(-0.55314773, -16.635319)
+scale = Vector2(0.1, 0.1)
+sprite_frames = ExtResource("2_d8uwv")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931]
-position = Vector2(-7.582712e-07, -16.43217)
+position = Vector2(-1.0832157, -16.742313)
+scale = Vector2(1.0000002, 1.0000002)
 shape = SubResource("RectangleShape2D_vvf27")
 
 [node name="mira" type="Sprite2D" parent="." unique_id=1591960555]
