@@ -6,7 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://by4q75nrxtdxj" path="res://cenas_tscn/personagem.tscn" id="4_13lfy"]
 [ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_pdimi"]
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/mira.gd" id="7_j0gmb"]
+[ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Texture2D" uid="uid://be84l1qogj1w" path="res://placeholder/IGORMORENO.jpg" id="8_t3wwm"]
+[ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
+[ext_resource type="Script" uid="uid://dgnct4e6m2fwr" path="res://cenas_tscn/inimigo.gd" id="9_iwd25"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
+size = Vector2(464, 467)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1627"]
 size = Vector2(53.014732, 64.94514)
@@ -32,19 +38,37 @@ scale = Vector2(0.2626967, 0.2626967)
 texture = ExtResource("6_pdimi")
 script = ExtResource("7_j0gmb")
 
-[node name="inimigoTestIgor" type="StaticBody2D" parent="." unique_id=355737784 groups=["hurtbox", "inimigos"]]
-position = Vector2(404, 127)
-
-[node name="Sprite2D" type="Sprite2D" parent="inimigoTestIgor" unique_id=2095477280]
-scale = Vector2(0.35072476, 0.35072476)
-texture = ExtResource("8_t3wwm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="inimigoTestIgor" unique_id=1599620763]
-scale = Vector2(1.4951277, 1.1934714)
-shape = SubResource("RectangleShape2D_w1627")
-
-[node name="personagem" parent="." unique_id=1587912254 instance=ExtResource("4_13lfy")]
+[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
+camera = NodePath("../Camera2D")
 dash_vel = 1000.0
 classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
+
+[node name="Caixa" type="RigidBody2D" parent="." unique_id=873234227]
+position = Vector2(105.99999, 261.99997)
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("8_uk6bg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Caixa" unique_id=1533352646]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Caixa" unique_id=323275151]
+position = Vector2(0, 1.5)
+scale = Vector2(0.2, 0.2)
+shape = SubResource("RectangleShape2D_uk6bg")
+
+[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388]
+position = Vector2(309, 120)
+motion_mode = 1
+script = ExtResource("9_iwd25")
+
+[node name="Sprite2D" type="Sprite2D" parent="Inimigo" unique_id=2095477280]
+scale = Vector2(0.35072476, 0.35072476)
+texture = ExtResource("8_t3wwm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Inimigo" unique_id=1599620763]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_w1627")

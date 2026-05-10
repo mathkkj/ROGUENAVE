@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
+
 @onready var label = $Label
+@export var camera : Camera2D
 
 @export var velocidade: float = 350.0
 @export var aceleracao: float = 2750.0
@@ -42,7 +44,7 @@ var em_golpe: bool = false
 ]
 
 @onready var pivo_arma : Marker2D = get_node("pivo_arma")
-
+@onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 func _ready() -> void:
 	Global.personagem = self
 	atualizar_arma()
@@ -76,6 +78,7 @@ func atualizar_arma():
 
 	if arma is ArmaMeele:
 		arma.connect("golpe_executado", _on_golpe_executado)
+		arma.get_node("hitbox").body_entered.connect(_arma_encostou)
 
 func obter_direcao_mira_controle() -> Vector2:
 	var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
@@ -123,7 +126,7 @@ func _physics_process(delta: float) -> void:
 		var velocidade_atual = forca_golpe * (1.0 - t * t)
 		
 		velocity = direcao_golpe * velocidade_atual
-		
+	
 		move_and_slide()
 		z_index = global_position.y
 		
@@ -131,6 +134,8 @@ func _physics_process(delta: float) -> void:
 			em_golpe = false
 		
 		return
+	
+	
 	
 	
 	var direcao := Input.get_vector("esquerda", "direita", "cima", "baixo")
@@ -158,7 +163,7 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, atrito * delta)
 	
 	move_and_slide()
-	z_index = global_position.y
+	#z_index = global_position.y
 	
 func _mecanica_dash(delta: float) -> bool:
 	if pode_dash and Input.is_action_just_pressed("dash"):
@@ -242,10 +247,11 @@ func _arma_mirar():
 				# direita + cima
 				lado = Vector2(1, -1).normalized()
 				rotacao = -50
-		print("eu ataquei para o ", lado)
-
-		arma.position = lado * 40
-		arma.rotation = deg_to_rad(rotacao)
+		print("eu ataquei para o ", round(lado))
+		
+		arma.position = round(lado) * 40
+		#arma.rotation = deg_to_rad(rotacao)
+		arma.rotation_degrees = rotacao
 		arma.scale.y = escala_original_arma.y
 		arma.show_behind_parent = lado.y < 0
 
@@ -261,24 +267,43 @@ func _arma_mirar():
 		
 		
 
-
-
 func _on_golpe_executado(golpe: int) -> void:
 	em_golpe = true
 	tempo_golpe = duracao_golpe
-
+	
 	direcao_golpe = ultima_direcao_mira.normalized()
 	
 	
 
 	match golpe:
 		1:
-			
-			forca_golpe = 1000
+			forca_golpe = 700
 		2:
-			forca_golpe = 1000
+			forca_golpe = 900
 		3:
 			forca_golpe = 1500
 			
 			
-			#velocity += direcao_golpe * impulso_golpe3
+	var hitbox = arma.get_node("hitbox")
+	for body in hitbox.get_overlapping_bodies():
+		_arma_encostou(body)
+		print(body)
+
+
+func _arma_encostou(body):
+	if body.has_method("aplicar_knockback") and em_golpe:
+		#TODO: de acordo com o golpe, mudar o konockback e o shake da camera
+		print("to atacando o ", body)
+		body.aplicar_knockback(direcao_golpe, 900)
+		camera.add_trauma(0.45, round(direcao_golpe))
+		
+		#particula
+		var offset = direcao_golpe * 20
+		var explosao = explosao_cena.instantiate()
+		explosao.global_position = body.global_position + offset
+		
+		var particula = explosao.get_node("CPUParticles2D")
+		particula.direction = direcao_golpe
+		explosao.alvo = body
+		get_tree().current_scene.add_child(explosao)
+		

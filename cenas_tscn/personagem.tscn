@@ -10,6 +10,7 @@ size = Vector2(52, 60)
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
 scale = Vector2(1.8865434, 1.8865434)
+motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
 
