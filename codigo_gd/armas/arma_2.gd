@@ -16,6 +16,7 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
+	z_index = global_position.y
 	if timer_combo > 0.0:
 		timer_combo = max(0.0, timer_combo - delta)
 

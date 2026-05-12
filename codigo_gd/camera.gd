@@ -54,7 +54,7 @@ func shake() -> void:
 	#if direcao.y == 0:
 		#direcao.y = 1
 	
-	rotation = max_roll * amount * randf_range(-1, 1)
+	rotation = max_roll * amount * randf_range(-0.5, 0.5)
 	offset.x = max_offset.x * amount * randf_range(-direcao.x, direcao.x)
 	offset.y = max_offset.y * amount * randf_range(-direcao.y, direcao.y)
 	#print("offset x = ", offset.x)
