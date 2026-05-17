@@ -3,20 +3,23 @@
 [ext_resource type="Script" uid="uid://dvq6jg652ox1f" path="res://codigo_gd/armas/arma_2.gd" id="1_h2t4u"]
 [ext_resource type="Texture2D" uid="uid://bx1hpokuriu3l" path="res://placeholder/New Piskel.png" id="2_h2t4u"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2t4u"]
+radius = 5.8226285
+
 [node name="arma2" type="Node2D" unique_id=1469492499]
 z_index = 1
-scale = Vector2(3, 3.177)
+scale = Vector2(3, 4)
 script = ExtResource("1_h2t4u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278]
+texture_filter = 1
+scale = Vector2(1.6601895, 0.95459837)
+texture = ExtResource("2_h2t4u")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=1105355561 groups=["arma"]]
 
-[node name="Sprite2D" type="Sprite2D" parent="hitbox" unique_id=278146278]
-texture_filter = 1
-scale = Vector2(1.6601895, 0.9545983)
-texture = ExtResource("2_h2t4u")
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="hitbox" unique_id=135577879]
-scale = Vector2(1.6601895, 0.9545983)
-polygon = PackedVector2Array(-3.5, -14.5, -3.5, -13.5, -4.5, -13.5, -4.5, -9.5, -3.3999996, -9.5, -2.3999996, -5.5, -1.5, -5.5, -1.5, -2.5, -0.5, -2.5, -0.5, 1.5, 0.5, 1.5, 0.5, 4.5, -0.5, 4.5, -0.5, 6.700001, -2.5, 7.700001, -2.5, 8.5, -4.5, 8.5, -4.5, 9.700001, -6.5, 10.700001, -6.5, 13.5, -5.5, 13.5, -5.5, 14.5, -1.5, 14.5, -1.5, 13.5, 0.5, 13.5, 0.5, 12.5, 1.5, 12.5, 1.5, 11.5, 2.2999992, 11.5, 3.2999992, 9.5, 4.5, 9.5, 4.5, 6.5, 5.5, 6.5, 5.5, -0.5, 4.5, -0.5, 4.5, -4.5, 3.5, -4.5, 3.5, -7.5, 2.5, -7.5, 2.5, -9.5, 1.5, -9.5, 1.5, -11.5, 0.5, -11.5, 0.5, -13.5, -0.5, -13.5, -0.5, -14.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=523375316]
+scale = Vector2(1.6601895, 0.95459837)
+shape = SubResource("CapsuleShape2D_h2t4u")
 
 [node name="Timer" type="Timer" parent="." unique_id=1232833915]

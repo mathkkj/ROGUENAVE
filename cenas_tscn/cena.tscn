@@ -34,11 +34,11 @@ personagem = NodePath("../personagem")
 
 [node name="mira" type="Sprite2D" parent="." unique_id=2001920730]
 z_index = 2
-scale = Vector2(0.2626967, 0.2626967)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_pdimi")
 script = ExtResource("7_j0gmb")
 
-[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
+[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") groups=["inimigos"] instance=ExtResource("4_13lfy")]
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
 duracao_golpe = 0.25
@@ -59,7 +59,7 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388]
+[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 groups=["hurtbox"]]
 position = Vector2(309, 120)
 motion_mode = 1
 script = ExtResource("9_iwd25")

@@ -6,6 +6,7 @@ extends Node2D
 signal acertou(body, direcao, forca)
 
 
+
 @export var forca: float = 400
 var direcao: Vector2 = Vector2.RIGHT
 
@@ -20,4 +21,8 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	emit_signal("acertou", body, direcao, forca)
-	queue_free() # destrói a bala depois de bater
+	print(body)
+	if body.is_in_group("jogador"):
+		pass
+	else:
+		queue_free() # destrói a bala depois de bater

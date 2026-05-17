@@ -1,43 +1,40 @@
 [gd_scene format=3 uid="uid://by4q75nrxtdxj"]
 
 [ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem.gd" id="1_d8uwv"]
-[ext_resource type="SpriteFrames" uid="uid://d4brryl2lbkda" path="res://tres/spriteframes/full_sprite_frames.tres" id="2_d8uwv"]
-[ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="3_3s2pu"]
-[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/mira.gd" id="4_j50h3"]
+[ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="2_d8uwv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvf27"]
-size = Vector2(47.706295, 47.492302)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]
+height = 34.3697
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
-scale = Vector2(1.8865434, 1.8865434)
 motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248]
-position = Vector2(-0.55314773, -16.635319)
-scale = Vector2(0.1, 0.1)
+position = Vector2(0.19999993, -0.99999714)
+scale = Vector2(0.3, 0.3)
 sprite_frames = ExtResource("2_d8uwv")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931]
-position = Vector2(-1.0832157, -16.742313)
-scale = Vector2(1.0000002, 1.0000002)
-shape = SubResource("RectangleShape2D_vvf27")
-
-[node name="mira" type="Sprite2D" parent="." unique_id=1591960555]
-z_index = 2
-position = Vector2(-7.582712e-07, -2.5275708e-07)
-scale = Vector2(0.13924766, 0.13924766)
-texture = ExtResource("3_3s2pu")
-script = ExtResource("4_j50h3")
+position = Vector2(0.8188838, -0.16013908)
+scale = Vector2(3, 3)
+shape = SubResource("CapsuleShape2D_d8uwv")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
-position = Vector2(1.9073486e-06, -13.781818)
+position = Vector2(0, -5)
 scale = Vector2(1.0000001, 1.0000001)
 
+[node name="pivo_machado" type="Marker2D" parent="." unique_id=306450883]
+
 [node name="Label" type="Label" parent="." unique_id=926861963]
-offset_top = 13.78182
+offset_top = 37.0
 offset_right = 40.0
-offset_bottom = 36.781822
+offset_bottom = 60.0
 text = "false"
+
+[node name="Label2" type="Label" parent="." unique_id=303949759]
+offset_top = 69.0
+offset_right = 40.0
+offset_bottom = 92.0

@@ -10,8 +10,11 @@ signal golpe_executado(golpe: int)
 var combo_atual: int = 0
 var timer_combo: float = 0
 var atacando: bool = false
+@onready var hitbox = get_node("hitbox")
+
 
 func _ready() -> void:
+	
 	visible = false
 	pass
 
@@ -33,6 +36,7 @@ func atacar() -> void:
 
 	atacando = true
 	visible = true
+	hitbox.monitoring = true
 
 	combo_atual += 1
 	if combo_atual > total_golpes:
@@ -43,10 +47,16 @@ func atacar() -> void:
 	timer_combo = tempo_reset_combo
 	await get_tree().create_timer(tempo_entre_golpes).timeout
 
+	
+	
+	if timer_combo > 0:
+		timer_combo -= get_process_delta_time()
+		
+		if timer_combo <= 0:
+			combo_atual = 0
 	atacando = false
 	visible = false
-	if timer_combo <= 0.0:
-		combo_atual = 0
+	hitbox.monitoring = false
 
 func _executar_golpe(golpe: int) -> void:
 	emit_signal("golpe_executado", golpe)

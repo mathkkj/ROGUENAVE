@@ -6,7 +6,7 @@ var personagem
 
 var usando_controle = false
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		usando_controle = false
 	elif event is InputEventJoypadMotion:

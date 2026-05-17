@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 
 @onready var label = $Label
+@onready var label2 = $Label2
 @export var camera : Camera2D
 
 @export var velocidade: float = 350.0
@@ -19,6 +20,7 @@ var tempo_dash: float = 0.0
 var recarregar_tempo_dash: float = 0.0
 var dash_dir: Vector2 = Vector2.ZERO
 var ultima_direcao_mira: Vector2 = Vector2.RIGHT
+var direcao_mira : Vector2
 
 var arma = null
 var escala_original_arma = Vector2.ONE
@@ -34,6 +36,12 @@ var direcao_golpe: Vector2 = Vector2.ZERO
 @export var cadencia_atirar = 0.25
 var tempo_atirar = 0
 
+var stamina_total : int
+var stamina = 0
+var descanso = 30
+var stamina_por_acao = 40
+var pode_descansar : bool
+var stamina_por_ataque = 25
 
 #estados
 var esta_andando: bool = false
@@ -47,6 +55,7 @@ var atirando: bool = false
 ]
 
 @onready var pivo_arma : Marker2D = get_node("pivo_arma")
+@onready var pivo_machado : Marker2D = get_node("pivo_machado")
 @onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 
 #sprite
@@ -67,10 +76,12 @@ func atualizar_arma():
 		0:
 			Global.arma_atual = 0
 			sprite.sprite_frames = lista_sprite_frames[0]
+			stamina_total = 100
 			
 		1:
 			Global.arma_atual = 1
 			sprite.sprite_frames = lista_sprite_frames[1]
+			stamina_total = 150
 		2:
 			print("arma multidores fullstack")
 			sprite.sprite_frames = lista_sprite_frames[2]
@@ -90,7 +101,12 @@ func atualizar_arma():
 	 
 	arma = cena_armas[Global.arma_atual].instantiate()
 	add_child(arma)
-	arma.position = pivo_arma.position
+	match Global.arma_atual:
+		0:
+			arma.position = pivo_arma.position
+		1:
+			arma.position = pivo_machado.position
+	
 	escala_original_arma = arma.scale
 
 	if arma is ArmaMeele:
@@ -126,16 +142,20 @@ func _atualizar_ultima_direcao():
 
 
 func _physics_process(delta: float) -> void:
-	if tempo_atirar > 0.0:
-		tempo_atirar = tempo_atirar - delta
+	
+	label2.text = str(stamina)
+	
+	_stamina(delta)
+	
+	_tempo_atirar(delta)
 	
 	label.text = str(em_golpe, atirando, em_dash)
 	
 	_atualizar_ultima_direcao()
-
+	
 	if arma == null or Global.arma_atual == null:
 		return
-
+	
 	em_dash = _mecanica_dash(delta)
 	if em_dash:
 		move_and_slide()
@@ -161,30 +181,58 @@ func _physics_process(delta: float) -> void:
 	
 	
 	var direcao := Input.get_vector("esquerda", "direita", "cima", "baixo")
+	var sprite_arma = arma.get_node("Sprite2D")
+	
+	
+	var angulo_em_graus_mira = rad_to_deg(ultima_direcao_mira.angle())
+	
+	##FLIP SPRITE
+	sprite.flip_h = false
+	if abs(int(angulo_em_graus_mira) % 360) >= 90 and abs(int(angulo_em_graus_mira) % 360) <= 270:
+		#print("cu")
+		sprite.flip_h = true
+		
+		
 	esta_andando = direcao != Vector2.ZERO
 	
-	if arma is ArmaMeele and Input.is_action_just_pressed("atacar") and not em_dash and not em_golpe:
+	if arma is ArmaMeele and Input.is_action_just_pressed("atacar") and not em_dash and not em_golpe and stamina >= stamina_por_ataque:
 		if Global.usando_controle:
 			if obter_direcao_mira_controle() == Vector2.ZERO:
 				return
-		
-		if arma.has_method("atacar"):
-			arma.atacar()
 		_arma_mirar()
+		if arma.has_method("atacar"):
+			
+			arma.atacar()
+	
+		
+		
 
 	if arma is ArmasRanged:
-		
-		
+		atirando = arma.atirando
 		_arma_mirar()
+	
+		
+		
 		if Input.is_action_pressed("atacar") and tempo_atirar <= 0.0:
+			
+			
 			if arma.has_method("atirar"):
+				atirando = true
+				#print(direcao_mira)
 				
 				arma.atirar()
 				
+				##recoil
+				#if arma.pode_atirar and not em_dash:
+					#velocity = -direcao_mira.normalized() * 100
+					#move_and_slide()
+				
+				
 				tempo_atirar = cadencia_atirar
-				atirando = true
+				
 		elif tempo_atirar >= 0:
 			atirando = false
+			
 		
 	var intensidade = direcao.length()
 	if direcao != Vector2.ZERO:
@@ -197,7 +245,11 @@ func _physics_process(delta: float) -> void:
 	z_index = global_position.y
 	
 func _mecanica_dash(delta: float) -> bool:
-	if pode_dash and Input.is_action_just_pressed("dash"):
+	if pode_dash and Input.is_action_just_pressed("dash") and esta_andando and not atirando and stamina >= stamina_por_acao:
+		Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
+		stamina -= stamina_por_acao
+		
+		pode_descansar = false
 		pode_dash = false
 		tempo_dash = DASH_TIMER
 		recarregar_tempo_dash = tempo_recarregamento_dash
@@ -224,12 +276,17 @@ func _mecanica_dash(delta: float) -> bool:
 			recarregar_tempo_dash -= delta
 		else:
 			em_dash = false
+			
 			pode_dash = true
+			get_tree().create_timer(1.0, true)
+			pode_descansar = true
 	
 	return false
 
 
 func _arma_mirar():
+	
+	
 	var posicao_mira: Vector2
 	
 	if Global.usando_controle:
@@ -241,7 +298,7 @@ func _arma_mirar():
 	else:
 		posicao_mira = get_global_mouse_position()
 	
-	var direcao_mira := pivo_arma.global_position.direction_to(posicao_mira)
+	direcao_mira = pivo_arma.global_position.direction_to(posicao_mira)
 	
 	if arma is ArmaMeele:
 		var lado := Vector2.ZERO
@@ -253,62 +310,66 @@ func _arma_mirar():
 		var angulo := rad_to_deg(direcao_mira.angle())
 		if angulo < 0:
 			angulo += 360.0
-
+		var offset_lado = 80
 		# dividir o circulo em 8 direções
 		match int(round(angulo / 45.0)) % 8:
 			0:
 				# direita
 				lado = Vector2.RIGHT
 				rotacao = 0
+				
 			1:
 				# direita + baixo
 				lado = Vector2(1, 1).normalized()
-				rotacao = 30
+				rotacao = 45
+				
 			2:
 				# baixo
 				lado = Vector2.DOWN
 				rotacao = 90
+				
 			3:
 				# esquerda + baixo
 				lado = Vector2(-1, 1).normalized()
-				rotacao = 120
+				rotacao = 135
+				
 			4:
 				# esquerda
 				lado = Vector2.LEFT
 				rotacao = 180
+				
 			5:
 				# esquerda + cima
 				lado = Vector2(-1, -1).normalized()
-				rotacao = 220
+				rotacao = 225
+				
 			6:
 				# cima
 				lado = Vector2.UP
 				rotacao = 270
+				
 			7:
 				# direita + cima
 				lado = Vector2(1, -1).normalized()
-				rotacao = -50
-		print("eu ataquei para o ", round(lado))
+				rotacao = 315
+				
+		print("eu ataquei para o ", lado)
 		
 		
-		arma.position = pivo_arma.position + round(lado) * 40
-		
-		#arma.rotation = deg_to_rad(rotacao)
-		arma.rotation_degrees = rotacao
+		arma.position = pivo_machado.position + lado * offset_lado
+		arma.rotation = deg_to_rad(rotacao)
+		#arma.rotation_degrees = rotacao
 		arma.scale.y = escala_original_arma.y
-		arma.show_behind_parent = lado.y < 0
+		#arma.show_behind_parent = lado.y < 0
 
-	
 	else:
-		var angulo := direcao_mira.angle()
-		var distancia := 60.0
+		var angulo = direcao_mira.angle()
+		var distancia = 20
 		
 		arma.global_position = pivo_arma.global_position + Vector2(cos(angulo), sin(angulo)) * distancia
 		arma.rotation = lerp_angle(arma.rotation, angulo, 18.0 * get_process_delta_time())
 		arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
-		arma.show_behind_parent = direcao_mira.y < 0
-		
-		
+		#arma.show_behind_parent = direcao_mira.y < 0
 
 func _on_golpe_executado(golpe: int) -> void:
 	em_golpe = true
@@ -321,10 +382,13 @@ func _on_golpe_executado(golpe: int) -> void:
 	match golpe:
 		1:
 			forca_golpe = 700
+			stamina -= stamina_por_ataque
 		2:
 			forca_golpe = 900
+			stamina -= stamina_por_ataque 
 		3:
 			forca_golpe = 1500
+			stamina -= stamina_por_ataque
 			
 			
 	var hitbox = arma.get_node("hitbox")
@@ -332,9 +396,9 @@ func _on_golpe_executado(golpe: int) -> void:
 		_arma_encostou(body)
 		print(body)
 
-
 func _arma_encostou(body):
 	if body.has_method("aplicar_knockback") and em_golpe:
+		arma.get_node("hitbox").set_deferred("monitoring", false) 
 		#TODO: de acordo com o golpe, mudar o konockback e o shake da camera
 		print("to atacando o ", body)
 		body.aplicar_knockback(direcao_golpe, 900)
@@ -355,6 +419,7 @@ func _on_bala_acertou(body, direcao, forca):
 	if body.has_method("aplicar_knockback"):
 		body.aplicar_knockback(direcao, forca)
 		Input.start_joy_vibration(0, 1.0, 1.0, 0.1)
+		camera.add_trauma(0.1, round(direcao))
 		_particula_instancia(body, direcao)
 
 func _particula_instancia(body, direcao):
@@ -367,3 +432,13 @@ func _particula_instancia(body, direcao):
 			particula.direction = direcao
 			explosao.alvo = body
 			get_tree().current_scene.add_child(explosao)
+			
+			
+func _stamina(delta) -> void:
+	if stamina <= stamina_total and pode_descansar:
+		stamina += descanso * delta
+	
+		
+func _tempo_atirar(delta) -> void:
+	if tempo_atirar > 0.0:
+		tempo_atirar = tempo_atirar - delta

@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://b8h36nxt0ngtx"]
 
-[ext_resource type="Texture2D" uid="uid://ddnsvgcvtkavs" path="res://placeholder/multimidia_placeholder.png" id="1_0ps83"]
+[ext_resource type="Texture2D" uid="uid://cq7n7cm64gc0d" path="res://tres/spriteframes/programadcor ONX (de lado,Direito).png" id="1_0ps83"]
 
 [resource]
 animations = [{
