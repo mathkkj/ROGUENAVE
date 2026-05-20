@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 
 	if Global.usando_controle:
 		zoom_aplicado = Vector2(1, 1)
-		var direcao := Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
+		direcao = Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
 		alvo_offset = direcao * distancia_maxima
 	else:
 		zoom_aplicado = Vector2(0.92, 0.92)

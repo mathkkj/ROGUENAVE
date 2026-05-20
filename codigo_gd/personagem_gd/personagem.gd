@@ -422,6 +422,7 @@ func _arma_encostou(body):
 		if body is CharacterBody2D:
 			Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
 			camera.add_trauma(0.4, round(direcao_golpe))
+			
 			_particula_instancia(body, direcao_golpe)
 	if body.is_in_group("projetil_inimigo") and em_golpe:
 		pass
@@ -435,15 +436,26 @@ func _on_bala_acertou(body, direcao, forca):
 		_particula_instancia(body, direcao)
 
 func _particula_instancia(body, direcao):
-	if body is CharacterBody2D: 
-			var offset = direcao * 20
-			var explosao = explosao_cena.instantiate()
-			explosao.global_position = body.global_position + offset
-			
-			var particula = explosao.get_node("CPUParticles2D")
-			particula.direction = direcao
-			explosao.alvo = body
-			get_tree().current_scene.add_child(explosao)
+	var sprite = body.get_node("Sprite2D")
+	if sprite == null:
+		return
+
+	var textura = sprite.texture
+	if textura == null:
+		return
+
+	#var img = textura.get_image()
+	#var cor_dominante = textura.get_pixel(0, 0)
+
+	var explosao = explosao_cena.instantiate()
+	explosao.global_position = body.global_position + (direcao * 20)
+	#explosao.modulate = cor_dominante
+	explosao.alvo = body
+
+	var particula = explosao.get_node("CPUParticles2D")
+	particula.direction = direcao
+
+	get_tree().current_scene.add_child(explosao)
 			
 			
 func _stamina(delta) -> void:

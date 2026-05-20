@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bxg2rsostxiil"]
 
-[ext_resource type="Script" uid="uid://bu8w8xswwp1eg" path="res://codigo_gd/armas/arma_1.gd" id="1_qairy"]
+[ext_resource type="Script" uid="uid://bu8w8xswwp1eg" path="res://codigo_gd/personagem_gd/armas/arma_1.gd" id="1_qairy"]
 [ext_resource type="Texture2D" uid="uid://dr1ereo3cxt3u" path="res://placeholder/arma_do_fluzao_ia_pixelada.png" id="1_tnsys"]
 
 [node name="arma1" type="Node2D" unique_id=1469492499]

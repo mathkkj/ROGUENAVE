@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7illcrujwx0o"]
 
-[ext_resource type="Script" uid="uid://dduv6d4xi1kdx" path="res://codigo_gd/bala.gd" id="1_hiwyg"]
+[ext_resource type="Script" uid="uid://dduv6d4xi1kdx" path="res://codigo_gd/personagem_gd/armas/bala.gd" id="1_hiwyg"]
 [ext_resource type="Texture2D" uid="uid://dar85vxabes4h" path="res://placeholder/bala_placeholder.png" id="1_uygfv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hiwyg"]

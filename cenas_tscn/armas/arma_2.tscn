@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cauqixfj6xoc3"]
 
-[ext_resource type="Script" uid="uid://dvq6jg652ox1f" path="res://codigo_gd/armas/arma_2.gd" id="1_h2t4u"]
+[ext_resource type="Script" uid="uid://dvq6jg652ox1f" path="res://codigo_gd/personagem_gd/armas/arma_2.gd" id="1_h2t4u"]
 [ext_resource type="Texture2D" uid="uid://bx1hpokuriu3l" path="res://placeholder/New Piskel.png" id="2_h2t4u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2t4u"]

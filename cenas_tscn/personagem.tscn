@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://by4q75nrxtdxj"]
 
-[ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem.gd" id="1_d8uwv"]
+[ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem_gd/personagem.gd" id="1_d8uwv"]
 [ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="2_d8uwv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]

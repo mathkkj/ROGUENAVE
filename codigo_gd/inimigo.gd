@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-signal tomou_hit
 
-@export var velocidade: float = 1000.0
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
 @export var alvo: CharacterBody2D
@@ -173,17 +171,24 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 @export var max_accel := 1200.0
 
 
+@onready var cor_dominante := Color.WHITE
+
+func cachear_cor():
+	var sprite := $Sprite2D
+	var img = sprite.texture.get_image()
+	img.resize(1, 1, Image.INTERPOLATE_NEAREST)
+	cor_dominante = img.get_pixel(0, 0)
 
 func _physics_process(delta: float) -> void:
-
+	mirar()
+	check_posicao_alvo()
 	if not is_instance_valid(alvo):
 		return
 
 	var direcao_para_alvo: Vector2 = (alvo.global_position - global_position).normalized()
 	var direcao_path: Vector2 = escolher_dir(direcao_para_alvo, delta)
 
-	mirar()
-	check_posicao_alvo()
+	
 
 	var desired_velocity := direcao_path * max_speed
 
