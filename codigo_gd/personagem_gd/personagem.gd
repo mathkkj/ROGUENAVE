@@ -67,12 +67,21 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 	preload("res://tres/spriteframes/full_sprite_frames.tres")
 	]
 
-func perder_vida(dano) -> float:
-	
+func perder_vida(dano, direcao_projetil, forca) -> float:
+	Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
+	print(direcao_projetil)
+	camera.add_trauma(0.4, round(direcao_projetil))
+	aplicar_knockback(direcao_projetil, forca)
+	_particula_instancia(self, direcao_projetil)
 	vida -= dano
+	get_tree().paused = true
+	#taca a animacao
+	await get_tree().create_timer(0.1, true).timeout
+	get_tree().paused = false
 	return vida
 
 func _ready() -> void:
+	
 	Global.personagem = self
 	atualizar_dados()
 	
@@ -437,14 +446,14 @@ func _on_bala_acertou(body, direcao, forca):
 			_particula_instancia(body, direcao)
 		
 func _particula_instancia(body, direcao):
-	
-		var sprite = body.get_node("Sprite2D")
-		if sprite == null:
-			return
-
-		var textura = sprite.texture
-		if textura == null:
-			return
+		print(body, direcao)
+		#var sprite = body.get_node("Sprite2D")
+		#if sprite == null:
+			#return
+#
+		#var textura = sprite.texture
+		#if textura == null:
+			#return
 
 		#var img = textura.get_image()
 		#var cor_dominante = img.get_pixel(0, 0)
@@ -469,3 +478,12 @@ func _stamina(delta) -> void:
 func _tempo_atirar(delta) -> void:
 	if tempo_atirar > 0.0:
 		tempo_atirar = tempo_atirar - delta
+
+func aplicar_knockback(direcao: Vector2, forca: float) -> void:
+	
+	velocity = direcao.normalized() * forca
+
+	sprite.modulate = Color(10, 10, 10)
+
+	await get_tree().create_timer(0.15).timeout
+	sprite.modulate = Color.WHITE
