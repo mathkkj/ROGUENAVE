@@ -13,7 +13,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	if body.is_in_group("jogador") and body.has_method("perder_vida"):
-		body.perder_vida(10)
+		body.perder_vida(1)
 		queue_free()
 		return
 

@@ -7,15 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_pdimi"]
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
-[ext_resource type="Texture2D" uid="uid://be84l1qogj1w" path="res://placeholder/IGORMORENO.jpg" id="8_t3wwm"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
-[ext_resource type="Script" uid="uid://dgnct4e6m2fwr" path="res://codigo_gd/inimigo.gd" id="9_iwd25"]
+[ext_resource type="PackedScene" uid="uid://bsl2s6w6b1sjy" path="res://cenas_tscn/inimigos_tscn/inimigo.tscn" id="10_iwd25"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="11_y6nmq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
 size = Vector2(464, 467)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1627"]
-size = Vector2(53.014732, 64.94514)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(450, 469)
@@ -63,51 +60,6 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 node_paths=PackedStringArray("alvo") groups=["inimigos"]]
-position = Vector2(309, 120)
-motion_mode = 1
-script = ExtResource("9_iwd25")
-alvo = NodePath("../personagem")
-
-[node name="Sprite2D" type="Sprite2D" parent="Inimigo" unique_id=2095477280]
-scale = Vector2(0.35072476, 0.35072476)
-texture = ExtResource("8_t3wwm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Inimigo" unique_id=1599620763]
-scale = Vector2(1.4951277, 1.1934714)
-shape = SubResource("RectangleShape2D_w1627")
-
-[node name="atirar_tempo" type="Timer" parent="Inimigo" unique_id=1901951399]
-autostart = true
-
-[node name="Raycast" type="Node2D" parent="Inimigo" unique_id=1854152093]
-
-[node name="RayBaixo" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1333195631]
-target_position = Vector2(0, 57)
-
-[node name="RayDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=2028782361]
-target_position = Vector2(63, 1)
-
-[node name="RayCima" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1574911612]
-target_position = Vector2(0, -59)
-
-[node name="RayEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=344684036]
-target_position = Vector2(-61, 0)
-
-[node name="RayBaixoDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1904822102]
-target_position = Vector2(50, 50)
-
-[node name="RayBaixoEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=200959714]
-target_position = Vector2(-50, 50)
-
-[node name="RayCimaDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1055532352]
-target_position = Vector2(50, -50)
-
-[node name="RayCimaEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=726543549]
-target_position = Vector2(-50, -50)
-
-[node name="RayLOS" type="RayCast2D" parent="Inimigo" unique_id=46791600]
-
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605418635]
 position = Vector2(441, 542)
 scale = Vector2(2.0661936, 0.37913367)
@@ -119,4 +71,12 @@ texture = ExtResource("8_q3n0b")
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
-[connection signal="timeout" from="Inimigo/atirar_tempo" to="Inimigo" method="_on_atirar_tempo_timeout"]
+[node name="Inimigo_projetil" parent="." unique_id=1768556099 node_paths=PackedStringArray("alvo") instance=ExtResource("11_y6nmq")]
+position = Vector2(249, -17)
+speed = 200.0
+alvo = NodePath("../personagem")
+max_speed = 300.0
+
+[node name="Inimigo" parent="." unique_id=420316846 node_paths=PackedStringArray("alvo") instance=ExtResource("10_iwd25")]
+position = Vector2(339, 159)
+alvo = NodePath("../personagem")

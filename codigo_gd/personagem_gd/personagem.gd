@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var vida = 100
+@export var vida = 6
 
 @onready var label = $Label
 @onready var label2 = $Label2
@@ -35,7 +35,7 @@ var direcao_golpe: Vector2 = Vector2.ZERO
 
 
 @export var cadencia_atirar = 0.25
-var tempo_atirar = 0
+@export var tempo_atirar = 0
 
 var stamina_total : int
 var stamina = 0
@@ -159,7 +159,7 @@ func _physics_process(delta: float) -> void:
 	
 	_tempo_atirar(delta)
 	
-	label.text = str(em_golpe, atirando, em_dash)
+	label.text = str(em_golpe, atirando, em_dash, esta_andando)
 	
 	_atualizar_ultima_direcao()
 	
@@ -433,29 +433,32 @@ func _on_bala_acertou(body, direcao, forca):
 		body.aplicar_knockback(direcao, forca)
 		Input.start_joy_vibration(0, 1.0, 1.0, 0.1)
 		camera.add_trauma(0.1, round(direcao))
-		_particula_instancia(body, direcao)
-
+		if body is CharacterBody2D:
+			_particula_instancia(body, direcao)
+		
 func _particula_instancia(body, direcao):
-	var sprite = body.get_node("Sprite2D")
-	if sprite == null:
-		return
+	
+		var sprite = body.get_node("Sprite2D")
+		if sprite == null:
+			return
 
-	var textura = sprite.texture
-	if textura == null:
-		return
+		var textura = sprite.texture
+		if textura == null:
+			return
 
-	#var img = textura.get_image()
-	#var cor_dominante = textura.get_pixel(0, 0)
+		#var img = textura.get_image()
+		#var cor_dominante = img.get_pixel(0, 0)
 
-	var explosao = explosao_cena.instantiate()
-	explosao.global_position = body.global_position + (direcao * 20)
-	#explosao.modulate = cor_dominante
-	explosao.alvo = body
+		var explosao = explosao_cena.instantiate()
+		#explosao.modulate = cor_dominante
+		explosao.global_position = body.global_position + (direcao * 20)
+		
+		explosao.alvo = body
 
-	var particula = explosao.get_node("CPUParticles2D")
-	particula.direction = direcao
+		var particula = explosao.get_node("CPUParticles2D")
+		particula.direction = direcao
 
-	get_tree().current_scene.add_child(explosao)
+		get_tree().current_scene.add_child(explosao)
 			
 			
 func _stamina(delta) -> void:

@@ -47,6 +47,4 @@ target_position = Vector2(50, -50)
 [node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1635963035]
 target_position = Vector2(-50, -50)
 
-[node name="RayLOS" type="RayCast2D" parent="." unique_id=1118115218]
-
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]

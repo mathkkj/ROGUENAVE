@@ -1,9 +1,14 @@
 extends CharacterBody2D
-
+class_name Inimigo
 
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
 @export var alvo: CharacterBody2D
+@export var max_speed := 300.0
+@export var max_accel := 1200.0
+
+@onready var cor_dominante := Color.WHITE
+
 
 var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 var vida: int = 25
@@ -12,14 +17,10 @@ var knockback_force: Vector2 = Vector2.ZERO
 @onready var sprite := $Sprite2D
 @onready var navagent = $NavigationAgent2D
 
-@onready var projetil_instancia = preload("res://cenas_tscn/projetil_inimigo.tscn")
-
-@onready var atirar_tempo = get_node("atirar_tempo")
-
 
 var ultima_direcao := Vector2.ZERO
 var tempo_memoria := 0.0
-@onready var LOS = get_node("RayLOS")
+
 @onready var arr_cast: Array[RayCast2D] = [
 	get_node("Raycast/RayDireita"),
 	get_node("Raycast/RayBaixoDireita"),
@@ -33,13 +34,12 @@ var tempo_memoria := 0.0
 
 
 enum ESTADOS {
-	NAO_CACANDO,
 	CACANDO,
 	ATIRANDO,
 	HIT,
 }
 
-var estado_atual: ESTADOS = ESTADOS.NAO_CACANDO
+var estado_atual: ESTADOS = ESTADOS.CACANDO
 
 
 #func escolher_direcao(direcao_alvo: Vector2) -> Vector2:
@@ -140,7 +140,11 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 			score += tangente.dot(direcao_alvo) * 4.0
 
 			# penalidade da colisão
-			score -= 4.0
+			
+			if ray.get_collider().is_in_group("inimigos"):
+				score -= 5.0
+			else:
+				score -= 4.0
 
 		
 		# ray da esquerda e direita
@@ -161,62 +165,55 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 	# atualizar os valores e resetar a memoria
 	if tempo_memoria <= 0.0:
 		ultima_direcao = melhor_direcao
-		tempo_memoria = 0.2
+		tempo_memoria = 0.1
 	
 	return melhor_direcao
 
 
 
-@export var max_speed := 300.0
-@export var max_accel := 1200.0
 
 
-@onready var cor_dominante := Color.WHITE
+#func cachear_cor():
+	#var sprite := $Sprite2D
+	#var img = sprite.texture.get_image()
+	#img.resize(1, 1, Image.INTERPOLATE_NEAREST)
+	#cor_dominante = img.get_pixel(0, 0)
 
-func cachear_cor():
-	var sprite := $Sprite2D
-	var img = sprite.texture.get_image()
-	img.resize(1, 1, Image.INTERPOLATE_NEAREST)
-	cor_dominante = img.get_pixel(0, 0)
+func gerar_steering(direcao_path) -> Vector2:
+	
+	var desired_velocity = direcao_path * max_speed
+	# steering force 
+	var steering = desired_velocity - velocity
+	return steering
 
 func _physics_process(delta: float) -> void:
-	mirar()
-	check_posicao_alvo()
+	
 	if not is_instance_valid(alvo):
 		return
-
+	
 	var direcao_para_alvo: Vector2 = (alvo.global_position - global_position).normalized()
 	var direcao_path: Vector2 = escolher_dir(direcao_para_alvo, delta)
 
 	
 
-	var desired_velocity := direcao_path * max_speed
+	
 
 	# steering force 
-	var steering = desired_velocity - velocity
+	var steering = gerar_steering(direcao_path)
 	steering = steering.limit_length(max_accel * delta)
 
 	# aplica knockback sem apagar o steering
 	knockback_force = knockback_force.move_toward(Vector2.ZERO, desaceleracao * delta)
 
-	velocity += steering
 	
-	print(estado_atual)
+	
+	
 	
 	match estado_atual:
-		ESTADOS.NAO_CACANDO:
-			#velocity = Vector2.ZERO
-			if LOS.get_collider() == alvo:
-				estado_atual = ESTADOS.CACANDO
-				
-
 		ESTADOS.CACANDO:
 			velocity += steering
-			if LOS.get_collider() != alvo:
-				estado_atual = ESTADOS.NAO_CACANDO
-
-		ESTADOS.ATIRANDO:
-			pass
+			#if LOS.get_collider() != alvo:
+				#estado_atual = ESTADOS.NAO_CACANDO
 
 		ESTADOS.HIT:
 			velocity = knockback_force
@@ -233,36 +230,8 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	sprite.modulate = Color(10, 10, 10)
 
 	await get_tree().create_timer(0.15).timeout
-	estado_atual = ESTADOS.NAO_CACANDO
+	estado_atual = ESTADOS.CACANDO
 	sprite.modulate = Color.WHITE
 
 func receber_dano(dano: int) -> void:
 	vida -= dano
-
-func check_posicao_alvo():
-	if LOS.get_collider() == alvo and atirar_tempo.is_stopped():
-		estado_atual = ESTADOS.ATIRANDO
-		atirar_tempo.start()
-	elif LOS.get_collider() != alvo and not atirar_tempo.is_stopped():
-		estado_atual = ESTADOS.CACANDO
-		atirar_tempo.stop()
-			
-func mirar():
-	LOS.target_position = to_local(alvo.position)
-
-
-func _on_atirar_tempo_timeout() -> void:
-	
-	atirar()
-
-func atirar():
-	var projetil = projetil_instancia.instantiate()
-	if not is_instance_valid(alvo):
-		return
-
-	projetil.global_position = global_position
-	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
-	projetil.rotation = projetil.direcao.angle()
-
-
-	get_tree().current_scene.add_child(projetil)

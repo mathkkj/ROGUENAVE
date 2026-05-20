@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dt7frg7l5upcl"]
+
+[ext_resource type="Script" uid="uid://bwtc1eqhsjlhl" path="res://codigo_gd/inimigo_gd/inimigo_projetil.gd" id="2_4js5t"]
+[ext_resource type="Texture2D" uid="uid://dbcftilx587yt" path="res://placeholder/icon.svg" id="3_taige"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4js5t"]
+size = Vector2(53.014732, 64.94514)
+
+[node name="Inimigo_projetil" type="CharacterBody2D" unique_id=944234677 groups=["inimigos"]]
+script = ExtResource("2_4js5t")
+speed = 200.0
+max_speed = 800.0
+metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1905566062]
+scale = Vector2(0.61805505, 0.61805505)
+texture = ExtResource("3_taige")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1935779329]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_4js5t")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=1877120801]
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=1565287869]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=1742504575]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=277203718]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=707735392]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1800423452]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1699422698]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=1911164999]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=761656461]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1079587081]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=1246484860]
+
+[node name="Label" type="Label" parent="." unique_id=1896435045]
+offset_left = 1.0
+offset_top = 46.0
+offset_right = 41.0
+offset_bottom = 69.0
+text = "asdwasd"
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
