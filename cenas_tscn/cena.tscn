@@ -17,6 +17,9 @@ size = Vector2(464, 467)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1627"]
 size = Vector2(53.014732, 64.94514)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
+size = Vector2(450, 469)
+
 [node name="cena" type="Node2D" unique_id=1523779238]
 script = ExtResource("1_q3n0b")
 
@@ -38,7 +41,8 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_pdimi")
 script = ExtResource("7_j0gmb")
 
-[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") groups=["inimigos"] instance=ExtResource("4_13lfy")]
+[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
+position = Vector2(-97, 165)
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
 duracao_golpe = 0.25
@@ -59,10 +63,11 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 groups=["hurtbox"]]
+[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 node_paths=PackedStringArray("alvo") groups=["hurtbox"]]
 position = Vector2(309, 120)
 motion_mode = 1
 script = ExtResource("9_iwd25")
+alvo = NodePath("../personagem")
 
 [node name="Sprite2D" type="Sprite2D" parent="Inimigo" unique_id=2095477280]
 scale = Vector2(0.35072476, 0.35072476)
@@ -71,3 +76,48 @@ texture = ExtResource("8_t3wwm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Inimigo" unique_id=1599620763]
 scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_w1627")
+
+[node name="atirar_tempo" type="Timer" parent="Inimigo" unique_id=1901951399]
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="Inimigo" unique_id=1854152093]
+
+[node name="RayBaixo" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1333195631]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=2028782361]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1574911612]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=344684036]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1904822102]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=200959714]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Inimigo/Raycast" unique_id=1055532352]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Inimigo/Raycast" unique_id=726543549]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="Inimigo" unique_id=46791600]
+visible = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605418635]
+position = Vector2(441, 542)
+scale = Vector2(2.0661936, 0.37913367)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=199179681]
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1531395333]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[connection signal="timeout" from="Inimigo/atirar_tempo" to="Inimigo" method="_on_nav_timer_timeout"]

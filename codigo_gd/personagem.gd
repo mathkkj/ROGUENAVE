@@ -159,7 +159,7 @@ func _physics_process(delta: float) -> void:
 	em_dash = _mecanica_dash(delta)
 	if em_dash:
 		move_and_slide()
-		z_index = global_position.y
+		#z_index = global_position.y
 		return
 
 	if em_golpe:
@@ -171,7 +171,7 @@ func _physics_process(delta: float) -> void:
 		velocity = direcao_golpe * velocidade_atual
 	
 		move_and_slide()
-		z_index = global_position.y
+		#z_index = global_position.y
 		
 		if tempo_golpe <= 0.0:
 			em_golpe = false
@@ -242,7 +242,7 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, atrito * delta)
 	
 	move_and_slide()
-	z_index = global_position.y
+	#z_index = global_position.y
 	
 func _mecanica_dash(delta: float) -> bool:
 	if pode_dash and Input.is_action_just_pressed("dash") and esta_andando and not atirando and stamina >= stamina_por_acao:

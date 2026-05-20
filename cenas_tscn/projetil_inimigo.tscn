@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://lcspweaa6i3h"]
+
+[ext_resource type="Script" uid="uid://cwgt7ebhcamam" path="res://codigo_gd/projetil_inimigo.gd" id="1_s1hpe"]
+[ext_resource type="Texture2D" uid="uid://dar85vxabes4h" path="res://placeholder/bala_placeholder.png" id="2_mkexo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ieeyu"]
+radius = 168.5
+height = 691.03784
+
+[node name="projetil_inimigo" type="Area2D" unique_id=764179290]
+script = ExtResource("1_s1hpe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=35225809]
+modulate = Color(0.9565484, 0.14671385, 0, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_mkexo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=798036596]
+position = Vector2(-3, -4.7683716e-07)
+rotation = 1.5672886
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CapsuleShape2D_ieeyu")
