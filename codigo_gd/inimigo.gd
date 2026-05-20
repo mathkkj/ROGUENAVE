@@ -114,7 +114,7 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 		
 		# memoria da ultima direcao pra nao trocar de diracao toda hora
 		if ultima_direcao != Vector2.ZERO:
-			score += dir.dot(ultima_direcao) * 1.25
+			score += dir.dot(ultima_direcao) * 1
 		
 		
 		if ray.is_colliding():
@@ -142,14 +142,13 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 			# penalidade da colisão
 			
 			if ray.get_collider().is_in_group("inimigos"):
-				score -= 5.0
+				score -= 6.0
 			else:
 				score -= 4.0
 
 		
 		# ray da esquerda e direita
 		var ray_esquerda: RayCast2D = arr_cast[(i - 1 + arr_cast.size()) % arr_cast.size()]
-
 		var ray_direita: RayCast2D = arr_cast[(i + 1) % arr_cast.size()]
 		#score do ray da esquerda e direita
 		if ray_esquerda.is_colliding():

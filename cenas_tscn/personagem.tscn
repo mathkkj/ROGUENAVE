@@ -11,6 +11,7 @@ radius = 26.0
 height = 102.0
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
+collision_layer = 3
 motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5

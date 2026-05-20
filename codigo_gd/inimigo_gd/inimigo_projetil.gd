@@ -5,9 +5,8 @@ class_name Inimigo_Projetil
 @onready var atirar_tempo = get_node("atirar_tempo")
 
 
-
-var distancia_maxima = 500
-var distancia_minima = 400
+var distancia_maxima = 400
+var distancia_minima = 350
 
 @onready var LOS = get_node("RayLOS")
 @onready var label = get_node("Label")
@@ -30,7 +29,11 @@ func check_posicao_alvo():
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(alvo):
 		return
-
+		
+	var direcao_para_alvo: Vector2 = round((alvo.global_position - global_position).normalized())
+	
+	var distancia_atual = global_position.distance_to(alvo.global_position)
+	var direcao_desejada: Vector2 = Vector2.ZERO
 	mirar()
 	check_posicao_alvo()
 
@@ -40,9 +43,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	var direcao_para_alvo: Vector2 = (alvo.global_position - global_position).normalized()
-	var distancia_atual = global_position.distance_to(alvo.global_position)
-	var direcao_desejada: Vector2 = Vector2.ZERO
+	
 
 	var estado_texto = {
 		ESTADOS_DISTANCIA.APROXIMAR: "aproximar",
@@ -55,7 +56,7 @@ func _physics_process(delta: float) -> void:
 
 	if collider != null and collider.is_in_group("inimigos"):
 		collider = alvo
-
+	
 	if collider == alvo:
 		if distancia_atual >= distancia_maxima:
 			direcao_desejada = direcao_para_alvo
@@ -68,8 +69,7 @@ func _physics_process(delta: float) -> void:
 			estado_distancia = ESTADOS_DISTANCIA.IDEAL
 	else:
 		direcao_desejada = direcao_para_alvo
-		estado_distancia = ESTADOS_DISTANCIA.PROCURAR
-
+	print(estado_distancia)
 	label.text = estado_texto[estado_distancia]
 
 	var direcao_path: Vector2 = escolher_dir(direcao_desejada.normalized(), delta)

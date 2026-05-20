@@ -76,7 +76,7 @@ func perder_vida(dano, direcao_projetil, forca) -> float:
 	vida -= dano
 	get_tree().paused = true
 	#taca a animacao
-	await get_tree().create_timer(0.1, true).timeout
+	await get_tree().create_timer(0.2, true).timeout
 	get_tree().paused = false
 	return vida
 

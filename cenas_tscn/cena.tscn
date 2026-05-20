@@ -73,7 +73,7 @@ shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Inimigo_projetil" parent="." unique_id=1768556099 node_paths=PackedStringArray("alvo") instance=ExtResource("11_y6nmq")]
 position = Vector2(249, -17)
-speed = 200.0
+speed = 300.0
 alvo = NodePath("../personagem")
 max_speed = 300.0
 

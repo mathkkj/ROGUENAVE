@@ -15,14 +15,14 @@ func _ready() -> void:
 	await get_tree().create_timer(TEMPO_DE_VIDA).timeout
 	queue_free()
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	position += direcao.normalized() * SPEED * delta
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	emit_signal("acertou", body, direcao, forca)
 	print(body)
 	if body.is_in_group("jogador"):
 		pass
 	else:
+		emit_signal("acertou", body, direcao, forca)
 		queue_free() # destrói a bala depois de bater
