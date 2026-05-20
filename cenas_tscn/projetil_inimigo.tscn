@@ -7,16 +7,19 @@
 radius = 168.5
 height = 691.03784
 
-[node name="projetil_inimigo" type="Area2D" unique_id=764179290]
+[node name="projetil_inimigo" type="Area2D" unique_id=764179290 groups=["projetil_inimigo"]]
 script = ExtResource("1_s1hpe")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=35225809]
 modulate = Color(0.9565484, 0.14671385, 0, 1)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_mkexo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=798036596]
 position = Vector2(-3, -4.7683716e-07)
 rotation = 1.5672886
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.1, 0.1)
 shape = SubResource("CapsuleShape2D_ieeyu")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

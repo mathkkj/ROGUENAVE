@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@export var vida = 100
 
 @onready var label = $Label
 @onready var label2 = $Label2
@@ -66,22 +67,29 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 	preload("res://tres/spriteframes/full_sprite_frames.tres")
 	]
 
+func perder_vida(dano) -> float:
+	
+	vida -= dano
+	return vida
+
 func _ready() -> void:
 	Global.personagem = self
-	atualizar_arma()
+	atualizar_dados()
 	
 
-func atualizar_arma():
+func atualizar_dados():
 	match classe_personagem:
 		0:
 			Global.arma_atual = 0
 			sprite.sprite_frames = lista_sprite_frames[0]
 			stamina_total = 100
+			vida = 100
 			
 		1:
 			Global.arma_atual = 1
 			sprite.sprite_frames = lista_sprite_frames[1]
 			stamina_total = 150
+			vida = 150
 		2:
 			print("arma multidores fullstack")
 			sprite.sprite_frames = lista_sprite_frames[2]
@@ -142,8 +150,10 @@ func _atualizar_ultima_direcao():
 
 
 func _physics_process(delta: float) -> void:
+	if vida <= 0:
+		queue_free()
 	
-	label2.text = str(stamina)
+	label2.text = str(stamina, vida)
 	
 	_stamina(delta)
 	
@@ -413,6 +423,8 @@ func _arma_encostou(body):
 			Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
 			camera.add_trauma(0.4, round(direcao_golpe))
 			_particula_instancia(body, direcao_golpe)
+	if body.is_in_group("projetil_inimigo") and em_golpe:
+		pass
 		
 #RECEBE O SINAL DA BALA LÁ NO CODIGO DA ARMA
 func _on_bala_acertou(body, direcao, forca):

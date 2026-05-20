@@ -45,6 +45,7 @@ script = ExtResource("7_j0gmb")
 position = Vector2(-97, 165)
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -63,7 +64,7 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 node_paths=PackedStringArray("alvo") groups=["hurtbox"]]
+[node name="Inimigo" type="CharacterBody2D" parent="." unique_id=1967159388 node_paths=PackedStringArray("alvo") groups=["inimigos"]]
 position = Vector2(309, 120)
 motion_mode = 1
 script = ExtResource("9_iwd25")
@@ -107,7 +108,6 @@ target_position = Vector2(50, -50)
 target_position = Vector2(-50, -50)
 
 [node name="RayLOS" type="RayCast2D" parent="Inimigo" unique_id=46791600]
-visible = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605418635]
 position = Vector2(441, 542)
@@ -120,4 +120,4 @@ texture = ExtResource("8_q3n0b")
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
-[connection signal="timeout" from="Inimigo/atirar_tempo" to="Inimigo" method="_on_nav_timer_timeout"]
+[connection signal="timeout" from="Inimigo/atirar_tempo" to="Inimigo" method="_on_atirar_tempo_timeout"]

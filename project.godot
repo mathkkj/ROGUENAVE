@@ -33,6 +33,8 @@ jogador=""
 arma_coletavel=""
 arma=""
 hurtbox=""
+projetil_inimigo=""
+arma_multimidia=""
 
 [input]
 

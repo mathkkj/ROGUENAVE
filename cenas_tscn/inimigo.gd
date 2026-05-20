@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal tomou_hit
+
 @export var velocidade: float = 1000.0
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
@@ -32,13 +34,14 @@ var tempo_memoria := 0.0
 ]
 
 
-enum estados{
-	patrulha,
-	andando,
-	atirando,
-	hit,
+enum ESTADOS {
+	NAO_CACANDO,
+	CACANDO,
+	ATIRANDO,
+	HIT,
 }
 
+var estado_atual: ESTADOS = ESTADOS.NAO_CACANDO
 
 
 #func escolher_direcao(direcao_alvo: Vector2) -> Vector2:
@@ -120,7 +123,8 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 
 			# direcao da parede (basicamente)
 			var normal = ray.get_collision_normal() 
-			score += normal.dot(direcao_alvo) * 2.0
+			score += normal.dot(direcao_alvo) * 3.0
+			
 			#peguei a tangente por conta de serem perpendiculares
 			var tangente_esquerda = Vector2(-normal.y, normal.x)
 			var tangente_direita = Vector2(normal.y, -normal.x)
@@ -135,7 +139,7 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 				tangente = tangente_direita
 
 			# favorece deslizar na parede
-			score += tangente.dot(direcao_alvo) * 3.0
+			score += tangente.dot(direcao_alvo) * 4.0
 
 			# penalidade da colisão
 			score -= 4.0
@@ -160,37 +164,71 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 	if tempo_memoria <= 0.0:
 		ultima_direcao = melhor_direcao
 		tempo_memoria = 0.2
+	
+	return melhor_direcao
 
-	return ultima_direcao
+
+
+@export var max_speed := 300.0
+@export var max_accel := 1200.0
+
+
 
 func _physics_process(delta: float) -> void:
+
+	if not is_instance_valid(alvo):
+		return
+
 	var direcao_para_alvo: Vector2 = (alvo.global_position - global_position).normalized()
-	var direcao_final = escolher_dir(direcao_para_alvo, delta)
-	
-	#print(direcao_final)
-	var pathfinding_velocity = direcao_final * 300
-	
+	var direcao_path: Vector2 = escolher_dir(direcao_para_alvo, delta)
+
 	mirar()
 	check_posicao_alvo()
 
-	
+	var desired_velocity := direcao_path * max_speed
+
+	# steering force 
+	var steering = desired_velocity - velocity
+	steering = steering.limit_length(max_accel * delta)
+
+	# aplica knockback sem apagar o steering
 	knockback_force = knockback_force.move_toward(Vector2.ZERO, desaceleracao * delta)
 
-	velocity = knockback_force + pathfinding_velocity
+	velocity += steering
+	
+	print(estado_atual)
+	
+	match estado_atual:
+		ESTADOS.NAO_CACANDO:
+			#velocity = Vector2.ZERO
+			if LOS.get_collider() == alvo:
+				estado_atual = ESTADOS.CACANDO
+				
+
+		ESTADOS.CACANDO:
+			velocity += steering
+			if LOS.get_collider() != alvo:
+				estado_atual = ESTADOS.NAO_CACANDO
+
+		ESTADOS.ATIRANDO:
+			pass
+
+		ESTADOS.HIT:
+			velocity = knockback_force
 
 	move_and_slide()
 
 	if vida <= 0:
 		queue_free()
 
-
 func aplicar_knockback(direcao: Vector2, forca: float) -> void:
+	estado_atual = ESTADOS.HIT
 	knockback_force = direcao.normalized() * forca
 
 	sprite.modulate = Color(10, 10, 10)
 
 	await get_tree().create_timer(0.15).timeout
-
+	estado_atual = ESTADOS.NAO_CACANDO
 	sprite.modulate = Color.WHITE
 
 func receber_dano(dano: int) -> void:
@@ -198,7 +236,28 @@ func receber_dano(dano: int) -> void:
 
 func check_posicao_alvo():
 	if LOS.get_collider() == alvo and atirar_tempo.is_stopped():
+		estado_atual = ESTADOS.ATIRANDO
 		atirar_tempo.start()
-		
+	elif LOS.get_collider() != alvo and not atirar_tempo.is_stopped():
+		estado_atual = ESTADOS.CACANDO
+		atirar_tempo.stop()
+			
 func mirar():
 	LOS.target_position = to_local(alvo.position)
+
+
+func _on_atirar_tempo_timeout() -> void:
+	
+	atirar()
+
+func atirar():
+	var projetil = projetil_instancia.instantiate()
+	if not is_instance_valid(alvo):
+		return
+
+	projetil.global_position = global_position
+	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
+	projetil.rotation = projetil.direcao.angle()
+
+
+	get_tree().current_scene.add_child(projetil)
