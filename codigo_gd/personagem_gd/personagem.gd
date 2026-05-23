@@ -12,7 +12,7 @@ extends CharacterBody2D
 @export var dash_vel: float = 1300.0
 
 @export var DASH_TIMER: float = 0.10
-@export var tempo_recarregamento_dash: float = 1.0
+@export var tempo_recarregamento_dash: float = 0.5
 
 @export_enum("Programador", "Multimidia", "Fullstack") var classe_personagem: int
 
@@ -38,7 +38,7 @@ var direcao_golpe: Vector2 = Vector2.ZERO
 @export var tempo_atirar = 0
 
 var stamina_total : int
-var stamina = 0
+var stamina = 100
 var descanso = 30
 var stamina_por_acao = 40
 var pode_descansar : bool
@@ -67,6 +67,12 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 	preload("res://tres/spriteframes/full_sprite_frames.tres")
 	]
 
+@onready var offset_pd = get_node("offset_pixel_dash")
+@onready var particula_dash = preload("res://cenas_tscn/particula_dash.tscn")
+
+@onready var ghost_node = preload("res://cenas_tscn/personagem/ghost_sprite.tscn")
+@onready var ghost_timer = get_node("ghost timer")
+
 func perder_vida(dano, direcao_projetil, forca) -> float:
 	Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
 	print(direcao_projetil)
@@ -92,16 +98,21 @@ func atualizar_dados():
 			Global.arma_atual = 0
 			sprite.sprite_frames = lista_sprite_frames[0]
 			stamina_total = 100
+			stamina = stamina_total
 			vida = 100
-			
+		
 		1:
 			Global.arma_atual = 1
 			sprite.sprite_frames = lista_sprite_frames[1]
 			stamina_total = 150
+			stamina = stamina_total
 			vida = 150
+		
 		2:
 			print("arma multidores fullstack")
 			sprite.sprite_frames = lista_sprite_frames[2]
+	
+	pode_descansar = true
 	
 	if arma != null:
 		arma.queue_free()
@@ -131,7 +142,6 @@ func atualizar_dados():
 		arma.get_node("hitbox").body_entered.connect(_arma_encostou)
 	if arma is ArmasRanged:
 		atirando = arma.pode_atirar
-		
 
 func obter_direcao_mira_controle() -> Vector2:
 	var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
@@ -168,7 +178,7 @@ func _physics_process(delta: float) -> void:
 	
 	_tempo_atirar(delta)
 	
-	label.text = str(em_golpe, atirando, em_dash, esta_andando)
+	label.text = str(em_golpe, atirando, pode_dash, esta_andando)
 	
 	_atualizar_ultima_direcao()
 	
@@ -180,6 +190,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		#z_index = global_position.y
 		return
+	
 
 	if em_golpe:
 		tempo_golpe -= delta
@@ -263,44 +274,69 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	#z_index = global_position.y
 	
+	
+func add_ghost():
+	var ghost = ghost_node.instantiate()
+
+	ghost.global_position = global_position
+	
+	# copia o frame atual
+	ghost.sprite_frames = sprite.sprite_frames
+	ghost.animation = sprite.animation
+	ghost.frame = sprite.frame
+
+
+	ghost.flip_h = sprite.flip_h
+	ghost.scale = sprite.scale
+	
+
+	get_tree().current_scene.add_child(ghost)
+	
+
+
+func _on_ghost_timer_timeout():
+	add_ghost()
+
 func _mecanica_dash(delta: float) -> bool:
 	if pode_dash and Input.is_action_just_pressed("dash") and esta_andando and not atirando and stamina >= stamina_por_acao:
-		Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
 		stamina -= stamina_por_acao
-		
-		pode_descansar = false
 		pode_dash = false
+		pode_descansar = false
 		tempo_dash = DASH_TIMER
 		recarregar_tempo_dash = tempo_recarregamento_dash
 		
 		dash_dir = Input.get_vector("esquerda", "direita", "cima", "baixo")
 		velocity = dash_dir.normalized() * dash_vel
-		var offset = direcao_golpe * 20
-		var explosao = explosao_cena.instantiate()
-		explosao.global_position = global_position + offset
 		
-		
-		##TODO: CRIAR PARTICULA DE DASH 
-		#var particula = explosao.get_node("CPUParticles2D")
-		#particula.direction = -dash_dir.normalized()
-		#explosao.alvo = self
-		#get_tree().current_scene.add_child(explosao)
-		
-		
-	if tempo_dash > 0.0:
-		tempo_dash = max(0.0, tempo_dash - delta)
+		ghost_timer.start()
+		#add_ghost()
+		Input.start_joy_vibration(0, 1.0, 1.0, 0.2)
 		return true
-	else:
-		if recarregar_tempo_dash > 0.0:
-			recarregar_tempo_dash -= delta
-		else:
-			em_dash = false
-			
-			pode_dash = true
-			get_tree().create_timer(1.0, true)
-			pode_descansar = true
+
 	
-	return false
+	if tempo_dash > 0.0:
+		tempo_dash -= delta
+		
+		
+		if tempo_dash <= 0.0:
+			parar_efeitos_visuais_dash()
+			
+		return true 
+
+	
+	if recarregar_tempo_dash > 0.0:
+		recarregar_tempo_dash -= delta
+		if recarregar_tempo_dash <= 0.0:
+			pode_dash = true
+		
+	
+	return false 
+
+func parar_efeitos_visuais_dash():
+	z_index = 0
+	pode_descansar = true
+	await get_tree().create_timer(0.25).timeout
+	ghost_timer.stop()
 
 
 func _arma_mirar():
@@ -471,8 +507,8 @@ func _particula_instancia(body, direcao):
 			
 			
 func _stamina(delta) -> void:
-	if stamina <= stamina_total and pode_descansar:
-		stamina += descanso * delta
+	if pode_descansar and stamina < stamina_total:
+		stamina = min(stamina_total, stamina + descanso * delta)
 	
 		
 func _tempo_atirar(delta) -> void:

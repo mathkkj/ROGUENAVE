@@ -8,6 +8,7 @@ radius = 168.5
 height = 691.03784
 
 [node name="projetil_inimigo" type="Area2D" unique_id=764179290 groups=["projetil_inimigo"]]
+collision_layer = 2
 script = ExtResource("1_s1hpe")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=35225809]

@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://by4q75nrxtdxj"]
 
 [ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem_gd/personagem.gd" id="1_d8uwv"]
-[ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="2_d8uwv"]
+[ext_resource type="SpriteFrames" uid="uid://b8h36nxt0ngtx" path="res://tres/spriteframes/mult_sprite_frames.tres" id="2_j7w2x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]
+radius = 7.666667
 height = 24.773428
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8x3t"]
@@ -11,29 +12,31 @@ radius = 26.0
 height = 102.0
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
-collision_layer = 3
+y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248]
 position = Vector2(0.19999993, -0.99999714)
-scale = Vector2(0.3, 0.3)
-sprite_frames = ExtResource("2_d8uwv")
+sprite_frames = ExtResource("2_j7w2x")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931]
-position = Vector2(2, -14)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931 groups=["jogador"]]
+position = Vector2(0, -3.000001)
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_d8uwv")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=213038543]
+[node name="Hitbox" type="Area2D" parent="." unique_id=213038543 groups=["jogador"]]
+z_index = 1
+collision_layer = 2
+collision_mask = 2
+collision_priority = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1952395402]
 shape = SubResource("CapsuleShape2D_u8x3t")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
-position = Vector2(0, -5)
 scale = Vector2(1.0000001, 1.0000001)
 
 [node name="pivo_machado" type="Marker2D" parent="." unique_id=306450883]
@@ -48,3 +51,11 @@ text = "false"
 offset_top = 69.0
 offset_right = 40.0
 offset_bottom = 92.0
+
+[node name="offset_pixel_dash" type="Marker2D" parent="." unique_id=820992287]
+position = Vector2(0, 35)
+
+[node name="ghost timer" type="Timer" parent="." unique_id=2026631748]
+wait_time = 0.1
+
+[connection signal="timeout" from="ghost timer" to="." method="_on_ghost_timer_timeout"]

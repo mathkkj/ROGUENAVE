@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://di2jgifstxq0d"]
+
+[ext_resource type="Script" uid="uid://b5d0v5a2sxujf" path="res://codigo_gd/personagem_gd/particula_dash.gd" id="1_cdn1w"]
+
+[sub_resource type="Curve" id="Curve_nugr0"]
+_limits = [1.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.460674), 0.0, 0.0, 0, 0, Vector2(0.546875, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.47191), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_l6pp5"]
+_limits = [0.0, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 4), 0.0, 0.0, 0, 0, Vector2(0.984375, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_uppy2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="particula_dash" type="Node2D" unique_id=2034674109]
+script = ExtResource("1_cdn1w")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=824503247]
+emitting = false
+amount = 64
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.5
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 16.66
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+orbit_velocity_curve = SubResource("Curve_nugr0")
+scale_amount_curve = SubResource("Curve_l6pp5")
+color_ramp = SubResource("Gradient_uppy2")

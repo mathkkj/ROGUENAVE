@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 			estado_distancia = ESTADOS_DISTANCIA.IDEAL
 	else:
 		direcao_desejada = direcao_para_alvo
-	print(estado_distancia)
+	#print(estado_distancia)
 	label.text = estado_texto[estado_distancia]
 
 	var direcao_path: Vector2 = escolher_dir(direcao_desejada.normalized(), delta)

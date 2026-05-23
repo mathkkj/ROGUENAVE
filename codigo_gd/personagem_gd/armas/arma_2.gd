@@ -11,10 +11,10 @@ var combo_atual: int = 0
 var timer_combo: float = 0
 var atacando: bool = false
 @onready var hitbox = get_node("hitbox")
-
+@onready var hitbox_col = get_node("hitbox/CollisionShape2D")
 
 func _ready() -> void:
-	
+	hitbox_col.disabled = true
 	visible = false
 	pass
 
@@ -37,6 +37,7 @@ func atacar() -> void:
 	atacando = true
 	visible = true
 	hitbox.monitoring = true
+	hitbox_col.disabled = false
 
 	combo_atual += 1
 	if combo_atual > total_golpes:
@@ -57,6 +58,7 @@ func atacar() -> void:
 	atacando = false
 	visible = false
 	hitbox.monitoring = false
+	hitbox_col.disabled = true
 
 func _executar_golpe(golpe: int) -> void:
 	emit_signal("golpe_executado", golpe)

@@ -15,7 +15,6 @@ var vida: int = 25
 var knockback_force: Vector2 = Vector2.ZERO
 
 @onready var sprite := $Sprite2D
-@onready var navagent = $NavigationAgent2D
 
 
 var ultima_direcao := Vector2.ZERO

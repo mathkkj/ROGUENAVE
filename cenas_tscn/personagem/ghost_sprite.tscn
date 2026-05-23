@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bja63e0jx283t"]
+
+[ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="1_vc8b8"]
+[ext_resource type="Script" uid="uid://cmquow6jti2g8" path="res://codigo_gd/personagem_gd/ghost_sprite.gd" id="2_e8irr"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" unique_id=1469361316]
+sprite_frames = ExtResource("1_vc8b8")
+animation = &"idle"
+script = ExtResource("2_e8irr")
