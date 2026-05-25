@@ -42,7 +42,6 @@ script = ExtResource("7_j0gmb")
 position = Vector2(-97, 165)
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
-classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 

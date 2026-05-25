@@ -120,8 +120,4 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func _on_hurtbox_body_exited(body: Node2D) -> void:
 	if body.is_in_group("jogador") and estado_ataque != ESTADOS_ATAQUE.DASH:
-		estado_ataque = ESTADOS_ATAQUE.IDEAL
-
-
-
-	
+		estado_ataque = ESTADOS_ATAQUE.ATACANDO
