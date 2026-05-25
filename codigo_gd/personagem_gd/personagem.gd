@@ -466,7 +466,7 @@ func _arma_encostou(body):
 		#particula e se for um personagem
 		if body is CharacterBody2D:
 			Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
-			camera.add_trauma(0.4, round(direcao_golpe))
+			#camera.add_trauma(0.4, round(direcao_golpe))
 			
 			_particula_instancia(body, direcao_golpe)
 	if body.is_in_group("projetil_inimigo") and em_golpe:

@@ -215,6 +215,7 @@ func _physics_process(delta: float) -> void:
 
 		ESTADOS.HIT:
 			velocity = knockback_force
+			
 
 	move_and_slide()
 

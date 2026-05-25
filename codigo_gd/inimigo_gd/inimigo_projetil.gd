@@ -4,7 +4,6 @@ class_name Inimigo_Projetil
 @onready var projetil_instancia = preload("res://cenas_tscn/projetil_inimigo.tscn")
 @onready var atirar_tempo = get_node("atirar_tempo")
 
-
 var distancia_maxima = 400
 var distancia_minima = 350
 

@@ -7,11 +7,11 @@ var desired_offset := Vector2(0,0)
 
 #SHAKE
 @export var decay : float = 0.8
-@export var max_offset : Vector2 = Vector2(100, 75)
-@export var max_roll : float = 0.3
+@export var max_offset : Vector2 = Vector2(40, 25)
+@export var max_roll : float = 0.1
 
-var trauma : float = 0.0
-var trauma_power : int = 2
+var trauma = 0.0
+var trauma_power = 1
 
 var direcao = Vector2.ZERO
 
@@ -43,11 +43,13 @@ func _process(delta: float) -> void:
 		
 
 func add_trauma(amount : float, direcao_ataque: Vector2) -> void:
-	trauma = trauma + amount
+
+	trauma = clamp(trauma + amount, 0.0, 1.0)
 	direcao = direcao_ataque
 
 func shake() -> void:
 	var amount = pow(trauma, trauma_power)
+	amount = clamp(amount, 0.0, 1.0)
 	
 	#if direcao.x == 0:
 		#direcao.x = 1
