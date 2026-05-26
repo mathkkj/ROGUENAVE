@@ -4,8 +4,10 @@ class_name Inimigo_Projetil
 @onready var projetil_instancia = preload("res://cenas_tscn/projetil_inimigo.tscn")
 @onready var atirar_tempo = get_node("atirar_tempo")
 
-var distancia_maxima = 400
-var distancia_minima = 350
+@export var distancia_maxima = 400
+@export var distancia_minima = 350
+
+@export var knockback = 700
 
 @onready var LOS = get_node("RayLOS")
 @onready var label = get_node("Label")
@@ -115,3 +117,8 @@ func atirar():
 	# Sai do estado de ataque depois do tempo do Timer
 	estado_atual = ESTADOS.CACANDO
 	atirar_tempo.start()
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("jogador"):
+		body.perder_vida(1, LOS.target_position.normalized(), knockback)

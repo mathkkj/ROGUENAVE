@@ -17,7 +17,7 @@ motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248 groups=["jogador"]]
 position = Vector2(0.19999993, -0.99999714)
 sprite_frames = ExtResource("2_j7w2x")
 animation = &"idle"
@@ -33,7 +33,7 @@ collision_layer = 2
 collision_mask = 2
 collision_priority = 2.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1952395402]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1952395402 groups=["jogador"]]
 shape = SubResource("CapsuleShape2D_u8x3t")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
@@ -46,11 +46,13 @@ offset_top = 37.0
 offset_right = 40.0
 offset_bottom = 60.0
 text = "false"
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="." unique_id=303949759]
 offset_top = 69.0
 offset_right = 40.0
 offset_bottom = 92.0
+metadata/_edit_use_anchors_ = true
 
 [node name="offset_pixel_dash" type="Marker2D" parent="." unique_id=820992287]
 position = Vector2(0, 35)

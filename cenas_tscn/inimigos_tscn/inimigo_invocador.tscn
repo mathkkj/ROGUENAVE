@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://b6hipi6lp07b3"]
+
+[ext_resource type="Script" uid="uid://b7hwqturaqma1" path="res://codigo_gd/inimigo_gd/inimigo_invocador.gd" id="1_6mb38"]
+[ext_resource type="Texture2D" uid="uid://bmlihvne85uxg" path="res://placeholder/WhatsApp Image 2026-05-11 at 21.06.03.jpeg" id="2_m4u3e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mb38"]
+size = Vector2(53.014732, 64.94514)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m4u3e"]
+radius = 141.55907
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eopj5"]
+size = Vector2(5.501678, 12.921783)
+
+[node name="Inimigo_invocador" type="CharacterBody2D" unique_id=1725429804 groups=["inimigos"]]
+motion_mode = 1
+script = ExtResource("1_6mb38")
+distancia_maxima = 500
+distancia_minima = 100
+speed = 150.0
+max_speed = 400.0
+max_accel = 1400.0
+metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1627349531]
+scale = Vector2(0.20165065, 0.36358115)
+texture = ExtResource("2_m4u3e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=778256619]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_6mb38")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=1213128496]
+wait_time = 5.0
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=696236964]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=1837901233]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=993373913]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1214821388]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1942108675]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1461268581]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=1712744997]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=187350127]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1070963282]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=506734714]
+
+[node name="circulo_de_visao" type="Area2D" parent="." unique_id=1514356705]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="circulo_de_visao" unique_id=168693219]
+scale = Vector2(1.0313972, 1)
+shape = SubResource("CircleShape2D_m4u3e")
+
+[node name="Label" type="Label" parent="." unique_id=1247877195]
+offset_left = 4.0
+offset_top = 50.0
+offset_right = 44.0
+offset_bottom = 73.0
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1197620599]
+scale = Vector2(1.0314662, 1.0777961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1603728799]
+position = Vector2(9.151536e-07, -0.5)
+scale = Vector2(15.349047, 6.1137066)
+shape = SubResource("RectangleShape2D_eopj5")
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
+[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_area_invocação_body_entered"]
+[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
+[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_area_invocação_body_exited"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]

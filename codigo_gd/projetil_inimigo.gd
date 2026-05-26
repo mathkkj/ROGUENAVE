@@ -22,6 +22,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if body.is_in_group("jogador") and body.has_method("perder_vida") and body.pode_dash:
 		body.perder_vida(1, direcao, 900)
+		queue_free()
 		return
 	if body.is_in_group("jogador") and body.has_method("perder_vida") and not body.pode_dash:
 		body.z_index = 1

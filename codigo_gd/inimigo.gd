@@ -32,6 +32,8 @@ var tempo_memoria := 0.0
 ]
 
 
+
+
 enum ESTADOS {
 	CACANDO,
 	ATIRANDO,
@@ -159,7 +161,8 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 		if score > melhor_score:
 			melhor_score = score
 			melhor_direcao = dir
-
+		
+		#print(inventario)
 	# atualizar os valores e resetar a memoria
 	if tempo_memoria <= 0.0:
 		ultima_direcao = melhor_direcao
@@ -234,3 +237,7 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 
 func receber_dano(dano: int) -> void:
 	vida -= dano
+
+
+func _ready() -> void:
+	alvo = Global.personagem
