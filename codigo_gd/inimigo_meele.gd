@@ -1,11 +1,10 @@
 extends Inimigo
 class_name Inimigo_meele
 
-@onready var LOS = get_node("RayLOS")
 @onready var atirar_tempo = get_node("atirar_tempo")
 @onready var label = get_node("Label")
 
-
+@onready var LOS = get_node("RayLOS")
 
 @export var dash_vel = 450
 @export var aceleracao = 1400

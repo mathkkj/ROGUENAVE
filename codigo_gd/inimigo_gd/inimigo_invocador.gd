@@ -4,7 +4,7 @@ class_name Inimigo_invocador
 @onready var inimigos_invocados_cena: PackedScene = preload("res://cenas_tscn/inimigos_tscn/inimigo_meele_invocado.tscn")
 @onready var area = $circulo_de_visao
 @onready var collision = $circulo_de_visao/CollisionShape2D
-
+var ja_atirou : bool = false
 enum ESTADOS_INVOCADOR {
 	NORMAL,
 	INVOCANDO
@@ -18,6 +18,7 @@ func pode_invocar() -> bool:
 
 
 func _physics_process(delta: float) -> void:
+	
 	if not is_instance_valid(alvo):
 		return
 
@@ -28,14 +29,16 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		super._physics_process(delta)
 		return
-
+	
 	super._physics_process(delta)
 
 
 func _on_atirar_tempo_timeout() -> void:
+	if ja_atirou:
+		return
 	if not pode_invocar():
 		return
-
+	ja_atirou = true
 	print("inimigo invocador invocou")
 	estado_invocador = ESTADOS_INVOCADOR.INVOCANDO
 	velocity = Vector2.ZERO
@@ -47,7 +50,7 @@ func _on_atirar_tempo_timeout() -> void:
 		get_tree().current_scene.add_child(inimigo)
 
 	estado_invocador = ESTADOS_INVOCADOR.NORMAL
-	atirar_tempo.start()
+	
 
 
 func pegar_pos_borda() -> Vector2:
@@ -74,6 +77,17 @@ func check_posicao_alvo():
 	if collider != null and collider.is_in_group("inimigos"):
 		return
 
-	if not atirar_tempo.is_stopped():
-		atirar_tempo.stop()
 	
+func receber_dano(dano: int) -> void:
+	if not is_instance_valid(alvo):
+		return
+	vida -= dano
+	if vida <= 0:
+			var particula_morte = particula_morte_cena.instantiate()
+			particula_morte.position = global_position
+			get_tree().current_scene.add_child(particula_morte)
+			queue_free()
+			for node in get_tree().get_nodes_in_group("inimigos_invocados"):
+				node.queue_free()
+
+	dano_processado.emit()

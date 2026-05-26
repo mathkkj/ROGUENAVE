@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_iwd25"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="10_y6nmq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
 size = Vector2(464, 467)
@@ -72,3 +73,6 @@ position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_iwd25")]
+
+[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("10_y6nmq")]
+position = Vector2(197, 6)

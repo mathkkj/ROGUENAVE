@@ -7,13 +7,13 @@
 size = Vector2(60, 61.666664)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_diibh"]
-radius = 634.34674
+radius = 707.8175
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osyl6"]
 size = Vector2(5.501678, 12.921783)
 
-[node name="Inimigo_meele_invocado" type="CharacterBody2D" unique_id=185664261 groups=["inimigos"]]
-scale = Vector2(0.5, 0.5)
+[node name="Inimigo_meele_invocado" type="CharacterBody2D" unique_id=185664261 groups=["inimigos", "inimigos_invocados"]]
+scale = Vector2(0.4, 0.4)
 motion_mode = 1
 safe_margin = 0.001
 script = ExtResource("1_pgx0w")
@@ -22,6 +22,7 @@ knockback_normal = 600
 knockback_dash = 800
 speed = 50.0
 max_speed = 250.0
+vida = 6
 metadata/_custom_type_script = "uid://carrgaap35jf0"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=345986527]

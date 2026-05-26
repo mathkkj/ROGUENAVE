@@ -11,6 +11,7 @@ motion_mode = 1
 script = ExtResource("2_4js5t")
 speed = 200.0
 max_speed = 400.0
+vida = 12
 metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1905566062]

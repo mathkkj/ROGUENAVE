@@ -1,12 +1,13 @@
 class_name ArmasRanged
 extends Node2D
 
-signal superaqueceu
 
 @onready var bala_cena = preload("res://cenas_tscn/armas/bala.tscn")
 @onready var sair_bala = get_node("sair_bala")
 @onready var sprite = get_node("Sprite2D")
 @onready var texto = get_node("Label")
+
+
 
 var calor = 0.0
 var calor_maximo = 100.0

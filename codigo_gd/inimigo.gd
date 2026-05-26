@@ -1,17 +1,21 @@
 extends CharacterBody2D
 class_name Inimigo
 
+signal dano_processado
+
+signal morreu
+
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
 @export var alvo: CharacterBody2D
 @export var max_speed := 300.0
 @export var max_accel := 1200.0
 
-@onready var cor_dominante := Color.WHITE
+@onready var particula_morte_cena = preload("res://cenas_tscn/inimigos_tscn/particula_morte.tscn")
+@onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 
+@export var vida: int
 
-var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
-var vida: int = 25
 var knockback_force: Vector2 = Vector2.ZERO
 
 @onready var sprite := $Sprite2D
@@ -141,11 +145,12 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 			score += tangente.dot(direcao_alvo) * 4.0
 
 			# penalidade da colisão
-			
-			if ray.get_collider().is_in_group("inimigos"):
-				score -= 6.0
-			else:
-				score -= 4.0
+			if ray.get_collider() != null:
+				
+				if ray.get_collider().is_in_group("inimigos") or ray.get_collider().is_in_group("inimigos_invocados"):
+					score -= 6.0
+				else:
+					score -= 4.0
 
 		
 		# ray da esquerda e direita
@@ -222,8 +227,7 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if vida <= 0:
-		queue_free()
+
 
 func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	estado_atual = ESTADOS.HIT
@@ -237,7 +241,17 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 
 func receber_dano(dano: int) -> void:
 	vida -= dano
+	if vida <= 0:
+			var particula_morte = particula_morte_cena.instantiate()
+			particula_morte.position = global_position
+			get_tree().current_scene.add_child(particula_morte)
+			queue_free()
+	dano_processado.emit()
 
 
 func _ready() -> void:
 	alvo = Global.personagem
+
+
+#func _on_morreu() -> void:
+	#get_tree().quit()

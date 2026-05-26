@@ -35,6 +35,7 @@ arma=""
 hurtbox=""
 projetil_inimigo=""
 arma_multimidia=""
+inimigos_invocados=""
 
 [input]
 

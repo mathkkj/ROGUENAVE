@@ -9,8 +9,9 @@ size = Vector2(53.014732, 64.94514)
 [node name="Inimigo" type="CharacterBody2D" unique_id=1768556099 groups=["inimigos"]]
 motion_mode = 1
 script = ExtResource("1_fc5b1")
+vida = 12
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=512661686]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=512661686 groups=["inimigos"]]
 scale = Vector2(0.35072476, 0.35072476)
 texture = ExtResource("2_0rnxl")
 
@@ -47,4 +48,5 @@ target_position = Vector2(50, -50)
 [node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1635963035]
 target_position = Vector2(-50, -50)
 
+[connection signal="morreu" from="." to="." method="_on_morreu"]
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]

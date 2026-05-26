@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var vida = 6
+@export var vida : int = 6
 
 @onready var label = $Label
 @onready var label2 = $Label2
@@ -44,6 +44,11 @@ var stamina_por_acao = 40
 var pode_descansar : bool
 var stamina_por_ataque = 25
 
+@export var dano_arma_prog : int = 4
+@export var dano_arma_mult : int = 6
+
+@onready var particula_morte_cena = preload("res://cenas_tscn/inimigos_tscn/particula_morte.tscn")
+
 #estados
 var esta_andando: bool = false
 var em_dash: bool = false
@@ -73,12 +78,12 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 @onready var ghost_node = preload("res://cenas_tscn/personagem/ghost_sprite.tscn")
 @onready var ghost_timer = get_node("ghost timer")
 
-func perder_vida(dano, direcao_projetil, forca) -> float:
+func perder_vida(dano, DIR, forca) -> float:
 	Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
-	print(direcao_projetil)
-	camera.add_trauma(0.4, round(direcao_projetil))
-	aplicar_knockback(direcao_projetil, forca)
-	_particula_instancia(self, direcao_projetil)
+	print(DIR)
+	camera.add_trauma(0.4, round(DIR))
+	aplicar_knockback(DIR, forca)
+	_particula_instancia(self, DIR)
 	vida -= dano
 	get_tree().paused = true
 	#taca a animacao
@@ -459,16 +464,22 @@ func _arma_encostou(body):
 		body.aplicar_knockback(direcao_golpe, 900)
 		
 		
-		##RECEBER DANO
-		#if body.has_method("receber_dano"):
-			#body.receber_dano(25)
+		#RECEBER DANO
+		
 		
 		#particula e se for um personagem
 		if body is CharacterBody2D:
 			Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
 			#camera.add_trauma(0.4, round(direcao_golpe))
-			
-			_particula_instancia(body, direcao_golpe)
+			if body.has_method("receber_dano"):
+				if body.vida <= dano_arma_mult:
+					body.receber_dano(dano_arma_mult)
+					#_particula_morte_instancia(body)
+					
+				else:
+					body.receber_dano(dano_arma_mult)
+					_particula_instancia(body, direcao_golpe)
+				print(body.vida)
 	if body.is_in_group("projetil_inimigo") and em_golpe:
 		pass
 		
@@ -478,9 +489,26 @@ func _on_bala_acertou(body, direcao, forca):
 		body.aplicar_knockback(direcao, forca)
 		Input.start_joy_vibration(0, 1.0, 1.0, 0.1)
 		camera.add_trauma(0.1, round(direcao))
+			#RECEBER DANO
 		if body is CharacterBody2D:
-			_particula_instancia(body, direcao)
+			#camera.add_trauma(0.4, round(direcao_golpe))
+			if body.has_method("receber_dano"):
+				if body.vida <= dano_arma_prog:
+					body.receber_dano(dano_arma_prog)
+					_particula_morte_instancia(body)
+				else:
+					body.receber_dano(dano_arma_prog)
+					_particula_instancia(body, direcao)
+			
 		
+
+func _particula_morte_instancia(body):
+	#var particula_morte = particula_morte_cena.instantiate()
+	#particula_morte.position = body.global_position
+	#get_tree().current_scene.add_child(particula_morte)
+	#
+	#body.queue_free()
+	pass
 func _particula_instancia(body, direcao):
 		print(body, direcao)
 		#var sprite = body.get_node("Sprite2D")
@@ -493,7 +521,7 @@ func _particula_instancia(body, direcao):
 
 		#var img = textura.get_image()
 		#var cor_dominante = img.get_pixel(0, 0)
-
+		
 		var explosao = explosao_cena.instantiate()
 		#explosao.modulate = cor_dominante
 		explosao.global_position = body.global_position + (direcao * 20)

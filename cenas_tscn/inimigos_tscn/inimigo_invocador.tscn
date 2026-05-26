@@ -17,9 +17,11 @@ motion_mode = 1
 script = ExtResource("1_6mb38")
 distancia_maxima = 500
 distancia_minima = 100
+knockback = 500
 speed = 150.0
 max_speed = 400.0
 max_accel = 1400.0
+vida = 12
 metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1627349531]
@@ -31,7 +33,7 @@ scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_6mb38")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=1213128496]
-wait_time = 5.0
+wait_time = 1.5
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=696236964]
