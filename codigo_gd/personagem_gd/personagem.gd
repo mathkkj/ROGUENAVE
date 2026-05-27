@@ -458,7 +458,6 @@ func _on_golpe_executado(golpe: int) -> void:
 
 func _arma_encostou(body):
 	if body.has_method("aplicar_knockback") and em_golpe:
-		arma.get_node("hitbox").set_deferred("monitoring", false) 
 		#TODO: de acordo com o golpe, mudar o konockback e o shake da camera
 		print("to atacando o ", body)
 		body.aplicar_knockback(direcao_golpe, 900)

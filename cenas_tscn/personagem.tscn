@@ -16,6 +16,7 @@ y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_d8uwv")
 duracao_golpe = 0.5
+dano_arma_prog = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248 groups=["jogador"]]
 position = Vector2(0.19999993, -0.99999714)

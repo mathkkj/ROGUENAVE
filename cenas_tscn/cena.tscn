@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_iwd25"]
 [ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="10_y6nmq"]
+[ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
 size = Vector2(464, 467)
@@ -42,7 +43,6 @@ script = ExtResource("7_j0gmb")
 position = Vector2(-97, 165)
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
-classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -76,3 +76,6 @@ shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("10_y6nmq")]
 position = Vector2(197, 6)
+
+[node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("11_y6nmq")]
+position = Vector2(406, -15)
