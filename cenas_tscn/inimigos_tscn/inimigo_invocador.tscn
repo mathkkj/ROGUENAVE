@@ -84,10 +84,14 @@ position = Vector2(9.151536e-07, -0.5)
 scale = Vector2(15.349047, 6.1137066)
 shape = SubResource("RectangleShape2D_eopj5")
 
+[node name="Label2" type="Label" parent="." unique_id=1590915014]
+offset_left = 3.0
+offset_top = -63.0
+offset_right = 43.0
+offset_bottom = -40.0
+
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
-[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
 [connection signal="body_entered" from="circulo_de_visao" to="." method="_on_area_invocação_body_entered"]
-[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
 [connection signal="body_exited" from="circulo_de_visao" to="." method="_on_area_invocação_body_exited"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]

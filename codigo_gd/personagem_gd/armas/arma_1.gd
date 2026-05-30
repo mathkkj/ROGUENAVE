@@ -9,10 +9,10 @@ extends Node2D
 
 
 
-var calor = 0.0
-var calor_maximo = 100.0
-var calor_por_tiro = 20.0
-var resfriamento = 50.0
+var calor = 0
+var calor_maximo = 100
+var calor_por_tiro = 20
+var resfriamento = 50
 
 @onready var camera = get_viewport().get_camera_2d()
 
@@ -44,6 +44,7 @@ func _physics_process(delta: float) -> void:
 	if superaquecida and calor <= 0:
 		calor = 0
 		superaquecida = false
+	
 
 func aplicar_recoil() -> void:
 	if tween_recoil:

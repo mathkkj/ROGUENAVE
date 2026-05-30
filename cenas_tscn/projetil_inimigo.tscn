@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dar85vxabes4h" path="res://placeholder/bala_placeholder.png" id="2_mkexo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ieeyu"]
-radius = 168.5
-height = 691.03784
+radius = 120.03433
+height = 519.99677
 
 [node name="projetil_inimigo" type="Area2D" unique_id=764179290 groups=["projetil_inimigo"]]
 collision_layer = 2

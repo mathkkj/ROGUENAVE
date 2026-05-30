@@ -8,8 +8,8 @@
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
-[ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_iwd25"]
-[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="10_y6nmq"]
+[ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_y6nmq"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
@@ -19,11 +19,12 @@ size = Vector2(464, 467)
 size = Vector2(450, 469)
 
 [node name="cena" type="Node2D" unique_id=1523779238]
+position = Vector2(2, 0)
 script = ExtResource("1_q3n0b")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=763547240]
 z_index = 66
-position = Vector2(-192, 46.000004)
+position = Vector2(1181.0001, 341.00003)
 scale = Vector2(1.8865434, 1.8865434)
 texture = ExtResource("2_uk6bg")
 
@@ -43,6 +44,7 @@ script = ExtResource("7_j0gmb")
 position = Vector2(-97, 165)
 camera = NodePath("../Camera2D")
 dash_vel = 1000.0
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -61,8 +63,20 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_uk6bg")
 
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1766068120]
+position = Vector2(729, -33)
+rotation = -1.5797108
+scale = Vector2(2.0661936, 0.37913364)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=406344323]
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=449427736]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605418635]
-position = Vector2(441, 542)
+position = Vector2(175, 498)
 scale = Vector2(2.0661936, 0.37913367)
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=199179681]
@@ -72,10 +86,34 @@ texture = ExtResource("8_q3n0b")
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
-[node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_iwd25")]
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=2007997586]
+position = Vector2(214, -564)
+scale = Vector2(2.0661936, 0.37913364)
 
-[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("10_y6nmq")]
-position = Vector2(197, 6)
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1011706732]
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=729542292]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=618769255]
+position = Vector2(-352, -18.999998)
+rotation = 1.5807698
+scale = Vector2(2.0661936, 0.37913364)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=386282951]
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1919873757]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("11_y6nmq")]
-position = Vector2(406, -15)
+position = Vector2(396.99997, -319)
+
+[node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_y6nmq")]
+position = Vector2(62, -290)
+
+[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("11_osep8")]
+position = Vector2(-110, -267)

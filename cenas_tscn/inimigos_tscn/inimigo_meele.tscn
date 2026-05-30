@@ -7,7 +7,7 @@
 size = Vector2(53.014732, 64.94514)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_an2hr"]
-radius = 340.68954
+radius = 449.15448
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_an2hr"]
 size = Vector2(5.501678, 12.921783)
@@ -16,7 +16,7 @@ size = Vector2(5.501678, 12.921783)
 scale = Vector2(1.0103017, 1)
 motion_mode = 1
 script = ExtResource("1_an2hr")
-dash_vel = 1200
+dash_vel = 800
 speed = 200.0
 max_speed = 400.0
 vida = 18
@@ -32,6 +32,7 @@ scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_a2lr6")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=478864463]
+wait_time = 0.7
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=1941409983]

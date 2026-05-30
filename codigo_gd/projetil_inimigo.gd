@@ -12,20 +12,23 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("arma_multimidia"):
-		
 		var particula = particula_cena.instantiate()
 		particula.position = global_position
 		get_tree().current_scene.add_child(particula)
-		
 		print(particula)
 		return
 
-	if body.is_in_group("jogador") and body.has_method("perder_vida") and body.pode_dash:
-		body.perder_vida(1, direcao, 900)
-		queue_free()
-		return
-	if body.is_in_group("jogador") and body.has_method("perder_vida") and not body.pode_dash:
-		body.z_index = 1
+	if body.is_in_group("jogador") and body.has_method("perder_vida"):
+		if body.invencivel:
+			return
+
+		if body.pode_dash:
+			body.perder_vida(1, direcao, 900)
+			queue_free()
+		elif body.invencivel:
+			return
+		else:
+			body.z_index = 1
 		return
 
 	if body.is_in_group("inimigos"):

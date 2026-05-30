@@ -54,6 +54,7 @@ var esta_andando: bool = false
 var em_dash: bool = false
 var em_golpe: bool = false
 var atirando: bool = false
+var invencivel: bool = false
 
 @onready var cena_armas : Array[PackedScene] = [ 
 	preload("res://cenas_tscn/armas/arma1.tscn"),
@@ -79,17 +80,37 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 @onready var ghost_timer = get_node("ghost timer")
 
 func perder_vida(dano, DIR, forca) -> float:
-	Input.start_joy_vibration(0, 1.0, 1.0, 0.2) 
-	print(DIR)
+	if invencivel:
+		return vida
+
+	invencivel = true
+
+	Input.start_joy_vibration(0, 1.0, 1.0, 0.2)
 	camera.add_trauma(0.4, round(DIR))
 	aplicar_knockback(DIR, forca)
 	_particula_instancia(self, DIR)
+
 	vida -= dano
+
+	_piscar_enquanto_invencivel()
+
 	get_tree().paused = true
-	#taca a animacao
 	await get_tree().create_timer(0.2, true).timeout
 	get_tree().paused = false
+
+	await get_tree().create_timer(1.0, true).timeout
+	invencivel = false
+
 	return vida
+
+
+func _piscar_enquanto_invencivel() -> void:
+	while invencivel:
+		visible = false
+		await get_tree().create_timer(0.08, true).timeout
+		visible = true
+		await get_tree().create_timer(0.08, true).timeout
+
 
 func _ready() -> void:
 	

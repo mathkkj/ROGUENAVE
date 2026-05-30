@@ -1,10 +1,16 @@
 extends Inimigo_Projetil
 class_name Inimigo_invocador
 
+var quantidade_de_inimigos = 0
+var quantidade_max_de_inimigos = 4
+
 @onready var inimigos_invocados_cena: PackedScene = preload("res://cenas_tscn/inimigos_tscn/inimigo_meele_invocado.tscn")
 @onready var area = $circulo_de_visao
 @onready var collision = $circulo_de_visao/CollisionShape2D
+@onready var label2 = $Label2
+
 var ja_atirou : bool = false
+
 enum ESTADOS_INVOCADOR {
 	NORMAL,
 	INVOCANDO
@@ -21,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_instance_valid(alvo):
 		return
-
+	label2.text = str(quantidade_de_inimigos, " ", quantidade_max_de_inimigos)
 	mirar()
 	check_posicao_alvo()
 
@@ -38,19 +44,29 @@ func _on_atirar_tempo_timeout() -> void:
 		return
 	if not pode_invocar():
 		return
+
 	ja_atirou = true
 	print("inimigo invocador invocou")
 	estado_invocador = ESTADOS_INVOCADOR.INVOCANDO
 	velocity = Vector2.ZERO
-	
 
-	for i in range(4):
+	var faltando = quantidade_max_de_inimigos - quantidade_de_inimigos
+
+	if faltando <= 0:
+		estado_invocador = ESTADOS_INVOCADOR.NORMAL
+		ja_atirou = false
+		return
+
+	for i in range(faltando):
 		var inimigo = inimigos_invocados_cena.instantiate()
 		inimigo.global_position = pegar_pos_borda()
 		get_tree().current_scene.add_child(inimigo)
 
+	quantidade_de_inimigos += faltando
+
+	conectar_inimigos()
 	estado_invocador = ESTADOS_INVOCADOR.NORMAL
-	
+	ja_atirou = false
 
 
 func pegar_pos_borda() -> Vector2:
@@ -88,6 +104,18 @@ func receber_dano(dano: int) -> void:
 			get_tree().current_scene.add_child(particula_morte)
 			queue_free()
 			for node in get_tree().get_nodes_in_group("inimigos_invocados"):
-				node.queue_free()
+				node.morrer()
 
-	dano_processado.emit()
+func conectar_inimigos():
+	var lista_de_inimigos = get_tree().get_nodes_in_group("inimigos_invocados")
+	for inimigo in lista_de_inimigos:
+		inimigo.invocadinho_morreu.connect(invocadinho_morreu)
+
+func invocadinho_morreu():
+	quantidade_de_inimigos -= 1
+	if quantidade_de_inimigos < 0:
+		quantidade_de_inimigos = 0
+
+	print("tem ainda ", quantidade_de_inimigos, " invocadinhos")
+
+	atirar_tempo.start()

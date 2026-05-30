@@ -8,8 +8,8 @@ radius = 7.666667
 height = 24.773428
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8x3t"]
-radius = 26.0
-height = 102.0
+radius = 18.0
+height = 74.0
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
 y_sort_enabled = true
