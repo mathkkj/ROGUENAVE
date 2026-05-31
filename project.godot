@@ -22,8 +22,9 @@ Global="*uid://nq0wgah86c28"
 
 [display]
 
-window/size/viewport_width=854
-window/size/viewport_height=480
+window/size/viewport_width=560
+window/size/viewport_height=315
+window/size/mode=2
 window/stretch/mode="viewport"
 
 [global_group]
@@ -36,6 +37,7 @@ hurtbox=""
 projetil_inimigo=""
 arma_multimidia=""
 inimigos_invocados=""
+quebraveis=""
 
 [input]
 

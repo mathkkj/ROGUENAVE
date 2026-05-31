@@ -7,6 +7,7 @@
 size = Vector2(53.014732, 64.94514)
 
 [node name="Inimigo_projetil" type="CharacterBody2D" unique_id=944234677 groups=["inimigos"]]
+scale = Vector2(0.6473287, 0.6473287)
 motion_mode = 1
 script = ExtResource("2_4js5t")
 speed = 200.0
@@ -23,6 +24,7 @@ scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_4js5t")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=1877120801]
+wait_time = 2.0
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=1565287869]

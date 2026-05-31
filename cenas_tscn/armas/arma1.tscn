@@ -9,8 +9,8 @@ scale = Vector2(0.5, 0.5)
 script = ExtResource("1_qairy")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278]
-position = Vector2(16.999998, 9.999999)
-scale = Vector2(0.36003923, 0.36003923)
+position = Vector2(12, 12)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_tnsys")
 
 [node name="sair_bala" type="Marker2D" parent="." unique_id=374399913]

@@ -13,6 +13,7 @@ radius = 141.55907
 size = Vector2(5.501678, 12.921783)
 
 [node name="Inimigo_invocador" type="CharacterBody2D" unique_id=1725429804 groups=["inimigos"]]
+scale = Vector2(0.58685726, 0.58685726)
 motion_mode = 1
 script = ExtResource("1_6mb38")
 distancia_maxima = 500

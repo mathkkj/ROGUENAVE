@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://c1dghxl1a7uwr"]
 
-[ext_resource type="Texture2D" uid="uid://cbdtd40rb5f1l" path="res://placeholder/programadcor ONX (de lado,Direito) (1) resized fudido.png" id="1_l72lt"]
+[ext_resource type="Texture2D" uid="uid://8v8eyf7b8q2u" path="res://sprites/Onxy Parado.png" id="1_l72lt"]
 
 [resource]
 animations = [{

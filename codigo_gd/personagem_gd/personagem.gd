@@ -107,10 +107,9 @@ func perder_vida(dano, DIR, forca) -> float:
 func _piscar_enquanto_invencivel() -> void:
 	while invencivel:
 		visible = false
-		await get_tree().create_timer(0.08, true).timeout
+		await get_tree().create_timer(0.05, true).timeout
 		visible = true
-		await get_tree().create_timer(0.08, true).timeout
-
+		await get_tree().create_timer(0.05, true).timeout
 
 func _ready() -> void:
 	
@@ -391,7 +390,7 @@ func _arma_mirar():
 		var angulo := rad_to_deg(direcao_mira.angle())
 		if angulo < 0:
 			angulo += 360.0
-		var offset_lado = 80
+		var offset_lado = 40
 		# dividir o circulo em 8 direções
 		match int(round(angulo / 45.0)) % 8:
 			0:
@@ -462,13 +461,13 @@ func _on_golpe_executado(golpe: int) -> void:
 
 	match golpe:
 		1:
-			forca_golpe = 700
+			forca_golpe = 500
 			stamina -= stamina_por_ataque
 		2:
-			forca_golpe = 900
+			forca_golpe = 700
 			stamina -= stamina_por_ataque 
 		3:
-			forca_golpe = 1500
+			forca_golpe = 800
 			stamina -= stamina_por_ataque
 			
 			
@@ -478,10 +477,10 @@ func _on_golpe_executado(golpe: int) -> void:
 		print(body)
 
 func _arma_encostou(body):
-	if body.has_method("aplicar_knockback") and em_golpe:
+	if body.has_method("aplicar_knockback") and em_golpe and body != self:
 		#TODO: de acordo com o golpe, mudar o konockback e o shake da camera
 		print("to atacando o ", body)
-		body.aplicar_knockback(direcao_golpe, 900)
+		body.aplicar_knockback(direcao_golpe, 800)
 		
 		
 		#RECEBER DANO

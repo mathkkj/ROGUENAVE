@@ -4,8 +4,8 @@ class_name Inimigo_Projetil
 @onready var projetil_instancia = preload("res://cenas_tscn/projetil_inimigo.tscn")
 @onready var atirar_tempo = get_node("atirar_tempo")
 
-@export var distancia_maxima = 400
-@export var distancia_minima = 350
+@export var distancia_maxima = 600	
+@export var distancia_minima = 200
 
 @export var knockback = 700
 
@@ -22,9 +22,13 @@ enum ESTADOS_DISTANCIA {
 var estado_distancia: ESTADOS_DISTANCIA
 
 func check_posicao_alvo():
-	if LOS.get_collider() == alvo and atirar_tempo.is_stopped():
+	var collider = LOS.get_collider()
+
+	if collider != null and collider.is_in_group("inimigos"):
+		return
+	if collider == alvo and atirar_tempo.is_stopped():
 		atirar_tempo.start()
-	elif LOS.get_collider() != alvo and not atirar_tempo.is_stopped():
+	elif collider != alvo and not atirar_tempo.is_stopped():
 		atirar_tempo.stop()
 
 func _physics_process(delta: float) -> void:

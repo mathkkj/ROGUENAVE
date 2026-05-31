@@ -193,39 +193,45 @@ func gerar_steering(direcao_path) -> Vector2:
 	return steering
 
 func _physics_process(delta: float) -> void:
-	
 	if not is_instance_valid(alvo):
 		return
 	
 	var direcao_para_alvo: Vector2 = (alvo.global_position - global_position).normalized()
 	var direcao_path: Vector2 = escolher_dir(direcao_para_alvo, delta)
 
-	
-
-	
-
-	# steering force 
 	var steering = gerar_steering(direcao_path)
 	steering = steering.limit_length(max_accel * delta)
 
-	# aplica knockback sem apagar o steering
 	knockback_force = knockback_force.move_toward(Vector2.ZERO, desaceleracao * delta)
-
-	
-	
-	
 	
 	match estado_atual:
 		ESTADOS.CACANDO:
 			velocity += steering
-			#if LOS.get_collider() != alvo:
-				#estado_atual = ESTADOS.NAO_CACANDO
 
 		ESTADOS.HIT:
 			velocity = knockback_force
-			
 
 	move_and_slide()
+
+	if estado_atual == ESTADOS.HIT:
+		empurrar_inimigos_colididos()
+
+
+func empurrar_inimigos_colididos() -> void:
+	var direcao_empurrao := velocity.normalized()
+	if direcao_empurrao == Vector2.ZERO:
+		return
+
+	for i in range(get_slide_collision_count()):
+		var col := get_slide_collision(i)
+		var outro = col.get_collider()
+
+		if outro != null and outro is Inimigo:
+			if outro == self:
+				continue
+
+			var forca_empurrao = max(knockback_force.length() * 0.7, 80.0)
+			outro.aplicar_knockback(direcao_empurrao, forca_empurrao)
 
 
 

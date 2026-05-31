@@ -13,7 +13,7 @@ radius = 707.8175
 size = Vector2(5.501678, 12.921783)
 
 [node name="Inimigo_meele_invocado" type="CharacterBody2D" unique_id=185664261 groups=["inimigos", "inimigos_invocados"]]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.3339099, 0.3339099)
 motion_mode = 1
 safe_margin = 0.001
 script = ExtResource("1_pgx0w")
@@ -36,6 +36,7 @@ scale = Vector2(2.075416, 2.075416)
 shape = SubResource("RectangleShape2D_yyysh")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=1984269923]
+wait_time = 2.0
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=1740057390]

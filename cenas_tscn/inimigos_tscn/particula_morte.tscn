@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dl3mrvveveu18" path="res://codigo_gd/inimigo_gd/explosao_destruiacao_bala.gd" id="1_06ssf"]
 
 [sub_resource type="Curve" id="Curve_ug3rk"]
-_limits = [0.0, 16.0, 0.0, 1.0]
-_data = [Vector2(0, 14.022472), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_limits = [0.0, 8.0, 0.0, 1.0]
+_data = [Vector2(0, 8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_06ssf"]
@@ -15,7 +15,7 @@ script = ExtResource("1_06ssf")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1631290075]
 emitting = false
-amount = 64
+amount = 32
 one_shot = true
 explosiveness = 1.0
 lifetime_randomness = 0.2

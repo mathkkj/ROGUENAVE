@@ -4,6 +4,8 @@ class_name Inimigo_meele
 @onready var atirar_tempo = get_node("atirar_tempo")
 @onready var label = get_node("Label")
 
+@onready var hurtbox = get_node("Hurtbox")
+
 @onready var LOS = get_node("RayLOS")
 
 @export var dash_vel = 450
@@ -27,6 +29,22 @@ enum ESTADOS_ATAQUE {
 
 var estado_ataque: ESTADOS_ATAQUE = ESTADOS_ATAQUE.APROXIMAR
 
+func tocar_animacao(nome: String) -> void:
+	if sprite.animation != nome:
+		sprite.play(nome)
+
+func atualizar_animacao():
+	if sprite is AnimatedSprite2D:
+		match estado_ataque:
+			ESTADOS_ATAQUE.APROXIMAR, ESTADOS_ATAQUE.IDEAL:
+				tocar_animacao("andando")
+			ESTADOS_ATAQUE.DASH:
+				tocar_animacao("impulso")
+			ESTADOS_ATAQUE.ATACANDO:
+				tocar_animacao("acertou")
+			_:
+				tocar_animacao("idle")
+	sprite.flip_h = alvo.global_position.x > global_position.x
 
 func check_posicao_alvo():
 	if LOS.get_collider() == alvo and atirar_tempo.is_stopped():
@@ -66,6 +84,8 @@ func dash():
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(alvo):
 		return
+	atualizar_animacao()
+
 	if ELE_DA_DASH == true:
 		if esta_na_area:
 			if estado_ataque == ESTADOS_ATAQUE.APROXIMAR:
@@ -102,7 +122,16 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(desired_velocity, max_accel * delta)
 	if estado_ataque == ESTADOS_ATAQUE.ATACANDO:
 		velocity = Vector2.ZERO
+		
+	for body in hurtbox.get_overlapping_bodies():
+		if body.is_in_group("jogador") and not body.invencivel:
+			body.perder_vida(1, LOS.target_position.normalized(), knockback_normal)
 	super(delta)
+	
+	match estado_atual:
+		ESTADOS.HIT:
+			atirar_tempo.stop()
+			velocity = knockback_force
 	
 
 func _on_circulo_de_visao_body_entered(body: Node2D) -> void:

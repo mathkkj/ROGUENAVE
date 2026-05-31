@@ -4,17 +4,21 @@
 [ext_resource type="SpriteFrames" uid="uid://b8h36nxt0ngtx" path="res://tres/spriteframes/mult_sprite_frames.tres" id="2_j7w2x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]
-radius = 7.666667
-height = 24.773428
+radius = 5.3333335
+height = 19.333334
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8x3t"]
 radius = 18.0
-height = 74.0
+height = 60.0
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_d8uwv")
+velocidade = 300.0
+aceleracao = 2600.0
+atrito = 1400.0
+dash_vel = 850.0
 duracao_golpe = 0.5
 dano_arma_prog = 3
 
@@ -35,6 +39,7 @@ collision_mask = 2
 collision_priority = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1952395402 groups=["jogador"]]
+position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_u8x3t")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
@@ -61,4 +66,6 @@ position = Vector2(0, 35)
 [node name="ghost timer" type="Timer" parent="." unique_id=2026631748]
 wait_time = 0.1
 
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="ghost timer" to="." method="_on_ghost_timer_timeout"]

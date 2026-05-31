@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bx1hpokuriu3l" path="res://placeholder/New Piskel.png" id="2_h2t4u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2t4u"]
-radius = 5.8226285
+radius = 3.413265
+height = 18.856096
 
 [node name="arma2" type="Node2D" unique_id=1469492499 groups=["arma", "arma_multimidia"]]
 z_index = 1
@@ -13,10 +14,11 @@ script = ExtResource("1_h2t4u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278 groups=["arma", "arma_multimidia"]]
 texture_filter = 1
-scale = Vector2(1.6601895, 0.95459837)
+scale = Vector2(1.2399116, 0.7666681)
 texture = ExtResource("2_h2t4u")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=1105355561 groups=["arma", "arma_multimidia"]]
+scale = Vector2(1.2399116, 1.3310211)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=523375316 groups=["arma", "arma_multimidia"]]
 scale = Vector2(1.6601895, 0.95459837)

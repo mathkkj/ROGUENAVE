@@ -8,18 +8,18 @@
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
+[ext_resource type="PackedScene" uid="uid://dpur187b3slj1" path="res://cenas_tscn/inimigos_tscn/inimigo_meele_pesado.tscn" id="9_uk6bg"]
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_y6nmq"]
-[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil.tscn" id="11_osep8"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
-size = Vector2(464, 467)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(450, 469)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
+size = Vector2(464, 467)
+
 [node name="cena" type="Node2D" unique_id=1523779238]
-position = Vector2(2, 0)
 script = ExtResource("1_q3n0b")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=763547240]
@@ -36,84 +36,99 @@ personagem = NodePath("../personagem")
 
 [node name="mira" type="Sprite2D" parent="." unique_id=2001920730]
 z_index = 2
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.12339991, 0.12339991)
 texture = ExtResource("6_pdimi")
 script = ExtResource("7_j0gmb")
 
 [node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
-position = Vector2(-97, 165)
+position = Vector2(8, 144)
 camera = NodePath("../Camera2D")
-dash_vel = 1000.0
-classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
-[node name="Caixa" type="RigidBody2D" parent="." unique_id=873234227]
-position = Vector2(105.99999, 261.99997)
+[node name="Paredes" type="Node2D" parent="." unique_id=1421782683]
+scale = Vector2(0.8710938, 0.8710938)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Paredes" unique_id=1766068120]
+position = Vector2(729, -33)
+rotation = -1.5797108
+scale = Vector2(2.0661933, 0.37913364)
+
+[node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D2" unique_id=406344323]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(8.763645, 564.80756)
+scale = Vector2(1.7250645, 3.2592301)
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D2" unique_id=449427736]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Paredes" unique_id=605418635]
+position = Vector2(175, 498)
+scale = Vector2(2.0661936, 0.37913367)
+
+[node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D" unique_id=199179681]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, 561.1169)
+scale = Vector2(1, 3.2444673)
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D" unique_id=1531395333]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Paredes" unique_id=2007997586]
+position = Vector2(214, -564)
+scale = Vector2(2.0661936, 0.37913364)
+
+[node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D3" unique_id=1011706732]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, -551.288)
+scale = Vector2(1, 3.205152)
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D3" unique_id=729542292]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Paredes" unique_id=618769255]
+position = Vector2(-352, -18.999998)
+rotation = 1.5807698
+scale = Vector2(2.0661936, 0.37913364)
+
+[node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D4" unique_id=386282951]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(3.4148026, 513.99146)
+scale = Vector2(1.6902939, 3.0559661)
+texture = ExtResource("8_q3n0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D4" unique_id=1919873757]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="Caixa" type="RigidBody2D" parent="." unique_id=873234227 groups=["quebraveis"]]
+position = Vector2(210, 192)
 mass = 0.001
 gravity_scale = 0.0
 script = ExtResource("8_uk6bg")
 
 [node name="Sprite2D" type="Sprite2D" parent="Caixa" unique_id=1533352646]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.098234236, 0.098234236)
 texture = ExtResource("8_q3n0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Caixa" unique_id=323275151]
 position = Vector2(0, 1.5)
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.098234236, 0.098234236)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1766068120]
-position = Vector2(729, -33)
-rotation = -1.5797108
-scale = Vector2(2.0661936, 0.37913364)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=406344323]
-texture = ExtResource("8_q3n0b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=449427736]
-position = Vector2(1, -2.5)
-shape = SubResource("RectangleShape2D_iwd25")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605418635]
-position = Vector2(175, 498)
-scale = Vector2(2.0661936, 0.37913367)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=199179681]
-texture = ExtResource("8_q3n0b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1531395333]
-position = Vector2(1, -2.5)
-shape = SubResource("RectangleShape2D_iwd25")
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=2007997586]
-position = Vector2(214, -564)
-scale = Vector2(2.0661936, 0.37913364)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=1011706732]
-texture = ExtResource("8_q3n0b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=729542292]
-position = Vector2(1, -2.5)
-shape = SubResource("RectangleShape2D_iwd25")
-
-[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=618769255]
-position = Vector2(-352, -18.999998)
-rotation = 1.5807698
-scale = Vector2(2.0661936, 0.37913364)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D4" unique_id=386282951]
-texture = ExtResource("8_q3n0b")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1919873757]
-position = Vector2(1, -2.5)
-shape = SubResource("RectangleShape2D_iwd25")
-
 [node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("11_y6nmq")]
-position = Vector2(396.99997, -319)
-
-[node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_y6nmq")]
-position = Vector2(62, -290)
 
 [node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("11_osep8")]
-position = Vector2(-110, -267)
+position = Vector2(238, 18)
+
+[node name="Inimigo_meele_pesado" parent="." unique_id=1226260101 instance=ExtResource("9_uk6bg")]
+position = Vector2(243, -91)
+
+[node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_y6nmq")]
+position = Vector2(424, 161)

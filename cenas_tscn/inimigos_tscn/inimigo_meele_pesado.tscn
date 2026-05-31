@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://dpur187b3slj1"]
+
+[ext_resource type="Script" uid="uid://b1r4aai6qgdii" path="res://codigo_gd/inimigo_gd/inimigo_meele_pesado.gd" id="1_5tr43"]
+[ext_resource type="Texture2D" uid="uid://dx548k8olcxov" path="res://placeholder/61899767-fofa-verde-lodo-personagem-com-sorridente-face-ilustracao-dentro-simples-estilo-para-criancas-e-diversao-desenhos-vetor.png" id="2_5tr43"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bciti"]
+size = Vector2(53.014732, 64.94514)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pcxvh"]
+radius = 284.0965
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xt6qk"]
+size = Vector2(5.501678, 12.921783)
+
+[node name="Inimigo_meele_pesado" type="CharacterBody2D" unique_id=1226260101 groups=["inimigos"]]
+scale = Vector2(1.0073775, 0.9487971)
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_5tr43")
+dash_vel = 850
+aceleracao = 2000
+knockback_normal = 600
+knockback_dash = 750
+speed = 50.0
+max_speed = 100.0
+vida = 42
+metadata/_custom_type_script = "uid://carrgaap35jf0"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=661270086]
+position = Vector2(-0.5000019, -0.5)
+scale = Vector2(0.11840227, 0.07959183)
+texture = ExtResource("2_5tr43")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1119429462]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_bciti")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=685902015]
+wait_time = 1.5
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=619811414]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=2124841572]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1430833230]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1414245073]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1722482356]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1202961109]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=2017254204]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=147981480]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=926904009]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=929620959]
+
+[node name="circulo_de_visao" type="Area2D" parent="." unique_id=67387050]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="circulo_de_visao" unique_id=281442374]
+scale = Vector2(1.0313972, 1)
+shape = SubResource("CircleShape2D_pcxvh")
+
+[node name="Label" type="Label" parent="." unique_id=935768636]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1761722111]
+scale = Vector2(1.0314662, 1.0777961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1114797238]
+position = Vector2(9.151536e-07, -0.5)
+scale = Vector2(15.349047, 6.1137066)
+shape = SubResource("RectangleShape2D_xt6qk")
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
+[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]
