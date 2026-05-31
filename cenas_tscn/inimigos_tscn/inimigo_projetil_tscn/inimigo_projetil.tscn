@@ -10,6 +10,7 @@ size = Vector2(53.014732, 64.94514)
 scale = Vector2(0.6473287, 0.6473287)
 motion_mode = 1
 script = ExtResource("2_4js5t")
+knockback = 500
 speed = 200.0
 max_speed = 400.0
 vida = 12
@@ -24,7 +25,7 @@ scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_4js5t")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=1877120801]
-wait_time = 2.0
+wait_time = 1.5
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=1565287869]

@@ -8,10 +8,9 @@
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
-[ext_resource type="PackedScene" uid="uid://dpur187b3slj1" path="res://cenas_tscn/inimigos_tscn/inimigo_meele_pesado.tscn" id="9_uk6bg"]
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_y6nmq"]
-[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
+[ext_resource type="PackedScene" uid="uid://cxb1xdf2n6kt8" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil_doze.tscn" id="13_pdimi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(450, 469)
@@ -124,11 +123,7 @@ shape = SubResource("RectangleShape2D_uk6bg")
 
 [node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("11_y6nmq")]
 
-[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("11_osep8")]
-position = Vector2(238, 18)
-
-[node name="Inimigo_meele_pesado" parent="." unique_id=1226260101 instance=ExtResource("9_uk6bg")]
-position = Vector2(243, -91)
-
 [node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_y6nmq")]
 position = Vector2(424, 161)
+
+[node name="Inimigo_Projetil_doze" parent="." unique_id=1348707866 instance=ExtResource("13_pdimi")]

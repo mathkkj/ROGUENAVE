@@ -6,8 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8wlr"]
 size = Vector2(53.014732, 64.94514)
 
-[node name="Inimigo_Projetil_doze" type="CharacterBody2D" unique_id=1348707866]
+[node name="Inimigo_Projetil_doze" type="CharacterBody2D" unique_id=1348707866 groups=["inimigos"]]
+scale = Vector2(0.61272776, 0.61272776)
 script = ExtResource("1_tmpha")
+knockback = 500
+vida = 12
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=29311351]
@@ -62,3 +65,7 @@ text = "asdwasd"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=447722878]
 scale = Vector2(1.6498704, 1.3169934)
 shape = SubResource("RectangleShape2D_o8wlr")
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="hurtbox" to="." method="_on_hurtbox_body_exited"]
