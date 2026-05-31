@@ -8,9 +8,10 @@ size = Vector2(53.014732, 64.94514)
 
 [node name="Inimigo_Projetil_doze" type="CharacterBody2D" unique_id=1348707866 groups=["inimigos"]]
 scale = Vector2(0.61272776, 0.61272776)
+motion_mode = 1
 script = ExtResource("1_tmpha")
 knockback = 500
-vida = 12
+vida = 18
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=29311351]

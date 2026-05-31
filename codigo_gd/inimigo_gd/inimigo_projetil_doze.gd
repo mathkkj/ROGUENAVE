@@ -7,12 +7,12 @@ func atirar():
 
 	estado_atual = ESTADOS.ATIRANDO
 	velocity = Vector2.ZERO
-	for i in range(3):
+	for i in range(4):
 		var projetil = projetil_instancia.instantiate()
 		projetil.global_position = global_position
 
 		var direcao = (alvo.global_position - global_position).normalized()
-
+		projetil.speed = 500
 		var spread = deg_to_rad(15) # 15 graus para cada lado
 		var angulo = (i - 1) * spread # -15, 0, +15
 
@@ -21,7 +21,7 @@ func atirar():
 
 		get_tree().current_scene.add_child(projetil)
 
-	# Sai do estado de ataque depois do tempo do Timer
+	# sai do estado de ataque depois do tempo do atirar tempo
 	estado_atual = ESTADOS.CACANDO
 	atirar_tempo.start()
 
