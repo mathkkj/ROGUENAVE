@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://x26clkqck301"]
+
+[ext_resource type="Script" uid="uid://50c2wmbhf8dr" path="res://codigo_gd/inimigo_gd/inimigo_projetil_rajada.gd" id="1_bwjmv"]
+[ext_resource type="Texture2D" uid="uid://cqjnujart8jes" path="res://placeholder/123124124124.png" id="2_srw0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmvi3"]
+size = Vector2(53.014732, 64.94514)
+
+[node name="Inimigo_Projetil_rajada" type="CharacterBody2D" unique_id=1421795218 groups=["inimigos"]]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_bwjmv")
+vida = 12
+metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1419617708 groups=["inimigos"]]
+scale = Vector2(0.23334716, 0.31824005)
+texture = ExtResource("2_srw0h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=693511251]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_hmvi3")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=337419705]
+wait_time = 1.75
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=1359155604]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=6586896]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=392524530]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1518265105]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=2135923980]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1312758515]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=1337746471]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=1571922978]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1248013199]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=120095101]
+
+[node name="Label" type="Label" parent="." unique_id=1381307250]
+offset_left = 1.0
+offset_top = 46.0
+offset_right = 41.0
+offset_bottom = 69.0
+text = "asdwasd"
+
+[node name="hurtbox" type="Area2D" parent="." unique_id=1489745792]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=238357151]
+scale = Vector2(1.6498704, 1.3169934)
+shape = SubResource("RectangleShape2D_hmvi3")
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="hurtbox" to="." method="_on_hurtbox_body_exited"]

@@ -22,7 +22,7 @@ texture = ExtResource("2_cvl3s")
 scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_o8wlr")
 
-[node name="atirar_tempo" type="Timer" parent="." unique_id=708189412]
+[node name="atirar_tempo" type="Timer" parent="." unique_id=708189412 groups=["inimigos"]]
 wait_time = 2.0
 autostart = true
 

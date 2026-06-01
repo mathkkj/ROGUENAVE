@@ -1,7 +1,7 @@
 extends Camera2D
 
 @export var personagem: Node2D
-@export var distancia_maxima := Vector2(100, 50)
+@export var distancia_maxima := Vector2(150, 75)
 
 var desired_offset := Vector2(0,0)
 

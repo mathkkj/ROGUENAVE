@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_y6nmq"]
+[ext_resource type="PackedScene" uid="uid://x26clkqck301" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil_rajada.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
-[ext_resource type="PackedScene" uid="uid://cxb1xdf2n6kt8" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil_doze.tscn" id="13_pdimi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(450, 469)
@@ -42,6 +42,7 @@ script = ExtResource("7_j0gmb")
 [node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
 position = Vector2(8, 144)
 camera = NodePath("../Camera2D")
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -126,4 +127,5 @@ shape = SubResource("RectangleShape2D_uk6bg")
 [node name="Inimigo_invocador" parent="." unique_id=1725429804 instance=ExtResource("10_y6nmq")]
 position = Vector2(424, 161)
 
-[node name="Inimigo_Projetil_doze" parent="." unique_id=1348707866 instance=ExtResource("13_pdimi")]
+[node name="Inimigo_Projetil_rajada" parent="." unique_id=1421795218 instance=ExtResource("11_osep8")]
+position = Vector2(193, 29)
