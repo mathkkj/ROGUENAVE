@@ -11,6 +11,18 @@
 [ext_resource type="PackedScene" uid="uid://b6hipi6lp07b3" path="res://cenas_tscn/inimigos_tscn/inimigo_invocador.tscn" id="10_y6nmq"]
 [ext_resource type="PackedScene" uid="uid://x26clkqck301" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil_rajada.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="11_y6nmq"]
+[ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://crt.gdshader" id="12_osep8"]
+[ext_resource type="PackedScene" uid="uid://dpur187b3slj1" path="res://cenas_tscn/inimigos_tscn/inimigo_meele_pesado.tscn" id="13_pdimi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
+shader = ExtResource("12_osep8")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.10000000475
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(450, 469)
@@ -32,6 +44,16 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("3_iwd25")
 personagem = NodePath("../personagem")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=1969910263]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer" unique_id=2114521150]
+material = SubResource("ShaderMaterial_osep8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="mira" type="Sprite2D" parent="." unique_id=2001920730]
 z_index = 2
@@ -56,8 +78,8 @@ scale = Vector2(2.0661933, 0.37913364)
 
 [node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D2" unique_id=406344323]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(8.763645, 564.80756)
-scale = Vector2(1.7250645, 3.2592301)
+position = Vector2(-8.763641, 564.80756)
+scale = Vector2(2.1125388, 3.2592301)
 texture = ExtResource("8_q3n0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D2" unique_id=449427736]
@@ -99,8 +121,8 @@ scale = Vector2(2.0661936, 0.37913364)
 
 [node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D4" unique_id=386282951]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(3.4148026, 513.99146)
-scale = Vector2(1.6902939, 3.0559661)
+position = Vector2(0.7602196, 513.99146)
+scale = Vector2(2.0508144, 3.0559661)
 texture = ExtResource("8_q3n0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D4" unique_id=1919873757]
@@ -129,3 +151,6 @@ position = Vector2(424, 161)
 
 [node name="Inimigo_Projetil_rajada" parent="." unique_id=1421795218 instance=ExtResource("11_osep8")]
 position = Vector2(193, 29)
+
+[node name="Inimigo_meele_pesado" parent="." unique_id=1226260101 instance=ExtResource("13_pdimi")]
+position = Vector2(407, 13)

@@ -1,5 +1,5 @@
 extends RigidBody2D
-
+#felipe porrua
 @export var velocidade = 1000.0
 @export var desaceleracao = 2500.0
 @onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
