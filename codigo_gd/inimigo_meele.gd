@@ -1,7 +1,6 @@
 extends Inimigo
 class_name Inimigo_meele
 
-@onready var atirar_tempo = get_node("atirar_tempo")
 @onready var label = get_node("Label")
 
 @onready var hurtbox = get_node("Hurtbox")

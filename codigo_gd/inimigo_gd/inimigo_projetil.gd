@@ -2,7 +2,6 @@ extends Inimigo
 class_name Inimigo_Projetil
 
 @onready var projetil_instancia = preload("res://cenas_tscn/projetil_inimigo.tscn")
-@onready var atirar_tempo = get_node("atirar_tempo")
 
 @export var distancia_maxima = 600	
 @export var distancia_minima = 200

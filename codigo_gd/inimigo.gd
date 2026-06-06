@@ -1,9 +1,11 @@
 extends CharacterBody2D
 class_name Inimigo
 
+
+
 signal dano_processado
 
-signal morreu
+
 
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
@@ -15,8 +17,11 @@ signal morreu
 @onready var explosao_cena = preload("res://cenas_tscn/explosao.tscn")
 
 @export var vida: int
+@export var escudo: int
 
 var knockback_force: Vector2 = Vector2.ZERO
+
+@onready var atirar_tempo = get_node("atirar_tempo")
 
 @onready var sprite := $Sprite2D
 
@@ -34,8 +39,6 @@ var tempo_memoria := 0.0
 	get_node("Raycast/RayCima"),
 	get_node("Raycast/RayCimaDireita"),
 ]
-
-
 
 
 enum ESTADOS {
@@ -230,9 +233,8 @@ func empurrar_inimigos_colididos() -> void:
 			if outro == self:
 				continue
 
-			var forca_empurrao = max(knockback_force.length() * 0.7, 80.0)
+			var forca_empurrao = max(knockback_force.length() * 1, 80.0)
 			outro.aplicar_knockback(direcao_empurrao, forca_empurrao)
-
 
 
 func aplicar_knockback(direcao: Vector2, forca: float) -> void:
@@ -246,7 +248,10 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	sprite.modulate = Color.WHITE
 
 func receber_dano(dano: int) -> void:
-	vida -= dano
+	if escudo <= 0:
+		vida -= dano
+	else:
+		escudo -= dano
 	if vida <= 0:
 			var particula_morte = particula_morte_cena.instantiate()
 			particula_morte.position = global_position
@@ -254,10 +259,8 @@ func receber_dano(dano: int) -> void:
 			queue_free()
 	dano_processado.emit()
 
-
 func _ready() -> void:
 	alvo = Global.personagem
 
-
-#func _on_morreu() -> void:
-	#get_tree().quit()
+func receber_buff(velocidade, escudo, duracao):
+	pass
