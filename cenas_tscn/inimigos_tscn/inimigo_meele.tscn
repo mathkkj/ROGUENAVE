@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3uji0hn5o0ap" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Andar_4.png" id="6_n0k4e"]
 [ext_resource type="Texture2D" uid="uid://cnvgvjr5hy6pn" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Impulso_1.png" id="7_xyxd1"]
 [ext_resource type="Texture2D" uid="uid://8l41o4qnwxee" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Impulso_2.png" id="8_r326f"]
+[ext_resource type="Texture2D" uid="uid://0cagw4msd14w" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Empurrão.png" id="9_nuvgp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i0dp6"]
 animations = [{
@@ -40,6 +41,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_nuvgp")
+}],
+"loop": true,
+"name": &"hit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -93,9 +102,8 @@ metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1982580131]
 sprite_frames = SubResource("SpriteFrames_i0dp6")
-animation = &"impulso"
+animation = &"hit"
 autoplay = "idle"
-frame_progress = 0.39506266
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1069773565]
 position = Vector2(5.8996875e-07, 3.5762787e-07)

@@ -43,6 +43,8 @@ func atualizar_animacao():
 				tocar_animacao("acertou")
 			_:
 				tocar_animacao("idle")
+	if estado_atual == ESTADOS.HIT:
+		tocar_animacao("hit")
 	sprite.flip_h = alvo.global_position.x > global_position.x
 
 func check_posicao_alvo():
@@ -75,7 +77,7 @@ func dash():
 	estado_ataque = ESTADOS_ATAQUE.DASH
 
 	var direcao = LOS.target_position.normalized()
-	var velocidade_dash = direcao * dash_vel * multiplicador_velocidade
+	var velocidade_dash = direcao * dash_vel 
 
 	velocity = velocidade_dash
 
