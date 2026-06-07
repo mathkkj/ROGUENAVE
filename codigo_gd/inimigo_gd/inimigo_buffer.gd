@@ -8,6 +8,9 @@ class_name Inimigo_Buffer
 @export var buff_escudo := 6
 @export var duracao_buff := 5
 
+var knockback_dir := Vector2.ZERO
+var knockback_speed := 0.0
+
 enum ESTADOS_BUFFER {
 	FUGIR_DO_PLAYER,
 	IR_PARA_INIMIGO,
@@ -120,6 +123,9 @@ func _physics_process(delta: float) -> void:
 	label.text = estados_texto.get(estado_atual, "?") + "\n" + estados_buffer_texto.get(estado_buffer_atual, "?")
 
 	if estado_atual == ESTADOS.HIT:
+		atirar_tempo.stop()
+		velocity = knockback_dir * knockback_speed
+		knockback_speed = move_toward(knockback_speed, 0, desaceleracao * delta)
 		empurrar_inimigos_colididos()
 
 	move_and_slide()
@@ -167,3 +173,8 @@ func receber_dano(dano: int) -> void:
 			get_tree().current_scene.add_child(particula_morte)
 			queue_free()
 	dano_processado.emit()
+	
+func aplicar_knockback(direcao: Vector2, forca: float) -> void:
+	estado_atual = ESTADOS.HIT
+	knockback_dir = direcao.normalized()
+	knockback_speed = forca

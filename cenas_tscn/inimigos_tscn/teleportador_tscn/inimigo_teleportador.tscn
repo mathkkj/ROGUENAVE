@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://d1r8i6gfvofhf"]
+
+[ext_resource type="Script" uid="uid://uix1g0bf3cfm" path="res://codigo_gd/inimigo_gd/inimigo_teleportador.gd" id="1_udkin"]
+[ext_resource type="Texture2D" uid="uid://bxy1nry2awvoj" path="res://placeholder/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" id="2_udkin"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0fs"]
+size = Vector2(53.014732, 64.94514)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_udkin"]
+radius = 432.86655
+
+[node name="Inimigo_teleportador" type="CharacterBody2D" unique_id=815149148 groups=["inimigos"]]
+scale = Vector2(0.7, 0.7)
+motion_mode = 1
+script = ExtResource("1_udkin")
+tp_distancia_minima = 200.0
+tp_distancia_maxima = 450.0
+vida = 10
+metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=774606071 groups=["inimigos"]]
+position = Vector2(1.1189773e-06, 9.536743e-07)
+scale = Vector2(0.106666654, 0.07714286)
+texture = ExtResource("2_udkin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1974246421]
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_cm0fs")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=1119056316]
+wait_time = 1.5
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=168150009]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=403747211]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=196895984]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1983124988]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1174954727]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=732318298]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=932257356]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=28559754]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1956565448]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=1290484361]
+
+[node name="Label" type="Label" parent="." unique_id=326174477]
+offset_left = 1.0
+offset_top = 46.0
+offset_right = 41.0
+offset_bottom = 69.0
+text = "asdwasd"
+
+[node name="hurtbox" type="Area2D" parent="." unique_id=1039485099]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=1807489555]
+scale = Vector2(1.6498704, 1.3169934)
+shape = SubResource("RectangleShape2D_cm0fs")
+
+[node name="buff_label" type="Label" parent="." unique_id=177375045]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+
+[node name="area_tp" type="Area2D" parent="." unique_id=1418459482]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area_tp" unique_id=309683195]
+shape = SubResource("CircleShape2D_udkin")
+debug_color = Color(0, 0, 0, 0.41960785)
+
+[node name="timer_tp" type="Timer" parent="." unique_id=1411980934]
+wait_time = 2.5
+autostart = true
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_timer_tp_timeout"]
+[connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]
