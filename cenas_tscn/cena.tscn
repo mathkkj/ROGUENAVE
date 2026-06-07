@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dpur187b3slj1" path="res://cenas_tscn/inimigos_tscn/inimigo_meele_pesado.tscn" id="10_pdimi"]
 [ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://crt.gdshader" id="12_osep8"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="12_t3wwm"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="13_pdimi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
 shader = ExtResource("12_osep8")
@@ -150,3 +151,5 @@ position = Vector2(353, 22)
 
 [node name="Inimigo_meele_pesado" parent="." unique_id=1226260101 instance=ExtResource("10_pdimi")]
 position = Vector2(-73, 88)
+
+[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("13_pdimi")]

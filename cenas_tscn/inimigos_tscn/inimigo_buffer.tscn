@@ -17,6 +17,7 @@ radius = 780.0
 scale = Vector2(0.5, 0.5)
 motion_mode = 1
 script = ExtResource("1_itejw")
+buff_velocidade = 1.5
 distancia_maxima = 375
 distancia_minima = 375
 desaceleracao = 2800.0

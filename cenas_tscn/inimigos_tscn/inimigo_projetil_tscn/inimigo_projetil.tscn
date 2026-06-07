@@ -69,5 +69,11 @@ text = "asdwasd"
 scale = Vector2(1.6498704, 1.3169934)
 shape = SubResource("RectangleShape2D_4js5t")
 
+[node name="buff_label" type="Label" parent="." unique_id=452409051]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

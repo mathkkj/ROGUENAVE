@@ -3,14 +3,17 @@ class_name Inimigo
 
 
 
+@onready var buff_label = get_node("buff_label")
+
 signal dano_processado
 
-
+var ja_deu_buff := false
 
 @export var desaceleracao: float = 2500.0
 @export var speed: float = 100.0
 @export var alvo: CharacterBody2D
 @export var max_speed := 300.0
+var multiplicador_velocidade := 1.0
 @export var max_accel := 1200.0
 
 @onready var particula_morte_cena = preload("res://cenas_tscn/inimigos_tscn/particula_morte.tscn")
@@ -189,8 +192,8 @@ func escolher_dir(direcao_alvo: Vector2, delta: float) -> Vector2:
 	#cor_dominante = img.get_pixel(0, 0)
 
 func gerar_steering(direcao_path) -> Vector2:
-	
-	var desired_velocity = direcao_path * max_speed
+
+	var desired_velocity = direcao_path * max_speed * multiplicador_velocidade
 	# steering force 
 	var steering = desired_velocity - velocity
 	return steering
@@ -244,10 +247,13 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	sprite.modulate = Color(10, 10, 10)
 
 	await get_tree().create_timer(0.15).timeout
+	if not is_inside_tree():
+		return
 	estado_atual = ESTADOS.CACANDO
 	sprite.modulate = Color.WHITE
 
 func receber_dano(dano: int) -> void:
+	print("vida: ", vida, " escudo: ", escudo  )
 	if escudo <= 0:
 		vida -= dano
 	else:
@@ -262,5 +268,40 @@ func receber_dano(dano: int) -> void:
 func _ready() -> void:
 	alvo = Global.personagem
 
-func receber_buff(velocidade, escudo, duracao):
-	pass
+func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
+	if ja_deu_buff:
+		return
+
+	ja_deu_buff = true
+	var texto_original = buff_label.text
+
+	if sorteado == 0:
+		var wait_time_original = atirar_tempo.wait_time
+
+		multiplicador_velocidade *= velocidade_buff
+		atirar_tempo.wait_time = wait_time_original / velocidade_buff
+
+		buff_label.text = str("Buff: velocidade aumentada, ", multiplicador_velocidade)
+		print("buff velocidade")
+
+		await get_tree().create_timer(duracao).timeout
+
+		atirar_tempo.wait_time = wait_time_original
+		buff_label.text = ""
+		multiplicador_velocidade /= velocidade_buff
+
+	else:
+		var escudo_original = escudo
+
+		escudo += escudo_buff
+
+		buff_label.text = str("Buff: escudo fortalecido, ", escudo)
+		print("buff escudo")
+
+		await get_tree().create_timer(duracao).timeout
+
+		escudo = escudo_original
+		buff_label.text = ""
+
+	buff_label.text = texto_original
+	ja_deu_buff = false

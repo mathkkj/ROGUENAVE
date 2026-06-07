@@ -48,5 +48,8 @@ target_position = Vector2(50, -50)
 [node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1635963035]
 target_position = Vector2(-50, -50)
 
-[connection signal="morreu" from="." to="." method="_on_morreu"]
+[node name="buff_label" type="Label" parent="." unique_id=201807275]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]

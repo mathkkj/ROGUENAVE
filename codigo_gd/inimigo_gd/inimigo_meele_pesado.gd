@@ -20,9 +20,10 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	
 	if estado_ataque == ESTADOS_ATAQUE.IDEAL and body.is_in_group("jogador"):
 		body.perder_vida(1, LOS.target_position.normalized(), knockback_normal)
-	if estado_ataque == ESTADOS_ATAQUE.DASH and body.is_in_group("jogador"):
+	if estado_ataque == ESTADOS_ATAQUE.DASH and body.is_in_group("jogador") and not body.invencivel:
 		body.perder_vida(1, LOS.target_position.normalized(), knockback_dash)
 		estado_ataque = ESTADOS_ATAQUE.ATACANDO
+		
 
 		await get_tree().create_timer(atirar_tempo.time_left).timeout
 		atirar_tempo.stop()
@@ -36,6 +37,5 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func _on_hurtbox_body_exited(body: Node2D) -> void:
 	if ELE_DA_DASH == true:
-		if body.is_in_group("jogador"):
-			estado_ataque = ESTADOS_ATAQUE.ATACANDO
+		if body.is_in_group("jogador") and not body.invencivel:
 			esta_na_area_hurtbox = false

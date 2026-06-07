@@ -75,7 +75,7 @@ func dash():
 	estado_ataque = ESTADOS_ATAQUE.DASH
 
 	var direcao = LOS.target_position.normalized()
-	var velocidade_dash = direcao * dash_vel
+	var velocidade_dash = direcao * dash_vel * multiplicador_velocidade
 
 	velocity = velocidade_dash
 
@@ -151,7 +151,7 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	
 	if estado_ataque == ESTADOS_ATAQUE.IDEAL and body.is_in_group("jogador"):
 		body.perder_vida(1, LOS.target_position.normalized(), knockback_normal)
-	if estado_ataque == ESTADOS_ATAQUE.DASH and body.is_in_group("jogador"):
+	if estado_ataque == ESTADOS_ATAQUE.DASH and body.is_in_group("jogador") and not body.invencivel:
 		body.perder_vida(1, LOS.target_position.normalized(), knockback_dash)
 		estado_ataque = ESTADOS_ATAQUE.ATACANDO
 
@@ -162,6 +162,6 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func _on_hurtbox_body_exited(body: Node2D) -> void:
 	if ELE_DA_DASH == true:
-		if body.is_in_group("jogador"):
+		if body.is_in_group("jogador") and not body.invencivel:
 			estado_ataque = ESTADOS_ATAQUE.ATACANDO
 			esta_na_area_hurtbox = false

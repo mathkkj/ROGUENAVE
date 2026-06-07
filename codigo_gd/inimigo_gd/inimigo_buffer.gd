@@ -6,7 +6,7 @@ class_name Inimigo_Buffer
 
 @export var buff_velocidade := 1.2
 @export var buff_escudo := 6
-@export var duracao_buff := 3.0
+@export var duracao_buff := 5
 
 enum ESTADOS_BUFFER {
 	FUGIR_DO_PLAYER,
@@ -144,9 +144,9 @@ func atirar() -> void:
 	for corpo in buffer_area.get_overlapping_bodies():
 		if corpo == self:
 			continue
-
+		var sorteado = randi_range(0, 1)
 		if corpo.is_in_group("inimigos") and corpo.has_method("receber_buff"):
-			corpo.receber_buff(buff_velocidade, buff_escudo, duracao_buff)
+			corpo.receber_buff(buff_velocidade, buff_escudo, duracao_buff, sorteado)
 
 	await get_tree().create_timer(1.5).timeout #animacao
 
@@ -154,3 +154,16 @@ func atirar() -> void:
 	estado_atual = ESTADOS.CACANDO
 	estado_buffer_atual = ESTADOS_BUFFER.FUGIR_DO_PLAYER
 	atirar_tempo.start()
+
+func receber_dano(dano: int) -> void:
+	print("vida: ", vida, " escudo: ", escudo  )
+	if escudo <= 0:
+		vida -= dano
+	else:
+		escudo -= dano
+	if vida <= 0:
+			var particula_morte = particula_morte_cena.instantiate()
+			particula_morte.position = global_position
+			get_tree().current_scene.add_child(particula_morte)
+			queue_free()
+	dano_processado.emit()

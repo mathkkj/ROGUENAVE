@@ -151,6 +151,12 @@ position = Vector2(-1.919216, -0.46391052)
 scale = Vector2(15.349047, 6.1137066)
 shape = SubResource("RectangleShape2D_an2hr")
 
+[node name="buff_label" type="Label" parent="." unique_id=1785581637]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
 [connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
 [connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
