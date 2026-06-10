@@ -20,6 +20,8 @@ enum ESTADOS_DISTANCIA {
 
 var estado_distancia: ESTADOS_DISTANCIA
 
+
+
 func check_posicao_alvo():
 	var collider = LOS.get_collider()
 
@@ -34,6 +36,11 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(alvo):
 		return
 		
+	if estado_atual == ESTADOS.ATIRANDO:
+		velocity = Vector2.ZERO
+		
+		return
+		
 	var direcao_para_alvo: Vector2 = round((alvo.global_position - global_position).normalized())
 	
 	var distancia_atual = global_position.distance_to(alvo.global_position)
@@ -41,11 +48,7 @@ func _physics_process(delta: float) -> void:
 	mirar()
 	check_posicao_alvo()
 
-	if estado_atual == ESTADOS.ATIRANDO:
-		velocity = Vector2.ZERO
-		super(delta)
-		move_and_slide()
-		return
+
 
 	
 
@@ -106,18 +109,21 @@ func mirar():
 func atirar():
 	if not is_instance_valid(alvo):
 		return
-
+	
 	estado_atual = ESTADOS.ATIRANDO
 	velocity = Vector2.ZERO
-
+	knockback_force = Vector2.ZERO
+	
+	
 	var projetil = projetil_instancia.instantiate()
 	projetil.global_position = global_position
 	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
 	projetil.rotation = projetil.direcao.angle()
-
 	get_tree().current_scene.add_child(projetil)
 
-	# Sai do estado de ataque depois do tempo do Timer
+	await get_tree().create_timer(0.35).timeout
+
+
 	estado_atual = ESTADOS.CACANDO
 	atirar_tempo.start()
 

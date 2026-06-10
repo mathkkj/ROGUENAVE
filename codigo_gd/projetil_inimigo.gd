@@ -33,6 +33,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if body.is_in_group("inimigos"):
 		return
+		
 	if body.is_in_group("buff"):
 		return
 

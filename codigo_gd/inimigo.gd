@@ -273,6 +273,7 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 		return
 
 	ja_deu_buff = true
+	
 	var texto_original = buff_label.text
 
 	if sorteado == 0:

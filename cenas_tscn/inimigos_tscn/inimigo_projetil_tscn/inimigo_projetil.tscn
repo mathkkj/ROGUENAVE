@@ -25,7 +25,7 @@ scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_4js5t")
 
 [node name="atirar_tempo" type="Timer" parent="." unique_id=1877120801]
-wait_time = 1.5
+wait_time = 1.25
 autostart = true
 
 [node name="Raycast" type="Node2D" parent="." unique_id=1565287869]

@@ -4,6 +4,8 @@ class_name Inimigo_Teleportador
 @onready var area_tp = get_node("area_tp/CollisionShape2D")
 @onready var timer_tp = get_node("timer_tp")
 
+@onready var hurtbox = get_node("hurtbox")
+
 @onready var cena_particula_teleporte = preload("res://cenas_tscn/inimigos_tscn/teleportador_tscn/teleportador_particula.tscn")
 
 const MAX_TENTATIVAS = 50
@@ -13,13 +15,21 @@ const MAX_TENTATIVAS = 50
 @export var tp_distancia_maxima: float = 300.0
 @export var tp_angulo_desvio: float = 35.0 #cone
 
+enum ESTADO_TP {
+	TP,
+	INVISIVEL,
+	NORMAL
+}
+
+var estado_tp : ESTADO_TP = ESTADO_TP.NORMAL
 
 func _on_timer_tp_timeout():
 	if is_instance_valid(alvo) and estado_atual == ESTADOS.CACANDO:
 		executar_teletransporte_tendencioso()
 		
 		await get_tree().create_timer(1).timeout
-		atirar()
+		if estado_tp == ESTADO_TP.NORMAL:
+			atirar()
 
 func atirar():
 	if not is_instance_valid(alvo):
@@ -70,12 +80,18 @@ func executar_teletransporte_tendencioso():
 
 		if not teste:
 			visible = false
+			hurtbox.monitoring = false
+			estado_tp = ESTADO_TP.INVISIVEL
+			
 			instanciar_particula(global_position)
 			
 			await get_tree().create_timer(0.5).timeout
+			
 			instanciar_particula(posicao_candidata)
-			visible = true
 			global_position = posicao_candidata
+			estado_tp = ESTADO_TP.NORMAL
+			visible = true
+			hurtbox.monitoring = true
 			
 			return
 
