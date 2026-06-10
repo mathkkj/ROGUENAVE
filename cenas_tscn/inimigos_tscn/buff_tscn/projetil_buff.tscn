@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://cq5h4j7s06vda"]
+
+[ext_resource type="Script" uid="uid://de22334e6vhd8" path="res://codigo_gd/inimigo_gd/projetil_buff.gd" id="1_8276p"]
+[ext_resource type="Texture2D" uid="uid://dan4jswollb4d" path="res://placeholder/Potion_of_Healing_JE2_BE2.png" id="2_rb564"]
+[ext_resource type="Texture2D" uid="uid://drjlwfvt7vqk6" path="res://placeholder/Potion_of_Regeneration_JE2_BE2.webp" id="3_7gx8y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lph3e"]
+size = Vector2(18, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hfw56"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rb564")
+}],
+"loop": true,
+"name": &"escudo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_7gx8y")
+}],
+"loop": true,
+"name": &"velocidade",
+"speed": 5.0
+}]
+
+[node name="projetil_buff" type="Area2D" unique_id=272984072]
+script = ExtResource("1_8276p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=894124682]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_lph3e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=445863385]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_hfw56")
+animation = &"escudo"

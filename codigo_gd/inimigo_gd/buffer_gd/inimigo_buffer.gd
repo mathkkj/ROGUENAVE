@@ -4,7 +4,9 @@ class_name Inimigo_Buffer
 @onready var buffer_area: Area2D = $buffer_area
 @onready var seguir_inimigo_area: Area2D = $seguir_inimigo
 
-@export var buff_velocidade := 1.2
+@onready var cena_projetil_buff = preload("res://cenas_tscn/inimigos_tscn/buff_tscn/projetil_buff.tscn")
+
+@export var buff_velocidade := 1.5
 @export var buff_escudo := 6
 @export var duracao_buff := 5
 
@@ -125,8 +127,12 @@ func _physics_process(delta: float) -> void:
 	if estado_atual == ESTADOS.HIT:
 		atirar_tempo.stop()
 		velocity = knockback_dir * knockback_speed
-		knockback_speed = move_toward(knockback_speed, 0, desaceleracao * delta)
+		knockback_speed = move_toward(knockback_speed, 0.0, desaceleracao * delta)
 		empurrar_inimigos_colididos()
+
+		if knockback_speed <= 0.1:
+			knockback_speed = 0.0
+			estado_atual = ESTADOS.CACANDO
 
 	move_and_slide()
 
@@ -152,7 +158,16 @@ func atirar() -> void:
 			continue
 		var sorteado = randi_range(0, 1)
 		if corpo.is_in_group("inimigos") and corpo.has_method("receber_buff"):
-			corpo.receber_buff(buff_velocidade, buff_escudo, duracao_buff, sorteado)
+			var projetil_buff = cena_projetil_buff.instantiate()
+			get_tree().current_scene.add_child(projetil_buff)
+			var p0 = global_position
+			var p2 = corpo.global_position
+			var p1 = (p0 + p2) / 2 + Vector2(0, -100)
+			projetil_buff.tipo_buff = sorteado
+			projetil_buff.iniciar_curva(p0, p1, p2)
+			
+			
+			
 
 	await get_tree().create_timer(1.5).timeout #animacao
 
@@ -160,6 +175,13 @@ func atirar() -> void:
 	estado_atual = ESTADOS.CACANDO
 	estado_buffer_atual = ESTADOS_BUFFER.FUGIR_DO_PLAYER
 	atirar_tempo.start()
+
+func _quadratic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, t: float):
+	var q0 = p0.lerp(p1, t)
+	var q1 = p1.lerp(p2, t)
+	var r = q0.lerp(q1, t)
+	return r
+ 
 
 func receber_dano(dano: int) -> void:
 	print("vida: ", vida, " escudo: ", escudo  )

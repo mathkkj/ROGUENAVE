@@ -1,4 +1,5 @@
 extends Inimigo_Projetil
+class_name Inimigo_Teleportador
 
 @onready var area_tp = get_node("area_tp/CollisionShape2D")
 @onready var timer_tp = get_node("timer_tp")
@@ -17,7 +18,7 @@ func _on_timer_tp_timeout():
 	if is_instance_valid(alvo) and estado_atual == ESTADOS.CACANDO:
 		executar_teletransporte_tendencioso()
 		
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(1).timeout
 		atirar()
 
 func atirar():
@@ -68,14 +69,20 @@ func executar_teletransporte_tendencioso():
 		var teste = test_move(global_transform, posicao_candidata - global_position)
 
 		if not teste:
+			visible = false
+			instanciar_particula(global_position)
+			
+			await get_tree().create_timer(0.5).timeout
+			instanciar_particula(posicao_candidata)
+			visible = true
 			global_position = posicao_candidata
-			instanciar_particula()
+			
 			return
 
 
 
 
-func instanciar_particula():
+func instanciar_particula(posicao):
 	var particula = cena_particula_teleporte.instantiate()
-	particula.position = global_position
+	particula.position = posicao
 	get_tree().current_scene.add_child(particula)

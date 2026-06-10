@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="11_pdimi"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="12_j0gmb"]
 [ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://crt.gdshader" id="12_osep8"]
-[ext_resource type="PackedScene" uid="uid://bhd7sfxvoyf7b" path="res://cenas_tscn/inimigos_tscn/inimigo_buffer.tscn" id="13_t3wwm"]
+[ext_resource type="PackedScene" uid="uid://bhd7sfxvoyf7b" path="res://cenas_tscn/inimigos_tscn/buff_tscn/inimigo_buffer.tscn" id="13_t3wwm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
 shader = ExtResource("12_osep8")
@@ -64,6 +64,7 @@ script = ExtResource("7_j0gmb")
 [node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
 position = Vector2(8, 144)
 camera = NodePath("../Camera2D")
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 

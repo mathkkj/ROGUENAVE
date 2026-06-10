@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bhd7sfxvoyf7b"]
 
-[ext_resource type="Script" uid="uid://c1ps4d6m0pcmg" path="res://codigo_gd/inimigo_gd/inimigo_buffer.gd" id="1_itejw"]
+[ext_resource type="Script" uid="uid://c1ps4d6m0pcmg" path="res://codigo_gd/inimigo_gd/buffer_gd/inimigo_buffer.gd" id="1_itejw"]
 [ext_resource type="Texture2D" uid="uid://ddt7clt2dnxeo" path="res://placeholder/F228MfPasAE5W5B.jpg" id="2_itejw"]
-[ext_resource type="Script" uid="uid://dj24rfdrtfx40" path="res://codigo_gd/inimigo_gd/buffer_area.gd" id="3_8yae3"]
+[ext_resource type="Script" uid="uid://dj24rfdrtfx40" path="res://codigo_gd/inimigo_gd/buffer_gd/buffer_area.gd" id="3_8yae3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n5clb"]
 size = Vector2(53.014732, 64.94514)

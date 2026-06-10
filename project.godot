@@ -38,6 +38,7 @@ projetil_inimigo=""
 arma_multimidia=""
 inimigos_invocados=""
 quebraveis=""
+buff=""
 
 [input]
 
