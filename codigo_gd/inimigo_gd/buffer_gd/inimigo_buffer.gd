@@ -152,11 +152,11 @@ func atirar() -> void:
 	velocity = Vector2.ZERO
 	atirar_tempo.stop()
 
-
+	var sorteado = randi_range(0, 1)
 	for corpo in buffer_area.get_overlapping_bodies():
 		if corpo == self:
 			continue
-		var sorteado = randi_range(0, 1)
+		
 		if corpo.is_in_group("inimigos") and corpo.has_method("receber_buff"):
 			var projetil_buff = cena_projetil_buff.instantiate()
 			get_tree().current_scene.add_child(projetil_buff)
@@ -166,8 +166,6 @@ func atirar() -> void:
 			projetil_buff.tipo_buff = sorteado
 			projetil_buff.iniciar_curva(p0, p1, p2)
 			
-			
-			
 
 	await get_tree().create_timer(1.5).timeout #animacao
 
@@ -175,13 +173,6 @@ func atirar() -> void:
 	estado_atual = ESTADOS.CACANDO
 	estado_buffer_atual = ESTADOS_BUFFER.FUGIR_DO_PLAYER
 	atirar_tempo.start()
-
-func _quadratic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, t: float):
-	var q0 = p0.lerp(p1, t)
-	var q1 = p1.lerp(p2, t)
-	var r = q0.lerp(q1, t)
-	return r
- 
 
 func receber_dano(dano: int) -> void:
 	print("vida: ", vida, " escudo: ", escudo  )

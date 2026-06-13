@@ -1,8 +1,29 @@
 [gd_scene format=3 uid="uid://bhd7sfxvoyf7b"]
 
 [ext_resource type="Script" uid="uid://c1ps4d6m0pcmg" path="res://codigo_gd/inimigo_gd/buffer_gd/inimigo_buffer.gd" id="1_itejw"]
+[ext_resource type="Shader" uid="uid://cui2f0q60yi16" path="res://shader_gdshader/buff.gdshader" id="1_rdo55"]
 [ext_resource type="Texture2D" uid="uid://ddt7clt2dnxeo" path="res://placeholder/F228MfPasAE5W5B.jpg" id="2_itejw"]
 [ext_resource type="Script" uid="uid://dj24rfdrtfx40" path="res://codigo_gd/inimigo_gd/buffer_gd/buffer_area.gd" id="3_8yae3"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="3_ib2cb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ib2cb"]
+shader = ExtResource("1_rdo55")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rdo55"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_itejw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n5clb"]
 size = Vector2(53.014732, 64.94514)
@@ -14,10 +35,10 @@ radius = 492.0
 radius = 780.0
 
 [node name="Inimigo_buffer" type="CharacterBody2D" unique_id=1800385750 groups=["inimigos"]]
+material = SubResource("ShaderMaterial_ib2cb")
 scale = Vector2(0.5, 0.5)
 motion_mode = 1
 script = ExtResource("1_itejw")
-buff_velocidade = 1.5
 distancia_maxima = 375
 distancia_minima = 375
 desaceleracao = 2800.0
@@ -27,10 +48,11 @@ max_accel = 600.0
 vida = 12
 metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1357652521]
-position = Vector2(1.9073486e-06, 0)
-scale = Vector2(0.050632916, 0.03808594)
-texture = ExtResource("2_itejw")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=865682421]
+material = ExtResource("3_ib2cb")
+position = Vector2(0, 3.33786e-06)
+scale = Vector2(0.051, 0.037109375)
+sprite_frames = SubResource("SpriteFrames_rdo55")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1480794905 groups=["inimigos"]]
 scale = Vector2(1.4951277, 1.1934714)
@@ -93,6 +115,10 @@ shape = SubResource("CircleShape2D_n5clb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="seguir_inimigo" unique_id=82026672]
 shape = SubResource("CircleShape2D_8yae3")
 debug_color = Color(0.9110333, 0, 0.08064195, 0.41960785)
+
+[node name="buff_label" type="Label" parent="." unique_id=1106499264]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

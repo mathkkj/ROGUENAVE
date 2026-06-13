@@ -119,6 +119,8 @@ func atirar():
 	projetil.global_position = global_position
 	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
 	projetil.rotation = projetil.direcao.angle()
+	projetil.speed = 400
+	
 	get_tree().current_scene.add_child(projetil)
 
 	await get_tree().create_timer(0.35).timeout

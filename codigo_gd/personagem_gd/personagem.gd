@@ -27,6 +27,8 @@ var arma = null
 var escala_original_arma = Vector2.ONE
 
 
+var ja_deu_buff : bool = false
+
 var tempo_golpe: float = 0.0
 @export var duracao_golpe: float = 0.25
 @export var forca_golpe: float = 700.0
@@ -78,6 +80,9 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 
 @onready var ghost_node = preload("res://cenas_tscn/personagem/ghost_sprite.tscn")
 @onready var ghost_timer = get_node("ghost timer")
+
+
+
 
 func perder_vida(dano, DIR, forca) -> float:
 	if invencivel:

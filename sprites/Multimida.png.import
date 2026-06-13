@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq7n7cm64gc0d"
-path="res://.godot/imported/programadcor ONX (de lado,Direito).png-700e383b24859c31275e960c9a8eea99.ctex"
+uid="uid://dfnykg51c3dd4"
+path="res://.godot/imported/Multimida.png-d3af1ce415e56562c1e6486778751e69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://programadcor ONX (de lado,Direito).png"
-dest_files=["res://.godot/imported/programadcor ONX (de lado,Direito).png-700e383b24859c31275e960c9a8eea99.ctex"]
+source_file="res://sprites/Multimida.png"
+dest_files=["res://.godot/imported/Multimida.png-d3af1ce415e56562c1e6486778751e69.ctex"]
 
 [params]
 

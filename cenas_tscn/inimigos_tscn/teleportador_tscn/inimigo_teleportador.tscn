@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://d1r8i6gfvofhf"]
 
 [ext_resource type="Script" uid="uid://uix1g0bf3cfm" path="res://codigo_gd/inimigo_gd/inimigo_teleportador.gd" id="1_udkin"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_72tp7"]
 [ext_resource type="Texture2D" uid="uid://bxy1nry2awvoj" path="res://placeholder/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" id="2_udkin"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jff41"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_udkin")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0fs"]
 size = Vector2(53.014732, 64.94514)
@@ -18,10 +30,11 @@ tp_distancia_maxima = 450.0
 vida = 10
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=774606071 groups=["inimigos"]]
-position = Vector2(1.1189773e-06, 9.536743e-07)
-scale = Vector2(0.106666654, 0.07714286)
-texture = ExtResource("2_udkin")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=882954370]
+material = ExtResource("2_72tp7")
+position = Vector2(0, -0.7142854)
+scale = Vector2(0.107, 0.07571429)
+sprite_frames = SubResource("SpriteFrames_jff41")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1974246421]
 scale = Vector2(1.4951277, 1.1934714)

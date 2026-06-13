@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://b6hipi6lp07b3"]
 
 [ext_resource type="Script" uid="uid://b7hwqturaqma1" path="res://codigo_gd/inimigo_gd/inimigo_invocador.gd" id="1_6mb38"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_eopj5"]
 [ext_resource type="Texture2D" uid="uid://bmlihvne85uxg" path="res://placeholder/WhatsApp Image 2026-05-11 at 21.06.03.jpeg" id="2_m4u3e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pl85s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m4u3e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6mb38"]
 size = Vector2(53.014732, 64.94514)
@@ -25,9 +37,11 @@ max_accel = 1400.0
 vida = 12
 metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1627349531]
-scale = Vector2(0.20165065, 0.36358115)
-texture = ExtResource("2_m4u3e")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=872667124]
+material = ExtResource("2_eopj5")
+position = Vector2(1.4305115e-06, 4.7683716e-07)
+scale = Vector2(0.21416293, 0.38612628)
+sprite_frames = SubResource("SpriteFrames_pl85s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=778256619]
 scale = Vector2(1.4951277, 1.1934714)

@@ -210,6 +210,13 @@ func _physics_process(delta: float) -> void:
 
 	knockback_force = knockback_force.move_toward(Vector2.ZERO, desaceleracao * delta)
 	
+	#if ja_deu_buff:
+		#sprite.material.set_shader_parameter("width", 2.0)
+	#else:
+		#sprite.material.set_shader_parameter("width", 0.0)
+	
+
+	
 	match estado_atual:
 		ESTADOS.CACANDO:
 			velocity += steering
@@ -266,6 +273,8 @@ func receber_dano(dano: int) -> void:
 	dano_processado.emit()
 
 func _ready() -> void:
+	sprite.material.set_shader_parameter("color", Color("c200a800"))
+
 	alvo = Global.personagem
 
 func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
@@ -277,6 +286,9 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 	var texto_original = buff_label.text
 
 	if sorteado == 0:
+		sprite.material.set_shader_parameter("color", Color("c200a8ff"))
+		
+
 		var wait_time_original = atirar_tempo.wait_time
 
 		multiplicador_velocidade *= velocidade_buff
@@ -286,13 +298,16 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 		print("buff velocidade")
 
 		await get_tree().create_timer(duracao).timeout
+		sprite.material.set_shader_parameter("color", Color("c200a800"))
 
 		atirar_tempo.wait_time = wait_time_original
 		buff_label.text = ""
 		multiplicador_velocidade /= velocidade_buff
 
 	else:
-		var escudo_original = escudo
+		var escudo_original = 0
+		sprite.material.set_shader_parameter("color", Color("d70034ff"))
+		
 
 		escudo += escudo_buff
 
@@ -300,6 +315,7 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 		print("buff escudo")
 
 		await get_tree().create_timer(duracao).timeout
+		sprite.material.set_shader_parameter("color", Color("c200a800"))
 
 		escudo = escudo_original
 		buff_label.text = ""

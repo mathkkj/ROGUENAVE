@@ -18,7 +18,7 @@ var p0: Vector2
 var p1: Vector2
 var p2: Vector2
 var t := 0.0
-@export var velocidade := 2
+@export var velocidade := 3
 
 func iniciar_curva(_p0: Vector2, _p1: Vector2, _p2: Vector2) -> void:
 	p0 = _p0
@@ -32,9 +32,14 @@ func _process(delta: float) -> void:
 
 	if t >= 1.0:
 		for body in get_overlapping_bodies():
+			if body.is_in_group("inimigo_buff") and body.is_in_group("inimigos"):
+				return
 			if body.is_in_group("inimigos"):
 				body.receber_buff(buff_velocidade, buff_escudo, duracao_buff, tipo_buff)
-				
+			if body.is_in_group("jogador"):
+				pass
+
+				#body.receber_buff(buff_velocidade, buff_escudo, duracao_buff, tipo_buff)
 		var particula = cena_particula.instantiate()
 		particula.get_child(0).color = cor
 		particula.position = global_position

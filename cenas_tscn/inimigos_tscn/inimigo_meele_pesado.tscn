@@ -1,7 +1,51 @@
 [gd_scene format=3 uid="uid://dpur187b3slj1"]
 
 [ext_resource type="Script" uid="uid://b1r4aai6qgdii" path="res://codigo_gd/inimigo_gd/inimigo_meele_pesado.gd" id="1_5tr43"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_5hgw8"]
 [ext_resource type="Texture2D" uid="uid://dx548k8olcxov" path="res://placeholder/61899767-fofa-verde-lodo-personagem-com-sorridente-face-ilustracao-dentro-simples-estilo-para-criancas-e-diversao-desenhos-vetor.png" id="2_5tr43"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5hgw8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5tr43")
+}],
+"loop": true,
+"name": &"acertou",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5tr43")
+}],
+"loop": true,
+"name": &"andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5tr43")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5tr43")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5tr43")
+}],
+"loop": true,
+"name": &"impulso",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bciti"]
 size = Vector2(53.014732, 64.94514)
@@ -26,46 +70,48 @@ max_speed = 100.0
 vida = 42
 metadata/_custom_type_script = "uid://carrgaap35jf0"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=661270086]
-position = Vector2(-0.5000019, -0.5)
-scale = Vector2(0.11840227, 0.07959183)
-texture = ExtResource("2_5tr43")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=535153633 groups=["inimigos"]]
+material = ExtResource("2_5hgw8")
+position = Vector2(0, -1.5809498)
+scale = Vector2(0.118, 0.07205687)
+sprite_frames = SubResource("SpriteFrames_5hgw8")
+animation = &"impulso"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1119429462]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1119429462 groups=["inimigos"]]
 scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_bciti")
 
-[node name="atirar_tempo" type="Timer" parent="." unique_id=685902015]
+[node name="atirar_tempo" type="Timer" parent="." unique_id=685902015 groups=["inimigos"]]
 wait_time = 1.5
 autostart = true
 
-[node name="Raycast" type="Node2D" parent="." unique_id=619811414]
+[node name="Raycast" type="Node2D" parent="." unique_id=619811414 groups=["inimigos"]]
 
-[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=2124841572]
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=2124841572 groups=["inimigos"]]
 target_position = Vector2(0, 57)
 
-[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1430833230]
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1430833230 groups=["inimigos"]]
 target_position = Vector2(63, 1)
 
-[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1414245073]
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1414245073 groups=["inimigos"]]
 target_position = Vector2(0, -59)
 
-[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1722482356]
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1722482356 groups=["inimigos"]]
 target_position = Vector2(-61, 0)
 
-[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1202961109]
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1202961109 groups=["inimigos"]]
 target_position = Vector2(50, 50)
 
-[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=2017254204]
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=2017254204 groups=["inimigos"]]
 target_position = Vector2(-50, 50)
 
-[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=147981480]
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=147981480 groups=["inimigos"]]
 target_position = Vector2(50, -50)
 
-[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=926904009]
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=926904009 groups=["inimigos"]]
 target_position = Vector2(-50, -50)
 
-[node name="RayLOS" type="RayCast2D" parent="." unique_id=929620959]
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=929620959 groups=["inimigos"]]
 
 [node name="circulo_de_visao" type="Area2D" parent="." unique_id=67387050]
 
@@ -80,7 +126,7 @@ offset_bottom = 23.0
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1761722111]
 scale = Vector2(1.0314662, 1.0777961)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1114797238]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1114797238 groups=["inimigos"]]
 position = Vector2(9.151536e-07, -0.5)
 scale = Vector2(15.349047, 6.1137066)
 shape = SubResource("RectangleShape2D_xt6qk")

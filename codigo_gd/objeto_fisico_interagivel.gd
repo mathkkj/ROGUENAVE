@@ -9,8 +9,7 @@ var knockback_force = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	
-	knockback_force = knockback_force.move_toward(Vector2.ZERO, desaceleracao * delta)
-	
+
 	if vida <= 0:
 		queue_free()
 	
@@ -18,7 +17,7 @@ func _physics_process(delta: float) -> void:
 
 func aplicar_knockback(direcao: Vector2, forca) -> void:
 	knockback_force = direcao.normalized() * forca
-	#trocar cor
+	apply_force(knockback_force)
 	sprite.modulate = Color(10, 10, 10)
 	await get_tree().create_timer(0.15).timeout
 	sprite.modulate = Color(1, 1, 1)

@@ -8,6 +8,9 @@ class_name Inimigo_Teleportador
 
 @onready var cena_particula_teleporte = preload("res://cenas_tscn/inimigos_tscn/teleportador_tscn/teleportador_particula.tscn")
 
+@onready var colisao_hurtbox = get_node("hurtbox/CollisionShape2D")
+@onready var colisao = get_node("CollisionShape2D")
+
 const MAX_TENTATIVAS = 50
 
 
@@ -42,7 +45,7 @@ func atirar():
 	projetil.global_position = global_position
 	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
 	projetil.rotation = projetil.direcao.angle()
-	projetil.speed = 500
+	projetil.speed = 400
 
 	get_tree().current_scene.add_child(projetil)
 
@@ -82,7 +85,7 @@ func executar_teletransporte_tendencioso():
 			visible = false
 			hurtbox.monitoring = false
 			estado_tp = ESTADO_TP.INVISIVEL
-			
+			colisao.disabled = true
 			instanciar_particula(global_position)
 			
 			await get_tree().create_timer(0.5).timeout
@@ -92,6 +95,7 @@ func executar_teletransporte_tendencioso():
 			estado_tp = ESTADO_TP.NORMAL
 			visible = true
 			hurtbox.monitoring = true
+			colisao.disabled = false
 			
 			return
 

@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dan4jswollb4d" path="res://placeholder/Potion_of_Healing_JE2_BE2.png" id="2_rb564"]
 [ext_resource type="Texture2D" uid="uid://drjlwfvt7vqk6" path="res://placeholder/Potion_of_Regeneration_JE2_BE2.webp" id="3_7gx8y"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lph3e"]
-size = Vector2(18, 26)
+[sub_resource type="CircleShape2D" id="CircleShape2D_8276p"]
+radius = 27.166155
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hfw56"]
 animations = [{
@@ -31,7 +31,7 @@ script = ExtResource("1_8276p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=894124682]
 position = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_lph3e")
+shape = SubResource("CircleShape2D_8276p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=445863385]
 scale = Vector2(0.2, 0.2)

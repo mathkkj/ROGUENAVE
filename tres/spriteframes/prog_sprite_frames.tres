@@ -1,9 +1,18 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://c1dghxl1a7uwr"]
 
 [ext_resource type="Texture2D" uid="uid://8v8eyf7b8q2u" path="res://sprites/Onxy Parado.png" id="1_l72lt"]
+[ext_resource type="Texture2D" uid="uid://b2vow2ehdmum7" path="res://sprites/PROGRAMDOR andando yayyy (1).png" id="1_ybru5"]
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ybru5")
+}],
+"loop": true,
+"name": &"andando",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_l72lt")

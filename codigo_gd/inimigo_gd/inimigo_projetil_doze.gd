@@ -13,7 +13,7 @@ func atirar():
 		projetil.global_position = global_position
 
 		var direcao = (alvo.global_position - global_position).normalized()
-		projetil.speed = 500
+		projetil.speed = 350
 		var spread = deg_to_rad(15)
 		var angulo = (i - 1) * spread
 
@@ -22,7 +22,7 @@ func atirar():
 
 		get_tree().current_scene.add_child(projetil)
 
-	await get_tree().create_timer(0.50).timeout
+		
 
 	if not is_inside_tree():
 		return

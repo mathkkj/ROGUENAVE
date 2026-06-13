@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://x26clkqck301"]
 
 [ext_resource type="Script" uid="uid://50c2wmbhf8dr" path="res://codigo_gd/inimigo_gd/inimigo_projetil_rajada.gd" id="1_bwjmv"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_hmvi3"]
 [ext_resource type="Texture2D" uid="uid://cqjnujart8jes" path="res://placeholder/123124124124.png" id="2_srw0h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bwjmv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_srw0h")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmvi3"]
 size = Vector2(53.014732, 64.94514)
@@ -12,9 +24,12 @@ script = ExtResource("1_bwjmv")
 vida = 12
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1419617708 groups=["inimigos"]]
-scale = Vector2(0.23334716, 0.31824005)
-texture = ExtResource("2_srw0h")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1772014563]
+material = ExtResource("2_hmvi3")
+position = Vector2(0, -0.83333397)
+scale = Vector2(0.233, 0.32467532)
+sprite_frames = SubResource("SpriteFrames_bwjmv")
+animation = &"new_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=693511251]
 scale = Vector2(1.4951277, 1.1934714)
@@ -64,6 +79,12 @@ text = "asdwasd"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=238357151]
 scale = Vector2(1.6498704, 1.3169934)
 shape = SubResource("RectangleShape2D_hmvi3")
+
+[node name="buff_label" type="Label" parent="." unique_id=935538518]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
 
 [connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -2,6 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dgnct4e6m2fwr" path="res://codigo_gd/inimigo.gd" id="1_fc5b1"]
 [ext_resource type="Texture2D" uid="uid://be84l1qogj1w" path="res://placeholder/IGORMORENO.jpg" id="2_0rnxl"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_a23tg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5gb1d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0rnxl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w1627"]
 size = Vector2(53.014732, 64.94514)
@@ -11,9 +23,11 @@ motion_mode = 1
 script = ExtResource("1_fc5b1")
 vida = 12
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=512661686 groups=["inimigos"]]
-scale = Vector2(0.35072476, 0.35072476)
-texture = ExtResource("2_0rnxl")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1167907159]
+material = ExtResource("2_a23tg")
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_5gb1d")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=73998144]
 scale = Vector2(1.4951277, 1.1934714)

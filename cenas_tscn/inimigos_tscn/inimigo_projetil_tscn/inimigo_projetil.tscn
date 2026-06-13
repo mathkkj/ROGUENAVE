@@ -1,7 +1,19 @@
 [gd_scene format=3 uid="uid://dt7frg7l5upcl"]
 
 [ext_resource type="Script" uid="uid://bwtc1eqhsjlhl" path="res://codigo_gd/inimigo_gd/inimigo_projetil.gd" id="2_4js5t"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_qbu08"]
 [ext_resource type="Texture2D" uid="uid://dbcftilx587yt" path="res://placeholder/icon.svg" id="3_taige"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sckk4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_taige")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4js5t"]
 size = Vector2(53.014732, 64.94514)
@@ -16,9 +28,10 @@ max_speed = 400.0
 vida = 12
 metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1905566062]
-scale = Vector2(0.61805505, 0.61805505)
-texture = ExtResource("3_taige")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1131258130]
+material = ExtResource("2_qbu08")
+scale = Vector2(0.618, 0.618)
+sprite_frames = SubResource("SpriteFrames_sckk4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1935779329]
 scale = Vector2(1.4951277, 1.1934714)

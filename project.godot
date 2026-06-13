@@ -39,6 +39,8 @@ arma_multimidia=""
 inimigos_invocados=""
 quebraveis=""
 buff=""
+inimigo_buff=""
+hurtbox_inimigo=""
 
 [input]
 

@@ -1,17 +1,16 @@
 [gd_scene format=3 uid="uid://b3gbqyj6pujkq"]
 
 [ext_resource type="Script" uid="uid://nq0wgah86c28" path="res://codigo_gd/global.gd" id="1_q3n0b"]
-[ext_resource type="Texture2D" uid="uid://dbcftilx587yt" path="res://placeholder/icon.svg" id="2_uk6bg"]
 [ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/personagem_gd/camera.gd" id="3_iwd25"]
 [ext_resource type="PackedScene" uid="uid://by4q75nrxtdxj" path="res://cenas_tscn/personagem.tscn" id="4_13lfy"]
 [ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_pdimi"]
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
+[ext_resource type="Shader" uid="uid://cui2f0q60yi16" path="res://shader_gdshader/buff.gdshader" id="7_osep8"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
 [ext_resource type="Script" uid="uid://ckbcyurf5jexp" path="res://codigo_gd/objeto_fisico_interagivel.gd" id="8_uk6bg"]
-[ext_resource type="PackedScene" uid="uid://d1r8i6gfvofhf" path="res://cenas_tscn/inimigos_tscn/teleportador_tscn/inimigo_teleportador.tscn" id="10_iwd25"]
-[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="11_pdimi"]
 [ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="12_j0gmb"]
-[ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://crt.gdshader" id="12_osep8"]
+[ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://shader_gdshader/crt.gdshader" id="12_osep8"]
+[ext_resource type="PackedScene" uid="uid://dpur187b3slj1" path="res://cenas_tscn/inimigos_tscn/inimigo_meele_pesado.tscn" id="12_pdimi"]
 [ext_resource type="PackedScene" uid="uid://bhd7sfxvoyf7b" path="res://cenas_tscn/inimigos_tscn/buff_tscn/inimigo_buffer.tscn" id="13_t3wwm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
@@ -24,20 +23,22 @@ shader_parameter/vignette_intensity = 0.3
 shader_parameter/grille_amount = 0.05
 shader_parameter/brightness_boost = 1.2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pdimi"]
+shader = ExtResource("7_osep8")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
-size = Vector2(450, 469)
+size = Vector2(679.4124, 521.5461)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
 size = Vector2(464, 467)
 
 [node name="cena" type="Node2D" unique_id=1523779238]
 script = ExtResource("1_q3n0b")
-
-[node name="Icon" type="Sprite2D" parent="." unique_id=763547240]
-z_index = 66
-position = Vector2(1181.0001, 341.00003)
-scale = Vector2(1.8865434, 1.8865434)
-texture = ExtResource("2_uk6bg")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1368271444 node_paths=PackedStringArray("personagem")]
 position_smoothing_enabled = true
@@ -62,6 +63,7 @@ texture = ExtResource("6_pdimi")
 script = ExtResource("7_j0gmb")
 
 [node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_13lfy")]
+material = SubResource("ShaderMaterial_pdimi")
 position = Vector2(8, 144)
 camera = NodePath("../Camera2D")
 classe_personagem = 1
@@ -78,8 +80,8 @@ scale = Vector2(2.0661933, 0.37913364)
 
 [node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D2" unique_id=406344323]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(-8.763641, 564.80756)
-scale = Vector2(2.1125388, 3.2592301)
+position = Vector2(-5.5801344, 553.46344)
+scale = Vector2(2.0998049, 3.2138534)
 texture = ExtResource("8_q3n0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D2" unique_id=449427736]
@@ -121,17 +123,17 @@ scale = Vector2(2.0661936, 0.37913364)
 
 [node name="Sprite2D" type="Sprite2D" parent="Paredes/StaticBody2D4" unique_id=386282951]
 modulate = Color(0, 0, 0, 1)
-position = Vector2(0.7602196, 513.99146)
-scale = Vector2(2.0508144, 3.0559661)
+position = Vector2(-6.2831335, 470.10297)
+scale = Vector2(2.0789878, 3.23152)
 texture = ExtResource("8_q3n0b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D4" unique_id=1919873757]
-position = Vector2(1, -2.5)
+position = Vector2(16.581161, -28.773132)
 shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Caixa" type="RigidBody2D" parent="." unique_id=873234227 groups=["quebraveis"]]
 position = Vector2(210, 192)
-mass = 0.001
+mass = 0.1
 gravity_scale = 0.0
 script = ExtResource("8_uk6bg")
 
@@ -144,13 +146,10 @@ position = Vector2(0, 1.5)
 scale = Vector2(0.098234236, 0.098234236)
 shape = SubResource("RectangleShape2D_uk6bg")
 
-[node name="Inimigo_teleportador" parent="." unique_id=815149148 instance=ExtResource("10_iwd25")]
-
-[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("11_pdimi")]
-position = Vector2(194, 8)
+[node name="Inimigo_buffer" parent="." unique_id=1800385750 instance=ExtResource("13_t3wwm")]
+position = Vector2(74, -14)
 
 [node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("12_j0gmb")]
-position = Vector2(197.99998, -78.99999)
 
-[node name="Inimigo_buffer" parent="." unique_id=1800385750 instance=ExtResource("13_t3wwm")]
-position = Vector2(371, 19)
+[node name="Inimigo_meele_pesado" parent="." unique_id=1226260101 instance=ExtResource("12_pdimi")]
+position = Vector2(153, 40)

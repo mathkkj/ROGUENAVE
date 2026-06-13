@@ -2,6 +2,50 @@
 
 [ext_resource type="Script" uid="uid://b562ldkvf01fn" path="res://codigo_gd/inimigo_gd/inimigo_meele_invocado.gd" id="1_pgx0w"]
 [ext_resource type="Texture2D" uid="uid://bcjtfgb645p0a" path="res://placeholder/SIM.png" id="2_ly80j"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_yyysh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ly80j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly80j")
+}],
+"loop": true,
+"name": &"acertou",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly80j")
+}],
+"loop": true,
+"name": &"andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly80j")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly80j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ly80j")
+}],
+"loop": true,
+"name": &"impulso",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyysh"]
 size = Vector2(60, 61.666664)
@@ -25,10 +69,12 @@ max_speed = 250.0
 vida = 6
 metadata/_custom_type_script = "uid://carrgaap35jf0"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=345986527]
-position = Vector2(0.50000095, 9.536743e-07)
-scale = Vector2(1.9889404, 1.9889404)
-texture = ExtResource("2_ly80j")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=996138744]
+material = ExtResource("2_yyysh")
+position = Vector2(2.861023e-06, -1.4974108)
+scale = Vector2(1.9965464, 1.9811884)
+sprite_frames = SubResource("SpriteFrames_ly80j")
+animation = &"impulso"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=773156831]
 position = Vector2(0.99999964, 0)

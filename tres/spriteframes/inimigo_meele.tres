@@ -1,0 +1,80 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cneombnk5np2p"]
+
+[ext_resource type="Texture2D" uid="uid://x6yqwc3v542r" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Soco_1.png" id="1_4s2ff"]
+[ext_resource type="Texture2D" uid="uid://cnvgvjr5hy6pn" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Impulso_1.png" id="2_wljpd"]
+[ext_resource type="Texture2D" uid="uid://8l41o4qnwxee" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Impulso_2.png" id="3_cm3k0"]
+[ext_resource type="Texture2D" uid="uid://c6m1glft7r2v7" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Andar_1.png" id="4_6besh"]
+[ext_resource type="Texture2D" uid="uid://b2u80k6nqgfa3" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Andar_2.png" id="5_54bnb"]
+[ext_resource type="Texture2D" uid="uid://beyfomubt8hcf" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Andar_3.png" id="6_ure86"]
+[ext_resource type="Texture2D" uid="uid://b3uji0hn5o0ap" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Andar_4.png" id="7_udkev"]
+[ext_resource type="Texture2D" uid="uid://0cagw4msd14w" path="res://sprites/inimigo/inimigo_dash_sprites/Dash_Empurrão.png" id="8_3l2xo"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4s2ff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_wljpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cm3k0")
+}],
+"loop": true,
+"name": &"acertou",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6besh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_54bnb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ure86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_udkev")
+}],
+"loop": true,
+"name": &"andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_3l2xo")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6besh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6besh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_54bnb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ure86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_udkev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_4s2ff")
+}],
+"loop": true,
+"name": &"impulso",
+"speed": 5.0
+}]
