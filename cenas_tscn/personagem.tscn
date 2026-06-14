@@ -7,7 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qoi5i"]
 shader = ExtResource("2_d8uwv")
 shader_parameter/color = Color(1, 1, 1, 0)
-shader_parameter/width = 1.0
+shader_parameter/width = 2.000000095
 shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
@@ -35,7 +35,7 @@ dano_arma_prog = 3
 material = SubResource("ShaderMaterial_qoi5i")
 position = Vector2(0.19999993, -0.99999714)
 sprite_frames = ExtResource("3_j7w2x")
-animation = &"idle_baixo"
+animation = &"idle_esquerda"
 autoplay = "idle_baixo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931 groups=["jogador"]]

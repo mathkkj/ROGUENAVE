@@ -35,6 +35,7 @@ var tempo_golpe: float = 0.0
 @export var impulso_golpe3: float = 1800.0
 var direcao_golpe: Vector2 = Vector2.ZERO
 
+var indice_golpe_anim : int
 
 @export var cadencia_atirar = 0.25
 @export var tempo_atirar = 0
@@ -94,7 +95,7 @@ func atualizar_animacao():
 
 	if angulo < 0:
 		angulo += 360
-
+	
 	var direcao_animacao = ""
 	match int(round(angulo / 90.0)) % 4:
 		0:
@@ -108,9 +109,47 @@ func atualizar_animacao():
 
 		3:
 			direcao_animacao = "cima"
-
-
-	var animacao = ("walk_" if esta_andando else "idle_") + direcao_animacao
+	
+	var tipo_animacao : String
+	
+	
+	if esta_andando:
+		tipo_animacao = "walk"
+	else:
+		tipo_animacao = "idle"
+	var animacao = tipo_animacao + "_" + direcao_animacao
+	
+	if em_golpe:
+		tipo_animacao = "golpe"
+		match int(round(angulo / 45.0)) % 8:
+			0:
+				direcao_animacao = "leste"
+				
+			1:
+				direcao_animacao = "sudeste"
+				
+			2:
+				direcao_animacao = "sul"
+				
+			3:
+				direcao_animacao = "sudoeste"
+				
+			4:
+				direcao_animacao = "oeste"
+				
+			5:
+				direcao_animacao = "noroeste"
+				
+			6:
+				direcao_animacao = "norte"
+				
+			7:
+				direcao_animacao = "nordeste"
+		
+		animacao = tipo_animacao + "_" + direcao_animacao + "_" + str(indice_golpe_anim)
+	else:
+		animacao = tipo_animacao + "_" + direcao_animacao
+		
 
 	if sprite.animation != animacao:
 		var reverso = false
@@ -132,7 +171,8 @@ func atualizar_animacao():
 			sprite.play_backwards(animacao)
 		else:
 			sprite.play(animacao)
-		#print(animacao)
+			
+		print(animacao)
 	# arma atrás quando olha para cima
 	if arma is ArmasRanged:
 		var sprite_arma = arma.get_node("Sprite2D")
@@ -516,7 +556,7 @@ func _on_golpe_executado(golpe: int) -> void:
 	
 	direcao_golpe = ultima_direcao_mira.normalized()
 	
-	
+	indice_golpe_anim = golpe
 
 	match golpe:
 		1:

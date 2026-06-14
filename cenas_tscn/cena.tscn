@@ -63,6 +63,7 @@ script = ExtResource("7_j0gmb")
 material = SubResource("ShaderMaterial_pdimi")
 position = Vector2(8, 144)
 camera = NodePath("../Camera2D")
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -129,7 +130,6 @@ shape = SubResource("RectangleShape2D_iwd25")
 
 [node name="Caixa" type="RigidBody2D" parent="." unique_id=873234227 groups=["quebraveis"]]
 position = Vector2(210, 192)
-mass = 0.1
 gravity_scale = 0.0
 script = ExtResource("8_uk6bg")
 
