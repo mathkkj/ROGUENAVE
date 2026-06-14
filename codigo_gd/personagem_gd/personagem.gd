@@ -75,7 +75,6 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 	preload("res://tres/spriteframes/full_sprite_frames.tres")
 	]
 
-@onready var offset_pd = get_node("offset_pixel_dash")
 @onready var particula_dash = preload("res://cenas_tscn/particula_dash.tscn")
 
 @onready var ghost_node = preload("res://cenas_tscn/personagem/ghost_sprite.tscn")
@@ -83,6 +82,61 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 
 
 
+func atualizar_animacao():
+	direcao_mira = ultima_direcao_mira
+
+	# prioridade para a arma
+	if arma is ArmasRanged:
+		direcao_mira = (get_global_mouse_position() - arma.global_position).normalized()
+
+
+	var angulo = rad_to_deg(direcao_mira.angle())
+
+	if angulo < 0:
+		angulo += 360
+
+	var direcao_animacao = ""
+	match int(round(angulo / 90.0)) % 4:
+		0:
+			direcao_animacao = "direita"
+
+		1:
+			direcao_animacao = "baixo"
+
+		2:
+			direcao_animacao = "esquerda"
+
+		3:
+			direcao_animacao = "cima"
+
+
+	var animacao = ("walk_" if esta_andando else "idle_") + direcao_animacao
+
+	if sprite.animation != animacao:
+		var reverso = false
+
+		if animacao == "walk_direita" and direcao_mira.x < 0:
+			reverso = true
+
+		elif animacao == "walk_esquerda" and direcao_mira.x > 0:
+			reverso = true
+
+		elif animacao == "walk_cima" and direcao_mira.y > 0:
+			reverso = true
+
+		elif animacao == "walk_baixo" and direcao_mira.y < 0:
+			reverso = true
+
+
+		if reverso:
+			sprite.play_backwards(animacao)
+		else:
+			sprite.play(animacao)
+		#print(animacao)
+	# arma atrás quando olha para cima
+	if arma is ArmasRanged:
+		var sprite_arma = arma.get_node("Sprite2D")
+		sprite_arma.z_index = -1 if direcao_animacao == "cima" else 1
 
 func perder_vida(dano, DIR, forca) -> float:
 	if invencivel:
@@ -202,6 +256,7 @@ func _physics_process(delta: float) -> void:
 	if vida <= 0:
 		queue_free()
 	
+	atualizar_animacao()
 	label2.text = str(stamina, vida)
 	
 	_stamina(delta)
@@ -246,11 +301,11 @@ func _physics_process(delta: float) -> void:
 	
 	var angulo_em_graus_mira = rad_to_deg(ultima_direcao_mira.angle())
 	
-	##FLIP SPRITE
-	sprite.flip_h = false
-	if abs(int(angulo_em_graus_mira) % 360) >= 90 and abs(int(angulo_em_graus_mira) % 360) <= 270:
-		#print("cu")
-		sprite.flip_h = true
+	###FLIP SPRITE
+	#sprite.flip_h = false
+	#if abs(int(angulo_em_graus_mira) % 360) >= 90 and abs(int(angulo_em_graus_mira) % 360) <= 270:
+		##print("cu")
+		#sprite.flip_h = true
 		
 		
 	esta_andando = direcao != Vector2.ZERO
@@ -445,16 +500,15 @@ func _arma_mirar():
 		arma.rotation = deg_to_rad(rotacao)
 		#arma.rotation_degrees = rotacao
 		arma.scale.y = escala_original_arma.y
-		#arma.show_behind_parent = lado.y < 0
 
 	else:
 		var angulo = direcao_mira.angle()
-		var distancia = 20
-		
+		var distancia = 0
+				
 		arma.global_position = pivo_arma.global_position + Vector2(cos(angulo), sin(angulo)) * distancia
 		arma.rotation = lerp_angle(arma.rotation, angulo, 18.0 * get_process_delta_time())
 		arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
-		#arma.show_behind_parent = direcao_mira.y < 0
+
 
 func _on_golpe_executado(golpe: int) -> void:
 	em_golpe = true

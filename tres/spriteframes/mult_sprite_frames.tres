@@ -4,12 +4,9 @@
 
 [resource]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_0ps83")
-}],
+"frames": [],
 "loop": true,
-"name": &"andando",
+"name": &"idle_baixo",
 "speed": 5.0
 }, {
 "frames": [{
@@ -17,6 +14,36 @@ animations = [{
 "texture": ExtResource("1_0ps83")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"idle_cima",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle_direita",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle_esquerda",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_baixo",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_cima",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_direita",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk_esquerda",
 "speed": 5.0
 }]

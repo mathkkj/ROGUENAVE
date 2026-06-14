@@ -246,7 +246,6 @@ func empurrar_inimigos_colididos() -> void:
 			var forca_empurrao = max(knockback_force.length() * 1, 80.0)
 			outro.aplicar_knockback(direcao_empurrao, forca_empurrao)
 
-
 func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	estado_atual = ESTADOS.HIT
 	knockback_force = direcao.normalized() * forca

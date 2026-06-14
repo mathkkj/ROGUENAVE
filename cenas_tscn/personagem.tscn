@@ -1,7 +1,16 @@
 [gd_scene format=3 uid="uid://by4q75nrxtdxj"]
 
 [ext_resource type="Script" uid="uid://cctxoitx16ea2" path="res://codigo_gd/personagem_gd/personagem.gd" id="1_d8uwv"]
-[ext_resource type="SpriteFrames" uid="uid://b8h36nxt0ngtx" path="res://tres/spriteframes/mult_sprite_frames.tres" id="2_j7w2x"]
+[ext_resource type="Shader" uid="uid://cui2f0q60yi16" path="res://shader_gdshader/buff.gdshader" id="2_d8uwv"]
+[ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="3_j7w2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qoi5i"]
+shader = ExtResource("2_d8uwv")
+shader_parameter/color = Color(1, 1, 1, 0)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]
 radius = 5.3333335
@@ -23,10 +32,11 @@ duracao_golpe = 0.5
 dano_arma_prog = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1403625248 groups=["jogador"]]
+material = SubResource("ShaderMaterial_qoi5i")
 position = Vector2(0.19999993, -0.99999714)
-sprite_frames = ExtResource("2_j7w2x")
-animation = &"idle"
-autoplay = "idle"
+sprite_frames = ExtResource("3_j7w2x")
+animation = &"idle_baixo"
+autoplay = "idle_baixo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931 groups=["jogador"]]
 scale = Vector2(3, 3)
@@ -43,6 +53,7 @@ position = Vector2(0, 9.536743e-07)
 shape = SubResource("CapsuleShape2D_u8x3t")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]
+position = Vector2(1, 0)
 scale = Vector2(1.0000001, 1.0000001)
 
 [node name="pivo_machado" type="Marker2D" parent="." unique_id=306450883]
@@ -59,9 +70,6 @@ offset_top = 69.0
 offset_right = 40.0
 offset_bottom = 92.0
 metadata/_edit_use_anchors_ = true
-
-[node name="offset_pixel_dash" type="Marker2D" parent="." unique_id=820992287]
-position = Vector2(0, 35)
 
 [node name="ghost timer" type="Timer" parent="." unique_id=2026631748]
 wait_time = 0.1

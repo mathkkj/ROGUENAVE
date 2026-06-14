@@ -1,23 +1,77 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://c1dghxl1a7uwr"]
 
-[ext_resource type="Texture2D" uid="uid://8v8eyf7b8q2u" path="res://sprites/Onxy Parado.png" id="1_l72lt"]
-[ext_resource type="Texture2D" uid="uid://b2vow2ehdmum7" path="res://sprites/PROGRAMDOR andando yayyy (1).png" id="1_ybru5"]
+[ext_resource type="Texture2D" uid="uid://cphm7h17fh4rm" path="res://sprites/sprite_prog/Onxy Sull02.png" id="1_wc2kq"]
+[ext_resource type="Texture2D" uid="uid://71tnpkjpft0u" path="res://sprites/sprite_prog/Onxy Norte022.png" id="2_jmdmf"]
+[ext_resource type="Texture2D" uid="uid://bmfs6c2t4585x" path="res://sprites/sprite_prog/Onxy Leste022.png" id="3_jldtx"]
+[ext_resource type="Texture2D" uid="uid://bijakm7oqfuyf" path="res://sprites/sprite_prog/Onxy Oeste.png" id="4_opybj"]
+[ext_resource type="Texture2D" uid="uid://c4bri876wlak4" path="res://sprites/sprite_prog/com_arma/Onxy Sul com arma.png" id="5_kwfb0"]
+[ext_resource type="Texture2D" uid="uid://73ho1olcr2nf" path="res://sprites/sprite_prog/com_arma/Onxy Norte com arma02.png" id="6_rmpnl"]
+[ext_resource type="Texture2D" uid="uid://byc1fs53ralpy" path="res://sprites/sprite_prog/com_arma/Onxy Leste com arma.png" id="7_8a4da"]
+[ext_resource type="Texture2D" uid="uid://bbqm4cw6hoy5v" path="res://sprites/sprite_prog/com_arma/Onxy Oeste com arma.png" id="8_c16n6"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_ybru5")
+"texture": ExtResource("1_wc2kq")
 }],
 "loop": true,
-"name": &"andando",
+"name": &"idle_baixo",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_l72lt")
+"texture": ExtResource("2_jmdmf")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"idle_cima",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jldtx")
+}],
+"loop": true,
+"name": &"idle_direita",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_opybj")
+}],
+"loop": true,
+"name": &"idle_esquerda",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_kwfb0")
+}],
+"loop": true,
+"name": &"walk_baixo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_rmpnl")
+}],
+"loop": true,
+"name": &"walk_cima",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8a4da")
+}],
+"loop": true,
+"name": &"walk_direita",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_c16n6")
+}],
+"loop": true,
+"name": &"walk_esquerda",
 "speed": 5.0
 }]

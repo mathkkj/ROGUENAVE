@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2vow2ehdmum7"
-path="res://.godot/imported/PROGRAMDOR andando yayyy (1).png-24c6286d57336cf2556a45b197d0b832.ctex"
+uid="uid://bbqm4cw6hoy5v"
+path="res://.godot/imported/Onxy Oeste com arma.png-384957616ff38528e3f112a17376c100.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/PROGRAMDOR andando yayyy (1).png"
-dest_files=["res://.godot/imported/PROGRAMDOR andando yayyy (1).png-24c6286d57336cf2556a45b197d0b832.ctex"]
+source_file="res://sprites/sprite_prog/com_arma/Onxy Oeste com arma.png"
+dest_files=["res://.godot/imported/Onxy Oeste com arma.png-384957616ff38528e3f112a17376c100.ctex"]
 
 [params]
 

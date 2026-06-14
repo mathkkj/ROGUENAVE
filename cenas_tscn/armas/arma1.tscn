@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://bxg2rsostxiil"]
 
 [ext_resource type="Script" uid="uid://bu8w8xswwp1eg" path="res://codigo_gd/personagem_gd/armas/arma_1.gd" id="1_qairy"]
-[ext_resource type="Texture2D" uid="uid://dr1ereo3cxt3u" path="res://placeholder/arma_do_fluzao_ia_pixelada.png" id="1_tnsys"]
+[ext_resource type="Texture2D" uid="uid://c6ksi6fr8odep" path="res://sprites/sprite_prog/Arma programador.png" id="2_qairy"]
 
 [node name="arma1" type="Node2D" unique_id=1469492499]
-position = Vector2(4, 0)
-scale = Vector2(0.5, 0.5)
+position = Vector2(-2, 0)
 script = ExtResource("1_qairy")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=278146278]
-position = Vector2(12, 12)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_tnsys")
+position = Vector2(2, 0)
+rotation = -1.5707964
+texture = ExtResource("2_qairy")
 
 [node name="sair_bala" type="Marker2D" parent="." unique_id=374399913]
-position = Vector2(62, 0)
+position = Vector2(27, 0)
 
 [node name="Label" type="Label" parent="." unique_id=826091825]
+visible = false
 offset_left = 62.0
 offset_top = 46.0
 offset_right = 102.0

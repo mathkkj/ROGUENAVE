@@ -21,7 +21,7 @@ var superaquecida = false
 var pode_atirar = true
 
 
-@export var recoil_offset: Vector2 = Vector2(-8, 0)
+@export var recoil_offset: Vector2 = Vector2(-2, 0)
 @export var recoil_ida: float = 0.04
 @export var recoil_volta: float = 0.08
 

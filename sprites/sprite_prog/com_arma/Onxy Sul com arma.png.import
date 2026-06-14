@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8v8eyf7b8q2u"
-path="res://.godot/imported/Onxy Parado.png-b60145ee4af53b655be1d1e0d25bdc24.ctex"
+uid="uid://c4bri876wlak4"
+path="res://.godot/imported/Onxy Sul com arma.png-9dfba16cb74312cb53df465007a6524a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Onxy Parado.png"
-dest_files=["res://.godot/imported/Onxy Parado.png-b60145ee4af53b655be1d1e0d25bdc24.ctex"]
+source_file="res://sprites/sprite_prog/com_arma/Onxy Sul com arma.png"
+dest_files=["res://.godot/imported/Onxy Sul com arma.png-9dfba16cb74312cb53df465007a6524a.ctex"]
 
 [params]
 
