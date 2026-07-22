@@ -1,5 +1,7 @@
 extends AnimatedSprite2D
 
+@onready var arma = get_node("arma1")
+
 func _ready() -> void:
 	ghosting()
 

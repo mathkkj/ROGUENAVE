@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dj40ywkwurwui"]
+
+[ext_resource type="Script" uid="uid://bqofcd62kvyo5" path="res://cenas_tscn/inimigos_tscn/buff_tscn/particula_buff.gd" id="1_bxb5n"]
+
+[sub_resource type="Gradient" id="Gradient_g4v7s"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="particula_buff" type="Node2D" unique_id=611838455]
+script = ExtResource("1_bxb5n")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=70600047]
+position = Vector2(0, -13)
+amount = 24
+explosiveness = 0.1
+randomness = 1.0
+use_fixed_seed = true
+seed = 466827704
+emission_shape = 1
+emission_sphere_radius = 24.46
+particle_flag_align_y = true
+gravity = Vector2(0, -100)
+scale_amount_min = 6.0
+scale_amount_max = 6.0
+color_ramp = SubResource("Gradient_g4v7s")

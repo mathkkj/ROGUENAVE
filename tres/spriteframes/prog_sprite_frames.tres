@@ -4,10 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://71tnpkjpft0u" path="res://sprites/sprite_prog/Onxy Norte022.png" id="2_jmdmf"]
 [ext_resource type="Texture2D" uid="uid://bmfs6c2t4585x" path="res://sprites/sprite_prog/Onxy Leste022.png" id="3_jldtx"]
 [ext_resource type="Texture2D" uid="uid://bijakm7oqfuyf" path="res://sprites/sprite_prog/Onxy Oeste.png" id="4_opybj"]
-[ext_resource type="Texture2D" uid="uid://c4bri876wlak4" path="res://sprites/sprite_prog/com_arma/Onxy Sul com arma.png" id="5_kwfb0"]
-[ext_resource type="Texture2D" uid="uid://73ho1olcr2nf" path="res://sprites/sprite_prog/com_arma/Onxy Norte com arma02.png" id="6_rmpnl"]
-[ext_resource type="Texture2D" uid="uid://byc1fs53ralpy" path="res://sprites/sprite_prog/com_arma/Onxy Leste com arma.png" id="7_8a4da"]
-[ext_resource type="Texture2D" uid="uid://bbqm4cw6hoy5v" path="res://sprites/sprite_prog/com_arma/Onxy Oeste com arma.png" id="8_c16n6"]
+[ext_resource type="Texture2D" uid="uid://pm6piu0jjp2n" path="res://sprites/sprite_prog/andando/Onxy Sul andando outro lado.png" id="5_8a4da"]
+[ext_resource type="Texture2D" uid="uid://uo610fpdvh0v" path="res://sprites/sprite_prog/andando/Onxy Sull02.png" id="6_c16n6"]
+[ext_resource type="Texture2D" uid="uid://lpdn3rs2xr26" path="res://sprites/sprite_prog/andando/Onxy Sul andando.png" id="7_uw6om"]
+[ext_resource type="Texture2D" uid="uid://d2p1n26ef7gdj" path="res://sprites/sprite_prog/andando/Onxy Norte022.png" id="8_dik6n"]
+[ext_resource type="Texture2D" uid="uid://drvh53e7rlvv3" path="res://sprites/sprite_prog/andando/Onxy Norte Andando.png" id="9_8fkxv"]
+[ext_resource type="Texture2D" uid="uid://bmko4hjjb8vkj" path="res://sprites/sprite_prog/andando/Onxy Leste Andando outro lado.png" id="10_20237"]
+[ext_resource type="Texture2D" uid="uid://vs5hcyamog3e" path="res://sprites/sprite_prog/andando/Onxy Leste022.png" id="11_bhnce"]
+[ext_resource type="Texture2D" uid="uid://8a2rn5xcgec7" path="res://sprites/sprite_prog/andando/Onxy Leste Andando.png" id="12_jpmh5"]
+[ext_resource type="Texture2D" uid="uid://dmxpbboi1n62q" path="res://sprites/sprite_prog/andando/Onxy Oeste Andando outro lado.png" id="13_60hj0"]
+[ext_resource type="Texture2D" uid="uid://v11pounbbwxl" path="res://sprites/sprite_prog/andando/Onxy Oeste.png" id="14_g4n7p"]
+[ext_resource type="Texture2D" uid="uid://bjob41ys07ayu" path="res://sprites/sprite_prog/andando/Onxy Oeste Andando.png" id="15_0yp2d"]
 
 [resource]
 animations = [{
@@ -15,7 +22,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_wc2kq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_baixo",
 "speed": 5.0
 }, {
@@ -23,7 +30,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_jmdmf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_cima",
 "speed": 5.0
 }, {
@@ -31,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_jldtx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_direita",
 "speed": 5.0
 }, {
@@ -39,39 +46,60 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_opybj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_esquerda",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_kwfb0")
+"texture": ExtResource("5_8a4da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_c16n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uw6om")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_baixo",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_rmpnl")
+"texture": ExtResource("8_dik6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8fkxv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_cima",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_8a4da")
+"texture": ExtResource("10_20237")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_bhnce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_jpmh5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_direita",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_c16n6")
+"texture": ExtResource("13_60hj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_g4n7p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_0yp2d")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_esquerda",
 "speed": 5.0
 }]

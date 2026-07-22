@@ -2,8 +2,27 @@
 
 [ext_resource type="SpriteFrames" uid="uid://c1dghxl1a7uwr" path="res://tres/spriteframes/prog_sprite_frames.tres" id="1_vc8b8"]
 [ext_resource type="Script" uid="uid://cmquow6jti2g8" path="res://codigo_gd/personagem_gd/ghost_sprite.gd" id="2_e8irr"]
+[ext_resource type="Texture2D" uid="uid://c6ksi6fr8odep" path="res://sprites/sprite_prog/Arma programador.png" id="3_e8irr"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" unique_id=1469361316]
 sprite_frames = ExtResource("1_vc8b8")
-animation = &"idle"
+animation = &"idle_baixo"
 script = ExtResource("2_e8irr")
+
+[node name="arma1" type="Node2D" parent="." unique_id=1469492499]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="arma1" unique_id=278146278]
+position = Vector2(2, 0)
+rotation = -1.5707964
+texture = ExtResource("3_e8irr")
+
+[node name="sair_bala" type="Marker2D" parent="arma1" unique_id=374399913]
+position = Vector2(27, 0)
+
+[node name="Label" type="Label" parent="arma1" unique_id=826091825]
+visible = false
+offset_left = 62.0
+offset_top = 46.0
+offset_right = 102.0
+offset_bottom = 69.0

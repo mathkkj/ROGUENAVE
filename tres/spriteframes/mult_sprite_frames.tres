@@ -80,7 +80,10 @@ animations = [{
 "name": &"golpe_oeste_3",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ch8l1")
+}],
 "loop": true,
 "name": &"golpe_sudeste_1",
 "speed": 5.0

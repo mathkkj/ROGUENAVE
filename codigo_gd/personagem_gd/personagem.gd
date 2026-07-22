@@ -52,6 +52,8 @@ var stamina_por_ataque = 25
 
 @onready var particula_morte_cena = preload("res://cenas_tscn/inimigos_tscn/particula_morte.tscn")
 
+
+var pode_andar: bool = true
 #estados
 var esta_andando: bool = false
 var em_dash: bool = false
@@ -82,6 +84,7 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 @onready var ghost_timer = get_node("ghost timer")
 
 
+var controles_bloqueados := false
 
 func atualizar_animacao():
 	direcao_mira = ultima_direcao_mira
@@ -113,13 +116,19 @@ func atualizar_animacao():
 	var tipo_animacao : String
 	
 	
-	if esta_andando:
-		tipo_animacao = "walk"
-	else:
-		tipo_animacao = "idle"
+	
 	var animacao = tipo_animacao + "_" + direcao_animacao
 	
-	if em_golpe:
+	if controles_bloqueados:
+		tipo_animacao = "idle"
+		animacao = tipo_animacao + "_" + direcao_animacao
+
+	if esta_andando:
+		tipo_animacao = "walk"
+		animacao = tipo_animacao + "_" + direcao_animacao
+	
+
+	elif em_golpe:
 		tipo_animacao = "golpe"
 		match int(round(angulo / 45.0)) % 8:
 			0:
@@ -145,12 +154,17 @@ func atualizar_animacao():
 				
 			7:
 				direcao_animacao = "nordeste"
-		
 		animacao = tipo_animacao + "_" + direcao_animacao + "_" + str(indice_golpe_anim)
-	else:
-		animacao = tipo_animacao + "_" + direcao_animacao
 		
 
+	
+	else:
+		tipo_animacao = "idle"
+		animacao = tipo_animacao + "_" + direcao_animacao
+		
+		
+	
+		
 	if sprite.animation != animacao:
 		var reverso = false
 
@@ -166,7 +180,9 @@ func atualizar_animacao():
 		elif animacao == "walk_baixo" and direcao_mira.y < 0:
 			reverso = true
 
-
+		if controles_bloqueados == true:
+			tipo_animacao = "idle"
+			
 		if reverso:
 			sprite.play_backwards(animacao)
 		else:
@@ -292,10 +308,30 @@ func _atualizar_ultima_direcao():
 		ultima_direcao_mira = direcao
 
 
+
+func unlock_movimentacao():
+	controles_bloqueados = false
+
+func lock_movimentacao():
+	controles_bloqueados = true
+
+	velocity = Vector2.ZERO
+	esta_andando = false
+	atirando = false
+	em_dash = false
+	em_golpe = false
+
+	move_and_slide()
+
+
 func _physics_process(delta: float) -> void:
 	if vida <= 0:
 		queue_free()
 	
+	if controles_bloqueados:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	atualizar_animacao()
 	label2.text = str(stamina, vida)
 	
@@ -347,7 +383,7 @@ func _physics_process(delta: float) -> void:
 		##print("cu")
 		#sprite.flip_h = true
 		
-		
+
 	esta_andando = direcao != Vector2.ZERO
 	
 	if arma is ArmaMeele and Input.is_action_just_pressed("atacar") and not em_dash and not em_golpe and stamina >= stamina_por_ataque:

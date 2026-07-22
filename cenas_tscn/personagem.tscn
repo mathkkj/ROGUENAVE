@@ -35,7 +35,7 @@ dano_arma_prog = 3
 material = SubResource("ShaderMaterial_qoi5i")
 position = Vector2(0.19999993, -0.99999714)
 sprite_frames = ExtResource("3_j7w2x")
-animation = &"idle_esquerda"
+animation = &"walk_baixo"
 autoplay = "idle_baixo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931 groups=["jogador"]]

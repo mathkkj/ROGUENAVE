@@ -3,6 +3,8 @@ extends Camera2D
 @export var personagem: Node2D
 @export var distancia_maxima := Vector2(150, 75)
 
+var alvo_camera: Node2D
+
 var desired_offset := Vector2(0,0)
 
 #SHAKE
@@ -15,12 +17,31 @@ var trauma_power = 1
 
 var direcao = Vector2.ZERO
 
-func _process(delta: float) -> void:
+var camera_lock := false
+
+func _ready() -> void:
+	alvo_camera = personagem
+
+func _physics_process(delta: float) -> void:
 	if personagem == null:
 		return
 
 	var zoom_aplicado := Vector2(1,1)
 	var alvo_offset := Vector2(0,0)
+
+	#lock e unlock
+	if personagem == null:
+		return
+
+	if camera_lock:
+		global_position = alvo_camera.global_position + desired_offset
+
+		if trauma:
+			trauma = max(trauma - decay * delta, 0)
+			shake()
+
+		return
+
 
 	if Global.usando_controle:
 		zoom_aplicado = Vector2(1, 1)
@@ -41,6 +62,62 @@ func _process(delta: float) -> void:
 		trauma = max(trauma - decay * delta, 0)
 		shake()
 		
+
+func transitar_personagem(novo_personagem: Node2D, tempo := 1.2):
+	if novo_personagem == null:
+		return
+
+
+	var ponto = Node2D.new()
+	get_tree().current_scene.add_child(ponto)
+
+	ponto.global_position = global_position
+	alvo_camera = ponto
+
+	var zoom_original = zoom
+
+	var tween = create_tween()
+
+	tween.set_trans(Tween.TRANS_QUINT)
+	tween.set_ease(Tween.EASE_IN_OUT)
+
+	tween.parallel().tween_property(
+		ponto,
+		"global_position",
+		novo_personagem.global_position,
+		tempo
+	)
+
+	tween.parallel().tween_property(
+		self,
+		"zoom",
+		Vector2.ONE * 1.15,
+		tempo * 0.4
+	)
+
+	await tween.finished
+
+	personagem = novo_personagem
+	alvo_camera = personagem
+
+	var tween2 = create_tween()
+
+	tween2.tween_property(
+		self,
+		"zoom",
+		zoom_original,
+		0.35
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	ponto.queue_free()
+
+
+func lock_camera():
+	camera_lock = true
+	desired_offset = Vector2.ZERO
+
+func unlock_camera():
+	camera_lock = false
 
 func add_trauma(amount : float, direcao_ataque: Vector2) -> void:
 

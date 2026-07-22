@@ -276,6 +276,15 @@ func _ready() -> void:
 
 	alvo = Global.personagem
 
+@onready var particula_buff_cena = preload("res://cenas_tscn/inimigos_tscn/buff_tscn/particula_buff.tscn")
+
+func particula_buff_instanciar(cor):
+		var particula_buff = particula_buff_cena.instantiate()
+		particula_buff.position = global_position
+		particula_buff.alvo = self
+		particula_buff.modulate = Color(cor.r, cor.g, cor.b, 1.0)
+		add_child(particula_buff)
+
 func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 	if ja_deu_buff:
 		return
@@ -285,9 +294,9 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 	var texto_original = buff_label.text
 
 	if sorteado == 0:
-		sprite.material.set_shader_parameter("color", Color("c200a8ff"))
-		
-
+		var cor := Color("c200a8ff")
+		particula_buff_instanciar(cor)
+		sprite.material.set_shader_parameter("color", cor)
 		var wait_time_original = atirar_tempo.wait_time
 
 		multiplicador_velocidade *= velocidade_buff
@@ -298,15 +307,16 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 
 		await get_tree().create_timer(duracao).timeout
 		sprite.material.set_shader_parameter("color", Color("c200a800"))
-
+		get_node("particula_buff").queue_free()
 		atirar_tempo.wait_time = wait_time_original
 		buff_label.text = ""
 		multiplicador_velocidade /= velocidade_buff
 
 	else:
 		var escudo_original = 0
-		sprite.material.set_shader_parameter("color", Color("d70034ff"))
-		
+		var cor := Color("d70034ff")
+		sprite.material.set_shader_parameter("color", cor)
+		particula_buff_instanciar(cor)
 
 		escudo += escudo_buff
 
@@ -315,7 +325,7 @@ func receber_buff(velocidade_buff, escudo_buff, duracao, sorteado):
 
 		await get_tree().create_timer(duracao).timeout
 		sprite.material.set_shader_parameter("color", Color("c200a800"))
-
+		get_node("particula_buff").queue_free()
 		escudo = escudo_original
 		buff_label.text = ""
 
