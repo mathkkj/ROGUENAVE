@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://c0yg86d4xthf5"]
 
-[ext_resource type="Script" uid="uid://nq0wgah86c28" path="res://codigo_gd/global.gd" id="1_8r7fh"]
+[ext_resource type="Script" uid="uid://d11wxybamp0ty" path="res://tutorial.gd" id="1_o5kxe"]
 [ext_resource type="Texture2D" uid="uid://vbl1x8cifntg" path="res://placeholder/tilemap free 2/Set 1.0.png" id="1_y3k0v"]
 [ext_resource type="Texture2D" uid="uid://bu1ne0e2jidmh" path="res://placeholder/tilemap free 2/Set 1.1.png" id="2_8r7fh"]
 [ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/personagem_gd/camera.gd" id="2_35xep"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d1j1ftfn0xdur" path="res://placeholder/full_placeholder.png" id="13_tjtyn"]
 [ext_resource type="Script" uid="uid://cvqmru1luaju5" path="res://npc_fullstack.gd" id="14_shyub"]
 [ext_resource type="Resource" uid="uid://kk8v7f6ai826" path="res://tres/tutorial_dialogo_sala1_intro.tres" id="15_o5kxe"]
+[ext_resource type="PackedScene" uid="uid://ccpspxtqx53x6" path="res://cenas_tscn/inimigos_tscn/dummys_tscn/dummy.tscn" id="17_3o0gj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5r8tp"]
 texture = ExtResource("1_y3k0v")
@@ -735,9 +736,8 @@ shader_parameter/add_margins = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
 size = Vector2(47, 43)
 
-[node name="Tutorial" type="Node2D" unique_id=967104594 node_paths=PackedStringArray("personagem")]
-script = ExtResource("1_8r7fh")
-personagem = NodePath("personagem")
+[node name="Tutorial" type="Node2D" unique_id=967104594]
+script = ExtResource("1_o5kxe")
 
 [node name="parede" type="Node2D" parent="." unique_id=520499830]
 
@@ -766,9 +766,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="personagem" parent="." unique_id=1587912254 instance=ExtResource("4_l7tjv")]
+[node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_l7tjv")]
 material = SubResource("ShaderMaterial_4imha")
 position = Vector2(283, 319)
+camera = NodePath("../Camera2D")
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -792,7 +794,7 @@ texture = ExtResource("13_tjtyn")
 shape = SubResource("RectangleShape2D_g4v7s")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="NPC Fullstack" unique_id=1150559461]
-position = Vector2(-336, -191)
+position = Vector2(-335, -167)
 rect = Rect2(312, 164, 47, 6)
 
 [node name="Label" type="Label" parent="NPC Fullstack" unique_id=1810345440]
@@ -801,5 +803,31 @@ offset_top = -50.0
 offset_right = 174.0
 offset_bottom = -27.0
 horizontal_alignment = 1
+
+[node name="caixas_spanwpoints" type="Node2D" parent="." unique_id=153425924]
+
+[node name="caixa_1" type="Marker2D" parent="caixas_spanwpoints" unique_id=1778167946]
+position = Vector2(123, 126)
+
+[node name="caixa_2" type="Marker2D" parent="caixas_spanwpoints" unique_id=987298943]
+position = Vector2(421, 126)
+
+[node name="Dummy" parent="." unique_id=446124110 instance=ExtResource("17_3o0gj")]
+position = Vector2(41.000004, 208)
+
+[node name="Dummy2" parent="." unique_id=2127492186 instance=ExtResource("17_3o0gj")]
+position = Vector2(69, 246)
+
+[node name="Dummy3" parent="." unique_id=141782988 instance=ExtResource("17_3o0gj")]
+position = Vector2(65, 149)
+
+[node name="Dummy4" parent="." unique_id=33275247 instance=ExtResource("17_3o0gj")]
+position = Vector2(470, 205)
+
+[node name="Dummy5" parent="." unique_id=1627952681 instance=ExtResource("17_3o0gj")]
+position = Vector2(498, 243)
+
+[node name="Dummy6" parent="." unique_id=446176166 instance=ExtResource("17_3o0gj")]
+position = Vector2(494, 146)
 
 [connection signal="screen_entered" from="NPC Fullstack/VisibleOnScreenNotifier2D" to="." method="quando_ver_o_npc_fullstack_tutorial_comecar_tutorial"]

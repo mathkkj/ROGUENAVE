@@ -85,7 +85,7 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 
 
 var controles_bloqueados := false
-
+var tipo_animacao : String
 func atualizar_animacao():
 	direcao_mira = ultima_direcao_mira
 
@@ -113,7 +113,6 @@ func atualizar_animacao():
 		3:
 			direcao_animacao = "cima"
 	
-	var tipo_animacao : String
 	
 	
 	
@@ -329,6 +328,10 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 	
 	if controles_bloqueados:
+		if not tipo_animacao == "idle":
+			tipo_animacao = "idle"
+			atualizar_animacao()
+			
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
@@ -486,6 +489,7 @@ func _mecanica_dash(delta: float) -> bool:
 
 	
 	if recarregar_tempo_dash > 0.0:
+		velocity = velocity.move_toward(Vector2.ZERO, 3000 * delta)
 		recarregar_tempo_dash -= delta
 		if recarregar_tempo_dash <= 0.0:
 			pode_dash = true
@@ -615,7 +619,10 @@ func _arma_encostou(body):
 	if body.has_method("aplicar_knockback") and em_golpe and body != self:
 		#TODO: de acordo com o golpe, mudar o konockback e o shake da camera
 		print("to atacando o ", body)
-		body.aplicar_knockback(direcao_golpe, 800)
+		if body is Quebravel:
+			body.aplicar_knockback(direcao_golpe, 600)
+		else:
+			body.aplicar_knockback(direcao_golpe, 800)
 		
 		
 		#RECEBER DANO

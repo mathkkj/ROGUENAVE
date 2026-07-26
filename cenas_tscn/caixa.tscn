@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://7wfra1ovhtw2"]
+
+[ext_resource type="Script" uid="uid://dp5dr7tesveac" path="res://caixa.gd" id="1_vkvp6"]
+[ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="2_2om00"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uk6bg"]
+size = Vector2(464, 467)
+
+[node name="Caixa" type="CharacterBody2D" unique_id=666689274 groups=["quebraveis"]]
+scale = Vector2(0.098234236, 0.098234236)
+motion_mode = 1
+script = ExtResource("1_vkvp6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1846890017]
+texture = ExtResource("2_2om00")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1296871575]
+position = Vector2(0, 15.269653)
+shape = SubResource("RectangleShape2D_uk6bg")

@@ -18,7 +18,42 @@ script = ExtResource("1_2qy7y")
 texto = "vou te treina pra tu entender como funciona aqui"
 metadata/_custom_type_script = "uid://dmcq5r7eg01un"
 
+[sub_resource type="Resource" id="Resource_o5kxe"]
+script = ExtResource("1_2qy7y")
+texto = "quebra essas caixas ai"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_ecy4j"]
+script = ExtResource("1_2qy7y")
+texto = "ja entendi q tu manja ent"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_c2slh"]
+script = ExtResource("1_2qy7y")
+texto = "antes de se achar o BIGODE do combate..."
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_tjtyn"]
+script = ExtResource("1_2qy7y")
+texto = "conheça meus amigos aí kkkkkkkk"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_hfgtm"]
+script = ExtResource("1_2qy7y")
+texto = "porra tu é foda mesmo"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_wv8gj"]
+script = ExtResource("1_2qy7y")
+texto = "00 do bglh tio"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_0bpey"]
+script = ExtResource("1_2qy7y")
+texto = "passa pra proxima fase ai "
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
 [resource]
 script = ExtResource("2_edooe")
-falas = Array[ExtResource("1_2qy7y")]([SubResource("Resource_3o0gj"), SubResource("Resource_2qy7y"), SubResource("Resource_k1cq8")])
+falas = Array[ExtResource("1_2qy7y")]([SubResource("Resource_3o0gj"), SubResource("Resource_2qy7y"), SubResource("Resource_k1cq8"), SubResource("Resource_o5kxe"), SubResource("Resource_ecy4j"), SubResource("Resource_c2slh"), SubResource("Resource_tjtyn"), SubResource("Resource_hfgtm"), SubResource("Resource_wv8gj"), SubResource("Resource_0bpey")])
 metadata/_custom_type_script = "uid://bol05gybj1fh"

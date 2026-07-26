@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://ccpspxtqx53x6"]
+
+[ext_resource type="Script" uid="uid://bpg50gtyh370i" path="res://codigo_gd/inimigo_gd/dummys_gd/dummy_meele.gd" id="1_cs4im"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_hfgtm"]
+[ext_resource type="Texture2D" uid="uid://bexcyf8s7lrkv" path="res://placeholder/tilemap free 2/dummy_placeholder.png" id="3_hfgtm"]
+[ext_resource type="Texture2D" uid="uid://cxgl7ka5tt2rx" path="res://placeholder/tilemap free 2/dummy_normal_placeholder.png" id="4_wv8gj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0bpey"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfgtm")
+}],
+"loop": 1,
+"name": &"acertou",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfgtm")
+}],
+"loop": 1,
+"name": &"andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_wv8gj")
+}],
+"loop": 1,
+"name": &"dormindo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfgtm")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfgtm")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_hfgtm")
+}],
+"loop": 1,
+"name": &"impulso",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0bpey"]
+size = Vector2(19.976524, 40.21881)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8fgqt"]
+radius = 245.68425
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyfuj"]
+size = Vector2(2.4633615, 7.588026)
+
+[node name="Dummy" type="CharacterBody2D" unique_id=446124110 groups=["dummy"]]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_cs4im")
+dash_vel = 250
+aceleracao = 1000
+knockback_normal = 600
+knockback_dash = 800
+vida = 6
+metadata/_custom_type_script = "uid://carrgaap35jf0"
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1341489243 groups=["dummy"]]
+material = ExtResource("2_hfgtm")
+sprite_frames = SubResource("SpriteFrames_0bpey")
+animation = &"dormindo"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1290642848 groups=["dummy"]]
+position = Vector2(-2.066278, 3.5762787e-07)
+scale = Vector2(1.4951271, 1.1934714)
+shape = SubResource("RectangleShape2D_0bpey")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=1435654281 groups=["dummy"]]
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=701804687 groups=["dummy"]]
+scale = Vector2(0.5, 0.5)
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=1796619340 groups=["dummy"]]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1168303891 groups=["dummy"]]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1382301489 groups=["dummy"]]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1083743440 groups=["dummy"]]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1115691901 groups=["dummy"]]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=671622312 groups=["dummy"]]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=996039548 groups=["dummy"]]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=636578154 groups=["dummy"]]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=553995017 groups=["dummy"]]
+
+[node name="circulo_de_visao" type="Area2D" parent="." unique_id=2008011759 groups=["dummy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="circulo_de_visao" unique_id=935006087 groups=["dummy"]]
+scale = Vector2(1.0313972, 0.8047205)
+shape = SubResource("CircleShape2D_8fgqt")
+
+[node name="Label" type="Label" parent="." unique_id=687470833 groups=["dummy"]]
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=899037301 groups=["dummy", "hurtbox_inimigo"]]
+scale = Vector2(1.0314662, 1.0777961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=596330900 groups=["dummy"]]
+position = Vector2(-0.48474696, -1.8556393)
+scale = Vector2(15.349047, 6.1137066)
+shape = SubResource("RectangleShape2D_yyfuj")
+
+[node name="buff_label" type="Label" parent="." unique_id=234677485 groups=["dummy"]]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+metadata/_edit_use_anchors_ = true
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
+[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]

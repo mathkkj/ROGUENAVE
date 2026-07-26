@@ -5,22 +5,28 @@ signal dialogo_finalizado
 @onready var texto = $Label
 
 @export var dialogo: Dialogue
+@export var limite_dialogo: int = -1  # -1 = mostra tudo
 
 var escrevendo := false
 var pular_animacao := false
-
 var dialogo_ocorrendo := false
+@export var indice := 0
 
-var indice := 0
-
-func iniciar_dialogo():
+func iniciar_dialogo(indice_inicial := 0):
 	if dialogo == null:
 		return
+
 	dialogo_ocorrendo = true
-	indice = 0
+	indice = indice_inicial
 	mostrar_fala()
 
 func mostrar_fala():
+	if limite_dialogo != -1 and indice >= limite_dialogo:
+		dialogo_finalizado.emit()
+		dialogo_ocorrendo = false
+		texto.text = ""
+		return
+
 	if indice >= dialogo.falas.size():
 		texto.text = ""
 		return
@@ -48,25 +54,12 @@ func _input(event):
 	and event.pressed \
 	and event.button_index == MOUSE_BUTTON_LEFT \
 	and dialogo_ocorrendo == true:
-		
 		proxima_fala()
 
 func proxima_fala():
-	print("proxima_fala")
-
 	if escrevendo:
-		#print("pulando animação")
 		pular_animacao = true
 		return
 
-	#print("próxima linha")
-
 	indice += 1
-
-	if indice >= dialogo.falas.size():
-		dialogo_finalizado.emit()
-		dialogo_ocorrendo = false
-		texto.text = ""
-		return
-
 	mostrar_fala()

@@ -21,7 +21,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("3_cm3k0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"acertou",
 "speed": 5.0
 }, {
@@ -38,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_udkev")
 }],
-"loop": true,
+"loop": 1,
 "name": &"andando",
 "speed": 5.0
 }, {
@@ -46,7 +46,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_3l2xo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"hit",
 "speed": 5.0
 }, {
@@ -54,7 +54,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_6besh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -74,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_4s2ff")
 }],
-"loop": true,
+"loop": 1,
 "name": &"impulso",
 "speed": 5.0
 }]
