@@ -6,6 +6,7 @@ class_name InimigoDummy
 func _ready() -> void:
 	if not ativo:
 		tocar_animacao("dormindo")
+	
 	super()
 
 func ativar_dummy() -> void:

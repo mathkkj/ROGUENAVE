@@ -9,32 +9,28 @@ size = Vector2(64, 15)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57qmd"]
 size = Vector2(63, 13)
 
-[node name="porta_1" type="Node2D" unique_id=790529018 node_paths=PackedStringArray("area_porta", "porta")]
+[node name="porta_1" type="Node2D" unique_id=790529018]
 script = ExtResource("1_dfei4")
-area_porta = NodePath("area_porta1")
-porta = NodePath("porta_1")
 direcao_entrada = "cima"
 
-[node name="porta_1" type="StaticBody2D" parent="." unique_id=957841579]
-position = Vector2(290, 8)
+[node name="porta" type="StaticBody2D" parent="." unique_id=957841579]
 
-[node name="Sprite2D" type="Sprite2D" parent="porta_1" unique_id=1676289846]
+[node name="Sprite2D" type="Sprite2D" parent="porta" unique_id=1676289846]
 position = Vector2(-1.9999998, 0)
 scale = Vector2(0.1629555, 0.05400634)
 texture = ExtResource("2_t40di")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="porta_1" unique_id=1259783675]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="porta" unique_id=1259783675]
 position = Vector2(-2, 0.5)
 shape = SubResource("RectangleShape2D_yf5fn")
 debug_color = Color(0.9777668, 0.15065578, 0, 0.41960785)
 
-[node name="area_porta1" type="Area2D" parent="." unique_id=286451436]
-position = Vector2(290, 8)
+[node name="area_porta" type="Area2D" parent="." unique_id=286451436]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="area_porta1" unique_id=896885733]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area_porta" unique_id=896885733]
 position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_57qmd")
 debug_color = Color(0.49535227, 0.5831253, 0, 0.41960785)
 
-[connection signal="body_exited" from="area_porta1" to="." method="_on_area_porta_1_body_exited"]
-[connection signal="body_shape_entered" from="area_porta1" to="." method="_on_area_porta_1_body_shape_entered"]
+[connection signal="body_entered" from="area_porta" to="." method="_on_area_porta_body_entered"]
+[connection signal="body_exited" from="area_porta" to="." method="_on_area_porta_body_exited"]

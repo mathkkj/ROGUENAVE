@@ -27,13 +27,14 @@ func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
+	print(visible)
+	print(visibility_layer)
 	if buffer_timer > 0:
 		buffer_timer -= delta
 
 	if buffer_timer <= 0:
 		input_buffer = false
 	
-	z_index = global_position.y
 	if timer_combo > 0.0:
 		timer_combo = max(0.0, timer_combo - delta)
 

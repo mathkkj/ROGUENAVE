@@ -42,6 +42,7 @@ buff=""
 inimigo_buff=""
 hurtbox_inimigo=""
 dummy=""
+bebedouro=""
 
 [input]
 

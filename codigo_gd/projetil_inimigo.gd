@@ -11,6 +11,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	
 	if body.is_in_group("arma_multimidia"):
 		var particula = particula_cena.instantiate()
 		particula.position = global_position

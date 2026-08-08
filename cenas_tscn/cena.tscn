@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://7wfra1ovhtw2" path="res://cenas_tscn/caixa.tscn" id="11_osep8"]
 [ext_resource type="PackedScene" uid="uid://bhd7sfxvoyf7b" path="res://cenas_tscn/inimigos_tscn/buff_tscn/inimigo_buffer.tscn" id="11_y6nmq"]
 [ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://shader_gdshader/crt.gdshader" id="12_osep8"]
+[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="12_pdimi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
 shader = ExtResource("12_osep8")
@@ -33,7 +34,7 @@ shader_parameter/add_margins = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwd25"]
 size = Vector2(679.4124, 521.5461)
 
-[node name="inimigos desviando de paredes" type="Node2D" unique_id=1523779238]
+[node name="cena" type="Node2D" unique_id=1523779238]
 script = ExtResource("1_q3n0b")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1368271444 node_paths=PackedStringArray("personagem")]
@@ -62,6 +63,7 @@ script = ExtResource("7_j0gmb")
 material = SubResource("ShaderMaterial_pdimi")
 position = Vector2(58, 260)
 camera = NodePath("../Camera2D")
+classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -226,3 +228,6 @@ texture = ExtResource("8_q3n0b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=577604991]
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
+
+[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("12_pdimi")]
+position = Vector2(167, -167)

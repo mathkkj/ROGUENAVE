@@ -3,8 +3,8 @@ class_name Porta
 
 signal alguem_atravessou(indo_para_fora: bool)
 
-@export var area_porta: Area2D
-@export var porta: StaticBody2D
+@onready var area_porta = get_node("area_porta")
+@onready var porta = get_node("porta")
 
 @export var distancia_abertura: float = 64.0
 @export var duracao: float = 1.2
@@ -74,14 +74,15 @@ func abrir_porta(direcao: String) -> void:
 
 
 
-func _on_area_porta_1_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_area_porta_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("jogador"):
 		return
 
 	personagem = body
 	posicao_entrada = personagem.global_position
 
-func _on_area_porta_1_body_exited(body: Node2D) -> void:
+func _on_area_porta_body_exited(body: Node2D) -> void:
+	
 	if body != personagem:
 		return
 

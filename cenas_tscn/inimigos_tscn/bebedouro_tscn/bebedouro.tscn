@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dgvu06fdg4jja"]
+
+[ext_resource type="Script" uid="uid://dg1na8q63ggij" path="res://codigo_gd/inimigo_gd/bebedouro_gd/bebedouro.gd" id="1_wlqd4"]
+[ext_resource type="Texture2D" uid="uid://d4c6odfcyiulu" path="res://placeholder/tilemap free 2/its-me-or-the-dark-fountains-are-shaped-like-a-watercooler-v0-1hdua0a1dldh1.webp" id="2_3imnx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf5fn"]
+size = Vector2(297, 500)
+
+[node name="Bebedouro" type="StaticBody2D" unique_id=1117275642 groups=["inimigos"]]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_wlqd4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1892193245]
+texture = ExtResource("2_3imnx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2039836979]
+position = Vector2(-0.5, 3)
+shape = SubResource("RectangleShape2D_yf5fn")
+
+[node name="Timer_tiro" type="Timer" parent="." unique_id=1345385567]
+wait_time = 2.0
+autostart = true
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1779031511]
+position = Vector2(-169.99998, 0)
+
+[connection signal="timeout" from="Timer_tiro" to="." method="_on_timer_tiro_timeout"]
