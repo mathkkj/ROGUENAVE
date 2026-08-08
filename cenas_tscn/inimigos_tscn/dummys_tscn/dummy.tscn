@@ -125,6 +125,7 @@ scale = Vector2(1.0313972, 0.8047205)
 shape = SubResource("CircleShape2D_8fgqt")
 
 [node name="Label" type="Label" parent="." unique_id=687470833 groups=["dummy"]]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 metadata/_edit_use_anchors_ = true
@@ -138,6 +139,7 @@ scale = Vector2(15.349047, 6.1137066)
 shape = SubResource("RectangleShape2D_yyfuj")
 
 [node name="buff_label" type="Label" parent="." unique_id=234677485 groups=["dummy"]]
+visible = false
 offset_left = -17.999998
 offset_top = 50.505047
 offset_right = 22.000002

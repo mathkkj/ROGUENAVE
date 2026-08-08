@@ -63,3 +63,64 @@ func proxima_fala():
 
 	indice += 1
 	mostrar_fala()
+
+
+
+
+
+
+
+
+
+# TELEPORTE
+
+@onready var particula_inicio_cena = preload(
+	"res://cenas_tscn/inimigos_tscn/explosao_destruiacao_bala.tscn"
+)
+
+
+func teleportar_para(marker: Marker2D):
+	if marker == null:
+		return
+
+	velocity = Vector2.ZERO
+
+	# Some do local atual
+	scale = Vector2.ZERO
+	modulate.a = 0.0
+
+	# Partícula no local de origem
+	var particula_inicio = particula_inicio_cena.instantiate()
+	particula_inicio.global_position = global_position
+	get_tree().current_scene.add_child(particula_inicio)
+
+	# Teleporta
+	global_position = marker.global_position
+
+	# Partícula no destino
+	var particula_fim = particula_inicio_cena.instantiate()
+	particula_fim.global_position = global_position
+	get_tree().current_scene.add_child(particula_fim)
+
+	# Mesma animação da caixa
+	var tween := create_tween()
+	tween.set_parallel(true)
+
+	tween.tween_property(
+		self,
+		"scale",
+		Vector2.ONE,
+		0.25
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	tween.tween_property(
+		self,
+		"modulate:a",
+		1.0,
+		0.2
+	)
+
+	await tween.finished
+
+	scale = Vector2.ONE
+	modulate.a = 1.0

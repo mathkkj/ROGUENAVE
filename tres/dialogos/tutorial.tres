@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Dialogue" format=3 uid="uid://c4vvyui0fkv7b"]
+
+[ext_resource type="Script" uid="uid://dmcq5r7eg01un" path="res://codigo_gd/dialogo/DialogueLine.gd" id="1_o7wl2"]
+[ext_resource type="Script" uid="uid://bol05gybj1fh" path="res://codigo_gd/dialogo/dialogo.gd" id="2_ty46u"]
+
+[sub_resource type="Resource" id="Resource_3o0gj"]
+script = ExtResource("1_o7wl2")
+texto = "eae kkkk"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_2qy7y"]
+script = ExtResource("1_o7wl2")
+texto = "ce é mo but kkkk"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_k1cq8"]
+script = ExtResource("1_o7wl2")
+texto = "vou te treina pra tu entender como funciona aqui"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_o5kxe"]
+script = ExtResource("1_o7wl2")
+texto = "quebra essas caixas ai"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_ecy4j"]
+script = ExtResource("1_o7wl2")
+texto = "ja entendi q tu manja ent"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_c2slh"]
+script = ExtResource("1_o7wl2")
+texto = "antes de se achar o BIGODE do combate..."
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_tjtyn"]
+script = ExtResource("1_o7wl2")
+texto = "conheça meus amigos aí kkkkkkkk"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_hfgtm"]
+script = ExtResource("1_o7wl2")
+texto = "porra tu é foda mesmo"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_wv8gj"]
+script = ExtResource("1_o7wl2")
+texto = "00 do bglh tio"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_0bpey"]
+script = ExtResource("1_o7wl2")
+texto = "passa pra proxima fase ai "
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[resource]
+script = ExtResource("2_ty46u")
+falas = Array[ExtResource("1_o7wl2")]([SubResource("Resource_3o0gj"), SubResource("Resource_2qy7y"), SubResource("Resource_k1cq8"), SubResource("Resource_o5kxe"), SubResource("Resource_ecy4j"), SubResource("Resource_c2slh"), SubResource("Resource_tjtyn"), SubResource("Resource_hfgtm"), SubResource("Resource_wv8gj"), SubResource("Resource_0bpey")])
+metadata/_custom_type_script = "uid://bol05gybj1fh"
