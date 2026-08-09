@@ -126,7 +126,7 @@ func iniciar_dialogo_final_sala_1():
 	await get_tree().create_timer(0.5).timeout
 	get_node("NPC Fullstack").teleportar_para(get_node("posicoes/final_1"))
 	await get_tree().create_timer(0.35).timeout
-	get_node("parede/porta_1").abrir_porta("esquerda")
+	#get_node("parede/porta_1").abrir_porta("esquerda")
 
 
 ##SALA 2
@@ -168,7 +168,6 @@ func _on_porta_1_alguem_atravessou(indo_para_fora: bool) -> void:
 			get_viewport().get_camera_2d().unlock_camera()
 			personagem.unlock_movimentacao()
 			
-			get_node("NPC Fullstack").teleportar_para(get_node("posicoes/final_2"))
 			await get_tree().create_timer(1).timeout
 			for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
 				bebedouro.ativo = true
@@ -188,3 +187,53 @@ func _on_visible_on_screen_fase_2_screen_entered() -> void:
 
 func _on_visible_on_screen_fase_2_screen_exited() -> void:
 	ta_olhando_pra_sala_2 = false
+
+
+
+var ja_viu_final_2 := false
+var jogador_na_area_final_2 := false
+func _on_visible_on_screen_final_2_screen_entered() -> void:
+	jogador_na_area_final_2 = true
+
+
+func _on_porta_2_alguem_atravessou(indo_para_fora: bool) -> void:
+
+	
+	if not jogador_na_area_final_2:
+		return
+	if indo_para_fora == false:
+		finalizar_sala_2()
+	else:
+		return
+
+
+func finalizar_sala_2() -> void:
+	if ja_viu_final_2:
+		return
+	
+	ja_viu_final_2 = true
+	
+	var camera := get_viewport().get_camera_2d()
+	var npc := get_node("NPC Fullstack")
+	var posicao_final := get_node("posicoes/final_2")
+	
+	camera.lock_camera()
+	personagem.lock_movimentacao()
+	
+	npc.teleportar_para(posicao_final)
+	await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 2)
+	get_node("NPC Fullstack").limite_dialogo = 19
+	get_node("NPC Fullstack").iniciar_dialogo(15)
+	await get_node("NPC Fullstack").dialogo_finalizado
+
+	await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 0.5)
+
+	get_viewport().get_camera_2d().unlock_camera()
+	personagem.unlock_movimentacao()
+	get_node("parede/porta_2").fechar_porta()
+	#ACABOU
+	#INICIAR ULTIMA FASE
+
+func _on_porta_2_abriu() -> void:
+	for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
+		bebedouro.ativo = false

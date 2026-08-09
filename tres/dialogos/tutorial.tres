@@ -78,7 +78,32 @@ script = ExtResource("1_o7wl2")
 texto = "tchau"
 metadata/_custom_type_script = "uid://dmcq5r7eg01un"
 
+[sub_resource type="Resource" id="Resource_o7wl2"]
+script = ExtResource("1_o7wl2")
+texto = "então mano, tava te zoando kkk"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_5r8tp"]
+script = ExtResource("1_o7wl2")
+texto = "eu quebrei os bebedouros sem querer"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_01kxa"]
+script = ExtResource("1_o7wl2")
+texto = "mas era por uma causa boa, te treinar"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_bceq5"]
+script = ExtResource("1_o7wl2")
+texto = "agora o teste final"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_j6ny1"]
+script = ExtResource("1_o7wl2")
+texto = "uma batalha contra mim"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
 [resource]
 script = ExtResource("2_ty46u")
-falas = Array[ExtResource("1_o7wl2")]([SubResource("Resource_3o0gj"), SubResource("Resource_2qy7y"), SubResource("Resource_k1cq8"), SubResource("Resource_o5kxe"), SubResource("Resource_ecy4j"), SubResource("Resource_c2slh"), SubResource("Resource_tjtyn"), SubResource("Resource_hfgtm"), SubResource("Resource_wv8gj"), SubResource("Resource_0bpey"), SubResource("Resource_in6cx"), SubResource("Resource_82xua"), SubResource("Resource_iavy5"), SubResource("Resource_3580n"), SubResource("Resource_nua32")])
+falas = Array[ExtResource("1_o7wl2")]([SubResource("Resource_3o0gj"), SubResource("Resource_2qy7y"), SubResource("Resource_k1cq8"), SubResource("Resource_o5kxe"), SubResource("Resource_ecy4j"), SubResource("Resource_c2slh"), SubResource("Resource_tjtyn"), SubResource("Resource_hfgtm"), SubResource("Resource_wv8gj"), SubResource("Resource_0bpey"), SubResource("Resource_in6cx"), SubResource("Resource_82xua"), SubResource("Resource_iavy5"), SubResource("Resource_3580n"), SubResource("Resource_nua32"), SubResource("Resource_o7wl2"), SubResource("Resource_5r8tp"), SubResource("Resource_01kxa"), SubResource("Resource_bceq5"), SubResource("Resource_j6ny1")])
 metadata/_custom_type_script = "uid://bol05gybj1fh"

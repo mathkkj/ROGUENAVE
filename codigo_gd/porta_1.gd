@@ -1,6 +1,6 @@
 extends Node2D
 class_name Porta
-
+signal abriu
 signal alguem_atravessou(indo_para_fora: bool)
 
 @onready var area_porta = get_node("area_porta")
@@ -11,6 +11,9 @@ signal alguem_atravessou(indo_para_fora: bool)
 
 @export_enum("cima", "baixo", "esquerda", "direita")
 var direcao_entrada: String = "direita"
+
+@export_enum("cima", "baixo", "esquerda", "direita")
+var direcao_abrir_padrao: String = "direita"
 
 @onready var collision: CollisionShape2D = porta.get_node("CollisionShape2D")
 
@@ -54,7 +57,6 @@ func abrir_porta(direcao: String) -> void:
 
 	var posicao_final := posicao_fechada + vetor_direcao * distancia_abertura
 
-	await get_tree().create_timer(0.15).timeout
 
 	var tween := create_tween()
 
@@ -67,12 +69,30 @@ func abrir_porta(direcao: String) -> void:
 		posicao_final,
 		duracao
 	)
+	abriu.emit()
+	await tween.finished
+	
+	collision.disabled = true
+func fechar_porta() -> void:
+	if not aberta:
+		return
+
+	var tween := create_tween()
+
+	tween.set_trans(Tween.TRANS_QUINT)
+	tween.set_ease(Tween.EASE_IN_OUT)
+
+	tween.tween_property(
+		porta,
+		"position",
+		posicao_fechada,
+		duracao
+	)
 
 	await tween.finished
 
-	collision.disabled = true
-
-
+	aberta = false
+	collision.disabled = false
 
 func _on_area_porta_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("jogador"):
@@ -106,7 +126,12 @@ func _on_area_porta_body_exited(body: Node2D) -> void:
 	var foi_na_direcao_da_entrada := deslocamento.dot(vetor_entrada) > 0.0
 
 	var indo_para_fora := not foi_na_direcao_da_entrada
-
+	
 	alguem_atravessou.emit(indo_para_fora)
 
 	personagem = null
+
+
+func _on_abrir_body_entered(body: Node2D) -> void:
+	if body.is_in_group("jogador"):
+		abrir_porta(direcao_abrir_padrao)

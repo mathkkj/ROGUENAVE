@@ -9,6 +9,10 @@ size = Vector2(64, 15)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57qmd"]
 size = Vector2(63, 13)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dfei4"]
+radius = 21.0
+height = 68.0
+
 [node name="porta_1" type="Node2D" unique_id=790529018]
 script = ExtResource("1_dfei4")
 direcao_entrada = "cima"
@@ -32,5 +36,12 @@ position = Vector2(-1.5, 0.5)
 shape = SubResource("RectangleShape2D_57qmd")
 debug_color = Color(0.49535227, 0.5831253, 0, 0.41960785)
 
+[node name="abrir" type="Area2D" parent="." unique_id=1620671397]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="abrir" unique_id=295771307]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_dfei4")
+
 [connection signal="body_entered" from="area_porta" to="." method="_on_area_porta_body_entered"]
 [connection signal="body_exited" from="area_porta" to="." method="_on_area_porta_body_exited"]
+[connection signal="body_entered" from="abrir" to="." method="_on_abrir_body_entered"]
