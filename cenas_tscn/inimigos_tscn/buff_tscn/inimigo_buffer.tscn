@@ -20,8 +20,32 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_itejw")
 }],
-"loop": true,
-"name": &"default",
+"loop": 1,
+"name": &"andar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_itejw")
+}],
+"loop": 1,
+"name": &"buffando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_itejw")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_itejw")
+}],
+"loop": 1,
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -53,6 +77,7 @@ material = ExtResource("3_ib2cb")
 position = Vector2(0, 3.33786e-06)
 scale = Vector2(0.051, 0.037109375)
 sprite_frames = SubResource("SpriteFrames_rdo55")
+animation = &"andar"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1480794905 groups=["inimigos"]]
 scale = Vector2(1.4951277, 1.1934714)

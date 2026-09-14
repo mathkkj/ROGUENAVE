@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://luckfm535dgl"]
+
+[ext_resource type="Script" uid="uid://cxv40gpjech55" path="res://codigo_gd/inimigo_gd/inimigo_banda/inimigo_projetil_rajada_guitarrista.gd" id="1_mhefk"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_eb01j"]
+[ext_resource type="Texture2D" uid="uid://cmywkvornxi0d" path="res://placeholder/tilemap free 2/capa-Bocchi-the-Rock.jpg" id="3_mhefk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhefk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}],
+"loop": 1,
+"name": &"andar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}],
+"loop": 1,
+"name": &"atirar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mhefk")
+}],
+"loop": 1,
+"name": &"preparando_guitarra",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osg2m"]
+size = Vector2(42.473213, 54.492424)
+
+[node name="Inimigo_projetil_rajada_guitarrista" type="CharacterBody2D" unique_id=1418006213 groups=["inimigos", "inimigos_invocados"]]
+script = ExtResource("1_mhefk")
+speed = 200.0
+max_speed = 400.0
+vida = 12
+metadata/_custom_type_script = "uid://chk0eespfdo0e"
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2067922574 groups=["inimigos"]]
+material = ExtResource("2_eb01j")
+position = Vector2(-9.536743e-07, 4.7683716e-07)
+scale = Vector2(0.0553907, 0.10645725)
+sprite_frames = SubResource("SpriteFrames_mhefk")
+animation = &"preparando_guitarra"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=222469589]
+position = Vector2(-0.2485606, 0)
+scale = Vector2(1.4951277, 1.1934714)
+shape = SubResource("RectangleShape2D_osg2m")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=311305354 groups=["inimigos"]]
+wait_time = 2.0
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=1444636854]
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=1433304677]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1388992847]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1291840990]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=936233100]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1370133359]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=683547325]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=1049603586]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1161060088]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=943201894]
+
+[node name="Label" type="Label" parent="." unique_id=700222909]
+offset_left = 1.0
+offset_top = 46.0
+offset_right = 41.0
+offset_bottom = 69.0
+text = "asdwasd"
+
+[node name="hurtbox" type="Area2D" parent="." unique_id=407822789]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=1538488324]
+position = Vector2(4.7683716e-07, 0)
+scale = Vector2(1.6498704, 1.3169934)
+shape = SubResource("RectangleShape2D_osg2m")
+
+[node name="buff_label" type="Label" parent="." unique_id=1980845022]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]

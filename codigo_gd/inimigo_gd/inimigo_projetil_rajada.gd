@@ -1,6 +1,5 @@
 extends Inimigo_Projetil
 
-
 func atirar():
 	if not is_instance_valid(alvo):
 		return

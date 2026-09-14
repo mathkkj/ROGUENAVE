@@ -1,0 +1,2 @@
+extends Inimigo_invocador
+class_name Inimigo_cantor

@@ -1,86 +1,110 @@
-[gd_scene format=3 uid="uid://cxb1xdf2n6kt8"]
+[gd_scene format=3 uid="uid://x26clkqck301"]
 
-[ext_resource type="Script" uid="uid://chk0eespfdo0e" path="res://codigo_gd/inimigo_gd/inimigo_projetil_doze.gd" id="1_tmpha"]
-[ext_resource type="Texture2D" uid="uid://buv5fuqeg8tcc" path="res://placeholder/1HoRJrczQoRSN6Vbtd1g0lX1CJVd37U4rajQYZ82Z3KRFrpyTdkLJWrVq1atWqVatWrVoPr38DXRAYBWULYT0AAAAASUVORK5CYII.png" id="2_cvl3s"]
+[ext_resource type="Script" uid="uid://50c2wmbhf8dr" path="res://codigo_gd/inimigo_gd/inimigo_projetil_rajada.gd" id="1_cvl3s"]
 [ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_o8wlr"]
+[ext_resource type="Texture2D" uid="uid://cqjnujart8jes" path="res://placeholder/123124124124.png" id="3_o8wlr"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_3g2ki"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bwjmv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_cvl3s")
+"texture": ExtResource("3_o8wlr")
 }],
-"loop": true,
-"name": &"default",
+"loop": 1,
+"name": &"andar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_o8wlr")
+}],
+"loop": 1,
+"name": &"atirar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_o8wlr")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_o8wlr")
+}],
+"loop": 1,
+"name": &"idle",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8wlr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmvi3"]
 size = Vector2(53.014732, 64.94514)
 
-[node name="Inimigo_Projetil_doze" type="CharacterBody2D" unique_id=1348707866 groups=["inimigos"]]
-scale = Vector2(0.61272776, 0.61272776)
-motion_mode = 1
-script = ExtResource("1_tmpha")
-knockback = 500
-vida = 18
+[node name="Inimigo_Projetil_rajada" type="CharacterBody2D" unique_id=1421795218 groups=["inimigos"]]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_cvl3s")
+vida = 12
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=43105136]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1772014563]
 material = ExtResource("2_o8wlr")
-scale = Vector2(0.49, 0.49)
-sprite_frames = SubResource("SpriteFrames_3g2ki")
+position = Vector2(0, -0.83333397)
+scale = Vector2(0.233, 0.32467532)
+sprite_frames = SubResource("SpriteFrames_bwjmv")
+animation = &"andar"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2023720691]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=693511251]
 scale = Vector2(1.4951277, 1.1934714)
-shape = SubResource("RectangleShape2D_o8wlr")
+shape = SubResource("RectangleShape2D_hmvi3")
 
-[node name="atirar_tempo" type="Timer" parent="." unique_id=708189412 groups=["inimigos"]]
+[node name="atirar_tempo" type="Timer" parent="." unique_id=337419705]
 wait_time = 2.0
 autostart = true
 
-[node name="Raycast" type="Node2D" parent="." unique_id=303967525]
+[node name="Raycast" type="Node2D" parent="." unique_id=1359155604]
 
-[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=447843121]
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=6586896]
 target_position = Vector2(0, 57)
 
-[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=1114574065]
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=392524530]
 target_position = Vector2(63, 1)
 
-[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1209907064]
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1518265105]
 target_position = Vector2(0, -59)
 
-[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1949796]
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=2135923980]
 target_position = Vector2(-61, 0)
 
-[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1268916779]
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=1312758515]
 target_position = Vector2(50, 50)
 
-[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=1525142818]
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=1337746471]
 target_position = Vector2(-50, 50)
 
-[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=1457422829]
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=1571922978]
 target_position = Vector2(50, -50)
 
-[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=857862966]
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1248013199]
 target_position = Vector2(-50, -50)
 
-[node name="RayLOS" type="RayCast2D" parent="." unique_id=646423564]
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=120095101]
 
-[node name="Label" type="Label" parent="." unique_id=1828261785]
+[node name="Label" type="Label" parent="." unique_id=1381307250]
 offset_left = 1.0
 offset_top = 46.0
 offset_right = 41.0
 offset_bottom = 69.0
 text = "asdwasd"
 
-[node name="hurtbox" type="Area2D" parent="." unique_id=573101614]
+[node name="hurtbox" type="Area2D" parent="." unique_id=1489745792]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=447722878]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox" unique_id=238357151]
 scale = Vector2(1.6498704, 1.3169934)
-shape = SubResource("RectangleShape2D_o8wlr")
+shape = SubResource("RectangleShape2D_hmvi3")
 
-[node name="buff_label" type="Label" parent="." unique_id=954224895]
+[node name="buff_label" type="Label" parent="." unique_id=935538518]
 offset_left = -17.999998
 offset_top = 50.505047
 offset_right = 22.000002

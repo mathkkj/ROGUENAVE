@@ -3,7 +3,6 @@ class_name Inimigo_Teleportador
 
 @onready var area_tp = get_node("area_tp/CollisionShape2D")
 @onready var timer_tp = get_node("timer_tp")
-
 @onready var hurtbox = get_node("hurtbox")
 
 @onready var cena_particula_teleporte = preload("res://cenas_tscn/inimigos_tscn/teleportador_tscn/teleportador_particula.tscn")
@@ -13,10 +12,9 @@ class_name Inimigo_Teleportador
 
 const MAX_TENTATIVAS = 50
 
-
 @export var tp_distancia_minima: float = 100.0
 @export var tp_distancia_maxima: float = 300.0
-@export var tp_angulo_desvio: float = 35.0 #cone
+@export var tp_angulo_desvio: float = 35.0
 
 enum ESTADO_TP {
 	TP,
@@ -24,15 +22,58 @@ enum ESTADO_TP {
 	NORMAL
 }
 
-var estado_tp : ESTADO_TP = ESTADO_TP.NORMAL
+var estado_tp: ESTADO_TP = ESTADO_TP.NORMAL
+var teleportando := false
+
+
+func atualizar_animacao():
+	if estado_atual == ESTADOS.HIT:
+		tocar_animacao("hit")
+		return
+
+	if estado_tp == ESTADO_TP.TP:
+		tocar_animacao("teleportando")
+		return
+
+	if estado_tp == ESTADO_TP.INVISIVEL:
+		tocar_animacao("teleportando")
+		return
+
+	if estado_atual == ESTADOS.ATIRANDO:
+		tocar_animacao("atirar")
+		return
+
+	if velocity.length() > 10:
+		tocar_animacao("andar")
+		return
+
+	tocar_animacao("idle")
+
 
 func _on_timer_tp_timeout():
-	if is_instance_valid(alvo) and estado_atual == ESTADOS.CACANDO:
-		executar_teletransporte_tendencioso()
-		
-		await get_tree().create_timer(1).timeout
-		if estado_tp == ESTADO_TP.NORMAL:
+	if teleportando:
+		return
+
+	if not is_instance_valid(alvo):
+		return
+
+	if estado_atual != ESTADOS.CACANDO:
+		return
+
+	await executar_teletransporte_tendencioso()
+
+	if not is_inside_tree():
+		return
+
+	if estado_tp == ESTADO_TP.NORMAL:
+		await get_tree().create_timer(1.0).timeout
+
+		if not is_inside_tree():
+			return
+
+		if not teleportando and estado_tp == ESTADO_TP.NORMAL:
 			atirar()
+
 
 func atirar():
 	if not is_instance_valid(alvo):
@@ -40,7 +81,7 @@ func atirar():
 
 	estado_atual = ESTADOS.ATIRANDO
 	velocity = Vector2.ZERO
-	
+
 	var projetil = projetil_instancia.instantiate()
 	projetil.global_position = global_position
 	projetil.direcao = (alvo.global_position - projetil.global_position).normalized()
@@ -49,11 +90,14 @@ func atirar():
 
 	get_tree().current_scene.add_child(projetil)
 
-	# sai do estado de ataque depois do tempo do Timer
 	estado_atual = ESTADOS.CACANDO
 	atirar_tempo.start()
 
+
 func executar_teletransporte_tendencioso():
+	if teleportando:
+		return
+
 	if not is_instance_valid(alvo) or not is_instance_valid(area_tp):
 		return
 
@@ -61,8 +105,10 @@ func executar_teletransporte_tendencioso():
 	var raio_area = area_tp.shape.radius
 
 	var direcao_base = LOS.target_position
+
 	if direcao_base.length_squared() == 0:
 		direcao_base = alvo.global_position - global_position
+
 	direcao_base = direcao_base.normalized()
 
 	if estado_distancia == ESTADOS_DISTANCIA.RECUAR:
@@ -78,28 +124,46 @@ func executar_teletransporte_tendencioso():
 		if posicao_candidata.distance_to(area_pos) > raio_area:
 			continue
 
-		# testa colisão só com o corpo do inimigo
 		var teste = test_move(global_transform, posicao_candidata - global_position)
 
 		if not teste:
+			teleportando = true
+			estado_tp = ESTADO_TP.TP
+
 			visible = false
+
 			hurtbox.monitoring = false
-			estado_tp = ESTADO_TP.INVISIVEL
 			colisao.disabled = true
+
 			instanciar_particula(global_position)
-			
+
 			await get_tree().create_timer(0.5).timeout
-			
+
+			if not is_inside_tree():
+				return
+
+			estado_tp = ESTADO_TP.INVISIVEL
+
 			instanciar_particula(posicao_candidata)
 			global_position = posicao_candidata
+
+			await get_tree().create_timer(0.05).timeout
+
+			if not is_inside_tree():
+				return
+
 			estado_tp = ESTADO_TP.NORMAL
+
 			visible = true
+
 			hurtbox.monitoring = true
 			colisao.disabled = false
-			
+
+			teleportando = false
+
+			atualizar_animacao()
+
 			return
-
-
 
 
 func instanciar_particula(posicao):

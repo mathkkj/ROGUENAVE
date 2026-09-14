@@ -10,8 +10,32 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_m4u3e")
 }],
-"loop": true,
-"name": &"default",
+"loop": 1,
+"name": &"andar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m4u3e")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m4u3e")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m4u3e")
+}],
+"loop": 1,
+"name": &"invocando",
 "speed": 5.0
 }]
 
@@ -42,6 +66,7 @@ material = ExtResource("2_eopj5")
 position = Vector2(1.4305115e-06, 4.7683716e-07)
 scale = Vector2(0.21416293, 0.38612628)
 sprite_frames = SubResource("SpriteFrames_pl85s")
+animation = &"andar"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=778256619]
 scale = Vector2(1.4951277, 1.1934714)

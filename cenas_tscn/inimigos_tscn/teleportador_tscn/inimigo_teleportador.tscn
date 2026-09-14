@@ -10,8 +10,40 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_udkin")
 }],
-"loop": true,
-"name": &"default",
+"loop": 1,
+"name": &"andar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_udkin")
+}],
+"loop": 1,
+"name": &"atirar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_udkin")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_udkin")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_udkin")
+}],
+"loop": 1,
+"name": &"teleportando",
 "speed": 5.0
 }]
 
@@ -35,6 +67,7 @@ material = ExtResource("2_72tp7")
 position = Vector2(0, -0.7142854)
 scale = Vector2(0.107, 0.07571429)
 sprite_frames = SubResource("SpriteFrames_jff41")
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1974246421]
 scale = Vector2(1.4951277, 1.1934714)

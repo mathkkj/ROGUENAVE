@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b3gbqyj6pujkq"]
+[gd_scene format=3 uid="uid://chm30g8fguv00"]
 
 [ext_resource type="Script" uid="uid://nq0wgah86c28" path="res://codigo_gd/global.gd" id="1_q3n0b"]
 [ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/personagem_gd/camera.gd" id="3_iwd25"]
@@ -7,11 +7,9 @@
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_j0gmb"]
 [ext_resource type="Shader" uid="uid://cui2f0q60yi16" path="res://shader_gdshader/buff.gdshader" id="7_osep8"]
 [ext_resource type="Texture2D" uid="uid://cmdiemw8l5v8o" path="res://placeholder/caixa_madeira.png" id="8_q3n0b"]
-[ext_resource type="PackedScene" uid="uid://o2qi5yx4o5ai" path="res://cenas_tscn/inimigos_tscn/inimigo_meele.tscn" id="10_iwd25"]
+[ext_resource type="PackedScene" uid="uid://dma2tfvc1kuve" path="res://cenas_tscn/inimigos_tscn/banda/inimigo_invocador_cantor.tscn" id="10_iwd25"]
 [ext_resource type="PackedScene" uid="uid://7wfra1ovhtw2" path="res://cenas_tscn/caixa.tscn" id="11_osep8"]
-[ext_resource type="PackedScene" uid="uid://bhd7sfxvoyf7b" path="res://cenas_tscn/inimigos_tscn/buff_tscn/inimigo_buffer.tscn" id="11_y6nmq"]
 [ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://shader_gdshader/crt.gdshader" id="12_osep8"]
-[ext_resource type="PackedScene" uid="uid://dt7frg7l5upcl" path="res://cenas_tscn/inimigos_tscn/inimigo_projetil_tscn/inimigo_projetil.tscn" id="12_pdimi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_osep8"]
 shader = ExtResource("12_osep8")
@@ -63,7 +61,6 @@ script = ExtResource("7_j0gmb")
 material = SubResource("ShaderMaterial_pdimi")
 position = Vector2(58, 260)
 camera = NodePath("../Camera2D")
-classe_personagem = 1
 duracao_golpe = 0.25
 forca_golpe = 500.0
 
@@ -127,11 +124,6 @@ texture = ExtResource("8_q3n0b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paredes/StaticBody2D4" unique_id=1919873757]
 position = Vector2(16.581161, -28.773132)
 shape = SubResource("RectangleShape2D_iwd25")
-
-[node name="Inimigo_meele" parent="." unique_id=967689483 instance=ExtResource("10_iwd25")]
-
-[node name="Inimigo_buffer" parent="." unique_id=1800385750 instance=ExtResource("11_y6nmq")]
-position = Vector2(257, 0)
 
 [node name="Caixa" parent="." unique_id=666689274 instance=ExtResource("11_osep8")]
 position = Vector2(210, 192)
@@ -211,9 +203,6 @@ texture = ExtResource("8_q3n0b")
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
-[node name="Inimigo_meele2" parent="." unique_id=1136362875 instance=ExtResource("10_iwd25")]
-position = Vector2(1913.9999, 134.99998)
-
 [node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=1437799998]
 position = Vector2(1570.0002, 508)
 rotation = -1.5797108
@@ -229,5 +218,4 @@ texture = ExtResource("8_q3n0b")
 position = Vector2(1, -2.5)
 shape = SubResource("RectangleShape2D_iwd25")
 
-[node name="Inimigo_projetil" parent="." unique_id=944234677 instance=ExtResource("12_pdimi")]
-position = Vector2(167, -167)
+[node name="Inimigo_invocador_cantor" parent="." unique_id=1630876127 instance=ExtResource("10_iwd25")]

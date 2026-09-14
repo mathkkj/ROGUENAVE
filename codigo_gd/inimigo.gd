@@ -3,7 +3,7 @@ class_name Inimigo
 
 
 
-@onready var buff_label = get_node("buff_label")
+@onready var buff_label = get_node_or_null("buff_label")
 
 signal dano_processado
 

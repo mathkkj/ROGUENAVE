@@ -191,3 +191,22 @@ func aplicar_knockback(direcao: Vector2, forca: float) -> void:
 	estado_atual = ESTADOS.HIT
 	knockback_dir = direcao.normalized()
 	knockback_speed = forca
+
+func atualizar_animacao():
+	if estado_atual == ESTADOS.HIT:
+		tocar_animacao("hit")
+		return
+
+	if esta_buffando:
+		tocar_animacao("buffando")
+		return
+
+	if estado_atual == ESTADOS.ATIRANDO:
+		tocar_animacao("buffando")
+		return
+
+	if velocity.length() > 10:
+		tocar_animacao("andar")
+		return
+
+	tocar_animacao("idle")

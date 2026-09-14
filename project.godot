@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="RogueNAVE"
-run/main_scene="uid://b3gbqyj6pujkq"
+run/main_scene="uid://chm30g8fguv00"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0.19434929, 0.19434926, 0.19434926, 1)
 config/icon="res://placeholder/icon.svg"
