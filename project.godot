@@ -43,6 +43,7 @@ inimigo_buff=""
 hurtbox_inimigo=""
 dummy=""
 bebedouro=""
+baquetas=""
 
 [input]
 

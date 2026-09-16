@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://luckfm535dgl" path="res://cenas_tscn/inimigos_tscn/banda/inimigo_projetil_rajada_guitarrista.tscn" id="2_xvpwt"]
 [ext_resource type="Texture2D" uid="uid://c72o7lxlkto3l" path="res://placeholder/images (37).jpg" id="3_3165x"]
 [ext_resource type="PackedScene" uid="uid://crjq8b0skoog8" path="res://cenas_tscn/inimigos_tscn/banda/projetil_inimigo_projetil_violinista.tscn" id="3_h0io2"]
+[ext_resource type="PackedScene" uid="uid://clvmteb0ibbr8" path="res://cenas_tscn/inimigos_tscn/banda/inimigo_projetil_baterista.tscn" id="4_h0io2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uww65"]
 animations = [{
@@ -53,7 +54,7 @@ size = Vector2(4.231929, 9.257391)
 [node name="Inimigo_invocador_cantor" type="CharacterBody2D" unique_id=1630876127 groups=["inimigos"]]
 script = ExtResource("1_sr5mx")
 quantidade_max_de_inimigos = 1
-inimigos_invocados_cenas = Array[PackedScene]([ExtResource("2_xvpwt"), ExtResource("3_h0io2")])
+inimigos_invocados_cenas = Array[PackedScene]([ExtResource("2_xvpwt"), ExtResource("3_h0io2"), ExtResource("4_h0io2")])
 knockback = 550
 vida = 16
 metadata/_custom_type_script = "uid://b7hwqturaqma1"

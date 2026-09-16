@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dyicwrsi1vym1"]
+
+[ext_resource type="Script" uid="uid://2utfcb3tt5s2" path="res://codigo_gd/inimigo_gd/buffer_gd/projetil_baterista.gd" id="1_l1w42"]
+[ext_resource type="Texture2D" uid="uid://nxo2jydyrny1" path="res://placeholder/images__42_-removebg-preview.png" id="2_l56lk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(17, 77)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_davlr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_l56lk")
+}],
+"loop": 1,
+"name": &"baqueta",
+"speed": 5.0
+}]
+
+[node name="projetil_baterista" type="Area2D" unique_id=2129941265 groups=["baquetas", "projetil_inimigo"]]
+script = ExtResource("1_l1w42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=401149111]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1540166679]
+rotation = -0.81908494
+scale = Vector2(0.1418917, 0.12001402)
+sprite_frames = SubResource("SpriteFrames_davlr")
+animation = &"baqueta"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

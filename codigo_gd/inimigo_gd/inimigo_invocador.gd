@@ -26,10 +26,7 @@ var estado_invocador: ESTADOS_INVOCADOR = ESTADOS_INVOCADOR.NORMAL
 
 
 func pode_invocar() -> bool:
-	return is_instance_valid(alvo) \
-		and estado_atual == ESTADOS.CACANDO \
-		and estado_distancia == ESTADOS_DISTANCIA.IDEAL \
-		and LOS.get_collider() == alvo
+	return is_instance_valid(alvo) and estado_atual == ESTADOS.CACANDO and estado_distancia == ESTADOS_DISTANCIA.IDEAL and LOS.get_collider() == alvo
 
 
 func _physics_process(delta: float) -> void:
