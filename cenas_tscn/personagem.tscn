@@ -13,12 +13,12 @@ shader_parameter/inside = false
 shader_parameter/add_margins = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d8uwv"]
-radius = 5.3333335
-height = 19.333334
+radius = 7.0
+height = 18.000002
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8x3t"]
-radius = 18.0
-height = 60.0
+radius = 23.0
+height = 56.0
 
 [node name="personagem" type="CharacterBody2D" unique_id=1587912254 groups=["jogador"]]
 y_sort_enabled = true
@@ -39,6 +39,7 @@ animation = &"walk_baixo"
 autoplay = "idle_baixo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2020198931 groups=["jogador"]]
+position = Vector2(0, -2)
 scale = Vector2(3, 3)
 shape = SubResource("CapsuleShape2D_d8uwv")
 
@@ -49,7 +50,7 @@ collision_mask = 2
 collision_priority = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1952395402 groups=["jogador"]]
-position = Vector2(0, 9.536743e-07)
+position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_u8x3t")
 
 [node name="pivo_arma" type="Marker2D" parent="." unique_id=524877746]

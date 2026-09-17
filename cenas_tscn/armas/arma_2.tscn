@@ -7,7 +7,7 @@
 radius = 3.413265
 height = 18.856096
 
-[node name="arma2" type="Node2D" unique_id=1469492499 groups=["arma", "arma_multimidia"]]
+[node name="arma2" type="Node2D" unique_id=1469492499 groups=["arma", "arma_multimidia", "jogador"]]
 scale = Vector2(3, 4)
 script = ExtResource("1_h2t4u")
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bu8w8xswwp1eg" path="res://codigo_gd/personagem_gd/armas/arma_1.gd" id="1_qairy"]
 [ext_resource type="Texture2D" uid="uid://c6ksi6fr8odep" path="res://sprites/sprite_prog/Arma programador.png" id="2_qairy"]
 
-[node name="arma1" type="Node2D" unique_id=1469492499]
+[node name="arma1" type="Node2D" unique_id=1469492499 groups=["arma_prog", "jogador"]]
 position = Vector2(-2, 0)
 script = ExtResource("1_qairy")
 

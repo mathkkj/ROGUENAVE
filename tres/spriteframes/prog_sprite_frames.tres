@@ -4,11 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://71tnpkjpft0u" path="res://sprites/sprite_prog/Onxy Norte022.png" id="2_jmdmf"]
 [ext_resource type="Texture2D" uid="uid://bmfs6c2t4585x" path="res://sprites/sprite_prog/Onxy Leste022.png" id="3_jldtx"]
 [ext_resource type="Texture2D" uid="uid://bijakm7oqfuyf" path="res://sprites/sprite_prog/Onxy Oeste.png" id="4_opybj"]
-[ext_resource type="Texture2D" uid="uid://pm6piu0jjp2n" path="res://sprites/sprite_prog/andando/Onxy Sul andando outro lado.png" id="5_8a4da"]
-[ext_resource type="Texture2D" uid="uid://uo610fpdvh0v" path="res://sprites/sprite_prog/andando/Onxy Sull02.png" id="6_c16n6"]
-[ext_resource type="Texture2D" uid="uid://lpdn3rs2xr26" path="res://sprites/sprite_prog/andando/Onxy Sul andando.png" id="7_uw6om"]
-[ext_resource type="Texture2D" uid="uid://d2p1n26ef7gdj" path="res://sprites/sprite_prog/andando/Onxy Norte022.png" id="8_dik6n"]
-[ext_resource type="Texture2D" uid="uid://drvh53e7rlvv3" path="res://sprites/sprite_prog/andando/Onxy Norte Andando.png" id="9_8fkxv"]
+[ext_resource type="Texture2D" uid="uid://dy2rjoe3frwtd" path="res://sprites/sprite_prog/andando/remake/Onxy Sul andando direito [remake].png" id="5_vfnox"]
+[ext_resource type="Texture2D" uid="uid://behmgdmavca4k" path="res://sprites/sprite_prog/andando/remake/Onxy Sul andando [remake].png" id="6_dik6n"]
+[ext_resource type="Texture2D" uid="uid://mcoto6rmv3bp" path="res://sprites/sprite_prog/andando/remake/Onxy Norte Andando muito mais outro lado [remake].png" id="7_8fkxv"]
+[ext_resource type="Texture2D" uid="uid://bf2vhmgo26axl" path="res://sprites/sprite_prog/andando/remake/Onxy Norte Andando.png" id="8_20237"]
 [ext_resource type="Texture2D" uid="uid://bmko4hjjb8vkj" path="res://sprites/sprite_prog/andando/Onxy Leste Andando outro lado.png" id="10_20237"]
 [ext_resource type="Texture2D" uid="uid://vs5hcyamog3e" path="res://sprites/sprite_prog/andando/Onxy Leste022.png" id="11_bhnce"]
 [ext_resource type="Texture2D" uid="uid://8a2rn5xcgec7" path="res://sprites/sprite_prog/andando/Onxy Leste Andando.png" id="12_jpmh5"]
@@ -52,13 +51,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_8a4da")
+"texture": ExtResource("5_vfnox")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_c16n6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_uw6om")
+"texture": ExtResource("6_dik6n")
 }],
 "loop": 1,
 "name": &"walk_baixo",
@@ -66,10 +62,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_dik6n")
+"texture": ExtResource("7_8fkxv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_8fkxv")
+"texture": ExtResource("8_20237")
 }],
 "loop": 1,
 "name": &"walk_cima",

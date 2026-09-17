@@ -44,6 +44,10 @@ size = Vector2(44.020283, 53.419865)
 
 [node name="Inimigo_Projetil_baterista" type="CharacterBody2D" unique_id=1947922237]
 script = ExtResource("1_2pgyl")
+distancia_maxima = 700
+distancia_minima = 50
+speed = 200.0
+max_speed = 350.0
 metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=841547949]
