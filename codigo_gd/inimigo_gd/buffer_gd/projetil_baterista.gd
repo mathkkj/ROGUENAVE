@@ -2,6 +2,11 @@ extends Projetil_do_inimigo
 
 signal ficou_no_chao
 
+var funcao_executada : bool = false
+
+
+var da_dano := true
+
 enum ESTADOS {
 	JOGANDO,
 	NO_CHAO
@@ -60,7 +65,7 @@ func _physics_process(delta: float) -> void:
 
 			rotation += velocidade_rotacao * delta
 
-			if t >= 1.0:
+			if t >= 0.9:
 				estado_atual = ESTADOS.NO_CHAO
 				ficou_no_chao.emit()
 
@@ -72,9 +77,25 @@ func _physics_process(delta: float) -> void:
 					Vector2.ZERO,
 					desaceleracao_knockback * delta
 				)
-
+			elif not funcao_executada:
+				var dir = direcao.normalized()
+				knockback_velocity = dir * 400
+				
+				knockback_velocity = knockback_velocity.move_toward(
+					Vector2.ZERO,
+					desaceleracao_knockback * delta
+				)
+				funcao_executada = true
+				await get_tree().create_timer(0.4).timeout
+				da_dano = false
+					
+				
+				
 
 func _on_body_entered(body: Node2D) -> void:
+	if body == RayCast2D or body.is_in_group("raycast") or body is Inimigo and not body == dono and not body == RayCast2D:
+		return
+	
 	if body == dono and estado_atual == ESTADOS.NO_CHAO:
 		dono.pegar_baqueta()
 		queue_free()
@@ -92,7 +113,8 @@ func _on_body_entered(body: Node2D) -> void:
 			return
 
 		# a baqueta sempre da dano no jogador
-		body.perder_vida(1, direcao, 900)
+		if da_dano:
+			body.perder_vida(1, direcao, 600)
 
 		# no ar ela tambem toma knockback
 		if estado_atual == ESTADOS.JOGANDO:
@@ -105,7 +127,8 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if body.is_in_group("buff"):
 		return
-
+	if body != dono:
+		knockback()
 
 func knockback() -> void:
 	var dir = -direcao.normalized()

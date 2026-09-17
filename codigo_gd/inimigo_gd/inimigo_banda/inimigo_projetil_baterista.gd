@@ -102,7 +102,7 @@ func atirar() -> void:
 		posicao_inicial,
 		posicao_meio,
 		posicao_jogador,
-		self
+		self,
 	)
 
 	projetil.ficou_no_chao.connect(

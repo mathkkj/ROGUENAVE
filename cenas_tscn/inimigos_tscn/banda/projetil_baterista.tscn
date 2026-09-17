@@ -18,6 +18,8 @@ animations = [{
 }]
 
 [node name="projetil_baterista" type="Area2D" unique_id=2129941265 groups=["baquetas", "projetil_inimigo"]]
+z_index = -1
+y_sort_enabled = true
 script = ExtResource("1_l1w42")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=401149111]

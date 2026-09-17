@@ -40,7 +40,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44fhe"]
-size = Vector2(53.014732, 64.94514)
+size = Vector2(44.020283, 53.419865)
 
 [node name="Inimigo_Projetil_baterista" type="CharacterBody2D" unique_id=1947922237]
 script = ExtResource("1_2pgyl")
@@ -49,11 +49,12 @@ metadata/_custom_type_script = "uid://bwtc1eqhsjlhl"
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=841547949]
 material = ExtResource("2_pxwv0")
 position = Vector2(0, -1)
-scale = Vector2(0.11875, 0.15416668)
+scale = Vector2(0.09455279, 0.11353221)
 sprite_frames = SubResource("SpriteFrames_8q72y")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1836901727]
+position = Vector2(-7.450581e-09, 2.3841858e-07)
 scale = Vector2(1.4951277, 1.1934714)
 shape = SubResource("RectangleShape2D_44fhe")
 
@@ -87,7 +88,7 @@ target_position = Vector2(50, -50)
 [node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1388598553]
 target_position = Vector2(-50, -50)
 
-[node name="RayLOS" type="RayCast2D" parent="." unique_id=1236465314]
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=1236465314 groups=["raycast"]]
 
 [node name="Label" type="Label" parent="." unique_id=166207511]
 offset_left = 1.0

@@ -55,6 +55,7 @@ size = Vector2(4.231929, 9.257391)
 script = ExtResource("1_sr5mx")
 quantidade_max_de_inimigos = 1
 inimigos_invocados_cenas = Array[PackedScene]([ExtResource("2_xvpwt"), ExtResource("3_h0io2"), ExtResource("4_h0io2")])
+distancia_minima = 100
 knockback = 550
 vida = 16
 metadata/_custom_type_script = "uid://b7hwqturaqma1"
