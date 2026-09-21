@@ -50,10 +50,18 @@ func mostrar_fala():
 	escrevendo = false
 
 func _input(event):
+	if not dialogo_ocorrendo:
+		return
+
 	if event is InputEventMouseButton \
 	and event.pressed \
-	and event.button_index == MOUSE_BUTTON_LEFT \
-	and dialogo_ocorrendo == true:
+	and event.button_index == MOUSE_BUTTON_LEFT:
+		proxima_fala()
+		return
+
+	if event.is_action_pressed("ui_accept") \
+	or event.is_action_pressed("ui_select") \
+	or event.is_action_pressed("pular_dialogo"):
 		proxima_fala()
 
 func proxima_fala():
@@ -85,24 +93,24 @@ func teleportar_para(marker: Marker2D):
 
 	velocity = Vector2.ZERO
 
-	# Some do local atual
+	# some do local atual
 	scale = Vector2.ZERO
 	modulate.a = 0.0
 
-	# Partícula no local de origem
+	# partícula no local de origem
 	var particula_inicio = particula_inicio_cena.instantiate()
 	particula_inicio.global_position = global_position
 	get_tree().current_scene.add_child(particula_inicio)
 
-	# Teleporta
+	# teleporta
 	global_position = marker.global_position
 
-	# Partícula no destino
+	# partícula no destino
 	var particula_fim = particula_inicio_cena.instantiate()
 	particula_fim.global_position = global_position
 	get_tree().current_scene.add_child(particula_fim)
 
-	# Mesma animação da caixa
+	# mesma animação da caixa
 	var tween := create_tween()
 	tween.set_parallel(true)
 

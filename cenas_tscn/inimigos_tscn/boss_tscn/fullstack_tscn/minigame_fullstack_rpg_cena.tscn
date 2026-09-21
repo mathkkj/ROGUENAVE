@@ -1,0 +1,218 @@
+[gd_scene format=3 uid="uid://c20plca76sbnh"]
+
+[ext_resource type="Script" uid="uid://cm3w7i4j5k4b6" path="res://codigo_gd/inimigo_gd/boss_gd/fullstack_gd/minigame_fullstack_rpg_cena.gd" id="1_gm2ox"]
+[ext_resource type="SpriteFrames" uid="uid://bi04gka6dkjm1" path="res://tres/spriteframes/minigame_fullstack/mult.tres" id="1_wvnmk"]
+[ext_resource type="Texture2D" uid="uid://d1j1ftfn0xdur" path="res://placeholder/full_placeholder.png" id="2_gm2ox"]
+[ext_resource type="Texture2D" uid="uid://dicycn7us0lg4" path="res://placeholder/images__10_-removebg-preview.png" id="4_tv5be"]
+[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="5_ju3pv"]
+[ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/personagem_gd/camera.gd" id="6_mt2qk"]
+[ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://shader_gdshader/crt.gdshader" id="7_ur3ou"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sulbe"]
+shader = ExtResource("7_ur3ou")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.10000000475
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ieofi"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"ataque",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gm2ox")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gm2ox")
+}],
+"loop": 1,
+"name": &"item",
+"speed": 5.0
+}]
+
+[node name="Control" type="Control" unique_id=1775790428]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gm2ox")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1012405558 node_paths=PackedStringArray("personagem")]
+position = Vector2(280, 157)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("6_mt2qk")
+personagem = NodePath("")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=428823010]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer" unique_id=287335495]
+material = SubResource("ShaderMaterial_sulbe")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="jogador" type="AnimatedSprite2D" parent="." unique_id=1040243523]
+position = Vector2(121.99999, 199)
+scale = Vector2(0.4, 0.4)
+sprite_frames = ExtResource("1_wvnmk")
+animation = &"ataque"
+
+[node name="fullstack" type="AnimatedSprite2D" parent="." unique_id=1903289823]
+position = Vector2(443.00003, 77)
+scale = Vector2(0.2759822, 0.2759822)
+sprite_frames = SubResource("SpriteFrames_ieofi")
+animation = &"item"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1891320860]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -85.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="atacar" type="Button" parent="HBoxContainer" unique_id=349541748]
+layout_mode = 2
+text = "atacar"
+
+[node name="item" type="Button" parent="HBoxContainer" unique_id=1260577624]
+layout_mode = 2
+text = "item
+"
+
+[node name="acao" type="Button" parent="HBoxContainer" unique_id=357816738]
+layout_mode = 2
+text = "ação
+"
+
+[node name="fugir" type="Button" parent="HBoxContainer" unique_id=1782278033]
+layout_mode = 2
+text = "fugir
+"
+
+[node name="texto_da_acao" type="Label" parent="HBoxContainer" unique_id=706584972]
+layout_mode = 2
+text = "placeholder"
+
+[node name="GridAcao" type="GridContainer" parent="HBoxContainer" unique_id=1529015621]
+layout_mode = 2
+columns = 2
+
+[node name="acao1" type="Button" parent="HBoxContainer/GridAcao" unique_id=2108666411]
+layout_mode = 2
+text = "asdwasd"
+
+[node name="acao2" type="Button" parent="HBoxContainer/GridAcao" unique_id=885845228]
+layout_mode = 2
+text = "asdwasd"
+
+[node name="acao3" type="Button" parent="HBoxContainer/GridAcao" unique_id=706273239]
+layout_mode = 2
+text = "asdwasd"
+
+[node name="acao4" type="Button" parent="HBoxContainer/GridAcao" unique_id=1342920646]
+layout_mode = 2
+text = "asdwasd"
+
+[node name="status_fullstack" type="BoxContainer" parent="." unique_id=1882628810]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 7.0
+offset_right = 265.0
+offset_bottom = 98.0
+alignment = 1
+vertical = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="status_fullstack" unique_id=954061096]
+layout_mode = 2
+alignment = 1
+
+[node name="nome" type="Label" parent="status_fullstack/VBoxContainer" unique_id=1724931017]
+layout_mode = 2
+text = "placeholder nome"
+
+[node name="lvl" type="Label" parent="status_fullstack/VBoxContainer" unique_id=13454056]
+layout_mode = 2
+text = "lv: 67"
+
+[node name="hp" type="HBoxContainer" parent="status_fullstack/VBoxContainer" unique_id=1043206665]
+layout_mode = 2
+alignment = 1
+
+[node name="nome_hp" type="Label" parent="status_fullstack/VBoxContainer/hp" unique_id=1335642730]
+layout_mode = 2
+text = "fullstack"
+
+[node name="ProgressBarHP" type="ProgressBar" parent="status_fullstack/VBoxContainer/hp" unique_id=622654850]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="status_jogador" type="BoxContainer" parent="." unique_id=2107206959]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 148.0
+offset_right = 556.0
+offset_bottom = 239.0
+alignment = 1
+vertical = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="status_jogador" unique_id=252473722]
+layout_mode = 2
+alignment = 1
+
+[node name="nome" type="Label" parent="status_jogador/VBoxContainer" unique_id=114838197]
+layout_mode = 2
+text = "placeholder nome"
+
+[node name="lvl" type="Label" parent="status_jogador/VBoxContainer" unique_id=1211843299]
+layout_mode = 2
+text = "lv: 67"
+
+[node name="hp" type="HBoxContainer" parent="status_jogador/VBoxContainer" unique_id=1952487642]
+layout_mode = 2
+alignment = 1
+
+[node name="nome_hp" type="Label" parent="status_jogador/VBoxContainer/hp" unique_id=1832456054]
+layout_mode = 2
+text = "fullstack"
+
+[node name="ProgressBarHP" type="ProgressBar" parent="status_jogador/VBoxContainer/hp" unique_id=1408716685]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="mira" type="Sprite2D" parent="." unique_id=407418530]
+z_index = 2
+position = Vector2(8, 11.000002)
+scale = Vector2(0.052748203, 0.052748203)
+texture = ExtResource("4_tv5be")
+script = ExtResource("5_ju3pv")
+
+[connection signal="button_down" from="HBoxContainer/atacar" to="." method="_on_atacar_button_down"]
+[connection signal="button_down" from="HBoxContainer/item" to="." method="_on_item_button_down"]
+[connection signal="button_down" from="HBoxContainer/acao" to="." method="_on_acao_button_down"]
+[connection signal="button_down" from="HBoxContainer/fugir" to="." method="_on_fugir_button_down"]

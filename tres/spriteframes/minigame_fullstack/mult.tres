@@ -1,0 +1,38 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bi04gka6dkjm1"]
+
+[ext_resource type="Texture2D" uid="uid://ddnsvgcvtkavs" path="res://placeholder/multimidia_placeholder.png" id="1_n1olh"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n1olh")
+}],
+"loop": 1,
+"name": &"ataque",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n1olh")
+}],
+"loop": 1,
+"name": &"check",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n1olh")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_n1olh")
+}],
+"loop": 1,
+"name": &"item",
+"speed": 5.0
+}]

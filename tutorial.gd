@@ -1,185 +1,235 @@
 extends Node2D
+var boss: Node2D
+const CAMINHO_MINIGAME := "res://cenas_tscn/inimigos_tscn/boss_tscn/fullstack_tscn/minigame_fullstack_rpg_cena.tscn"
+var CENA_CAIXA: PackedScene = preload("res://cenas_tscn/caixa.tscn")
+var cena_boss:= preload("res://cenas_tscn/inimigos_tscn/boss_tscn/fullstack_tscn/boss_fullstack.tscn")
 
+@onready var npc_fullstack_cena = preload("res://cenas_tscn/inimigos_tscn/boss_tscn/fullstack_tscn/npc_fullstack.tscn")
 
-@onready var cena_caixa = preload("res://cenas_tscn/caixa.tscn")
+enum FASE_SALA_1 {
+	INICIO,
+	TUTORIAL_INICIAL,
+	CAIXAS_1,
+	CAIXAS_2,
+	PREPARANDO_DUMMY,
+	DUMMY,
+	FINALIZANDO,
+	FINALIZADA
+}
+
 
 @export var personagem: CharacterBody2D
-var ja_vi_1_dialogo_tutorial_sala_1 := false
-var ja_vi_1_dialogo_tutorial_sala_2 := false
 
-var ja_spawnou_caixa := false
-var fase_caixas := 0
-
+var camera: Camera2D
+@onready var npc = get_node("NPC Fullstack")
+@onready var dummy = get_node("Dummy")
+@onready var dummy_4 = get_node("Dummy4")
+@onready var bebedouros = get_tree().get_nodes_in_group("bebedouro")
 
 @onready var spawn_caixa_1 = get_node("caixas_spanwpoints/caixa_1")
 @onready var spawn_caixa_2 = get_node("caixas_spanwpoints/caixa_2")
 
-var dialogo_final_ja_iniciado := false
+@onready var posicao_final_1 = get_node("posicoes/final_1")
+@onready var posicao_inicial_2 = get_node("posicoes/inicial_2")
+@onready var posicao_final_2 = get_node("posicoes/final_2")
 
-func _ready():
+@onready var porta_2 = get_node("parede/porta_2")
+
+
+var fase_sala_1: FASE_SALA_1 = FASE_SALA_1.INICIO
+
+var tutorial_sala_2_iniciado := false
+var ta_olhando_pra_sala_2 := false
+var jogador_na_area_final_2 := false
+var final_sala_2_iniciado := false
+
+
+func _ready() -> void:
 	if personagem == null:
 		personagem = get_node("personagem")
-		
-
-
-func _physics_process(delta: float) -> void:
+	camera = get_viewport().get_camera_2d()
 	
-	#mudança de fases (pra progredir no tutorial da sala 1)
-	if ja_spawnou_caixa and get_tree().get_nodes_in_group("quebraveis").is_empty():
-		match fase_caixas:
-			1:
-				
-				fase_caixas = 2
-				spawn_caixa()
+	TransicaoMinigame.minigame_fechado.connect(_on_minigame_fechado)
+	
+func _process(_delta: float) -> void:
+	if camera == null or not is_instance_valid(camera):
+		camera = get_viewport().get_camera_2d()
 
-			2:
-				fase_caixas = 3
+	if camera != null and camera.get_viewport() != get_viewport():
+		camera = get_viewport().get_camera_2d()
+
+	processar_fase_sala_1()
+
+func processar_fase_sala_1() -> void:
+	match fase_sala_1:
+		FASE_SALA_1.CAIXAS_1:
+			if grupo_esta_vazio("quebraveis"):
+				fase_sala_1 = FASE_SALA_1.CAIXAS_2
+				spawn_caixas()
+
+		FASE_SALA_1.CAIXAS_2:
+			if grupo_esta_vazio("quebraveis"):
+				fase_sala_1 = FASE_SALA_1.PREPARANDO_DUMMY
 				iniciar_fase_dummy()
 
-			3:
-				pass
-	
-	if get_tree().get_nodes_in_group("dummy").is_empty() and not dialogo_final_ja_iniciado:
-		dialogo_final_ja_iniciado = true
-		iniciar_dialogo_final_sala_1()
-		
-##SALA 1
+		FASE_SALA_1.DUMMY:
+			if grupo_esta_vazio("dummy"):
+				fase_sala_1 = FASE_SALA_1.FINALIZANDO
+				iniciar_dialogo_final_sala_1()
+
+
+func grupo_esta_vazio(grupo: String) -> bool:
+	return get_tree().get_nodes_in_group(grupo).is_empty()
+
+
+## SALA 1
 
 func quando_ver_o_npc_fullstack_tutorial_comecar_tutorial() -> void:
-	if ja_vi_1_dialogo_tutorial_sala_1:
+	if fase_sala_1 != FASE_SALA_1.INICIO:
 		return
-	
 
-	ja_vi_1_dialogo_tutorial_sala_1 = true
+	fase_sala_1 = FASE_SALA_1.TUTORIAL_INICIAL
+
 	personagem.lock_movimentacao()
+	camera.lock_camera()
 
-	get_viewport().get_camera_2d().lock_camera()
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 2)
+	await camera.transitar_personagem(npc, 2)
 
-	get_node("NPC Fullstack").iniciar_dialogo()
-	get_node("NPC Fullstack").limite_dialogo = 4
-	await get_node("NPC Fullstack").dialogo_finalizado
+	npc.limite_dialogo = 4
+	npc.iniciar_dialogo()
 
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 1)
+	await npc.dialogo_finalizado
 
-	get_viewport().get_camera_2d().unlock_camera()
+	await camera.transitar_personagem(personagem, 1)
+
+	camera.unlock_camera()
 	personagem.unlock_movimentacao()
 
 	await get_tree().create_timer(1).timeout
-	ja_spawnou_caixa = true
-	fase_caixas = 1
-	spawn_caixa()
+
+	fase_sala_1 = FASE_SALA_1.CAIXAS_1
+	spawn_caixas()
 
 
+func spawn_caixas() -> void:
+	var caixa_1 = CENA_CAIXA.instantiate()
+	caixa_1.global_position = spawn_caixa_1.global_position
+	add_child(caixa_1)
+	caixa_1.animacao_inicial()
 
-func spawn_caixa():
-	#spawn caixa nos marcadores
-	var caixa1 = cena_caixa.instantiate()
-	caixa1.global_position = spawn_caixa_1.global_position
-	add_child(caixa1)
-	caixa1.animacao_inicial()
+	var caixa_2 = CENA_CAIXA.instantiate()
+	caixa_2.global_position = spawn_caixa_2.global_position
+	add_child(caixa_2)
+	caixa_2.animacao_inicial()
 
-	var caixa2 = cena_caixa.instantiate()
-	caixa2.global_position = spawn_caixa_2.global_position
-	add_child(caixa2)
-	caixa2.animacao_inicial()
 
-func iniciar_fase_dummy():
+func iniciar_fase_dummy() -> void:
 	print("começo fase dummy tutorial sala 1")
+
 	personagem.lock_movimentacao()
-	get_viewport().get_camera_2d().lock_camera()
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 2)
+	camera.lock_camera()
 
+	await camera.transitar_personagem(npc, 2)
+
+	npc.limite_dialogo = 7
+	npc.iniciar_dialogo(4)
+
+	await npc.dialogo_finalizado
+
+	await camera.transitar_personagem(dummy, 1)
+	get_tree().call_group("dummy", "definir_demonstracao", true)
+
+	await camera.transitar_personagem(dummy_4, 1)
 	
-	get_node("NPC Fullstack").limite_dialogo = 7
-	get_node("NPC Fullstack").iniciar_dialogo(4)
+	await camera.transitar_personagem(personagem, 1)
 
-	await get_node("NPC Fullstack").dialogo_finalizado
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("Dummy"), 1)
-	get_tree().call_group("dummy", "tocar_animacao", "idle")
-	
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("Dummy4"), 1)
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 1)
-
-	get_viewport().get_camera_2d().unlock_camera()
+	camera.unlock_camera()
 	personagem.unlock_movimentacao()
 
 	await get_tree().create_timer(0.5).timeout
+	get_tree().call_group("dummy", "definir_demonstracao", false)
+	
 	get_tree().call_group("dummy", "ativar_dummy")
 
-func iniciar_dialogo_final_sala_1():
+	fase_sala_1 = FASE_SALA_1.DUMMY
+
+
+func iniciar_dialogo_final_sala_1() -> void:
 	await get_tree().create_timer(0.5).timeout
+
 	personagem.lock_movimentacao()
+	camera.lock_camera()
 
-	get_viewport().get_camera_2d().lock_camera()
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 2)
+	await camera.transitar_personagem(npc, 2)
 
-	get_node("NPC Fullstack").limite_dialogo = 9
-	get_node("NPC Fullstack").iniciar_dialogo(7)
-	await get_node("NPC Fullstack").dialogo_finalizado
+	npc.limite_dialogo = 9
+	npc.iniciar_dialogo(7)
 
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 1)
+	await npc.dialogo_finalizado
 
-	get_viewport().get_camera_2d().unlock_camera()
+	await camera.transitar_personagem(personagem, 1)
+
+	camera.unlock_camera()
 	personagem.unlock_movimentacao()
 
 	await get_tree().create_timer(0.5).timeout
-	get_node("NPC Fullstack").teleportar_para(get_node("posicoes/final_1"))
+
+	npc.teleportar_para(posicao_final_1)
+
 	await get_tree().create_timer(0.35).timeout
-	#get_node("parede/porta_1").abrir_porta("esquerda")
+
+	# porta 1
+	# get_node("parede/porta_1").abrir_porta("esquerda")
+
+	fase_sala_1 = FASE_SALA_1.FINALIZADA
 
 
-##SALA 2
-var ta_olhando_pra_sala_2 := false
+## SALA 2
+
 func _on_porta_1_alguem_atravessou(indo_para_fora: bool) -> void:
-	print("estou indo para fora? ",indo_para_fora)
-	if ja_vi_1_dialogo_tutorial_sala_2:
-			return
-	ja_vi_1_dialogo_tutorial_sala_2 = true
-		
-	if indo_para_fora == false:
-		
-		
+	if indo_para_fora:
 		await get_tree().create_timer(0.25).timeout
-		get_node("NPC Fullstack").teleportar_para(get_node("posicoes/inicial_2"))
-		#DIALOGO:
-		if ta_olhando_pra_sala_2:
-			get_viewport().get_camera_2d().lock_camera()
-			personagem.lock_movimentacao()
+		npc.teleportar_para(posicao_final_1)
+		return
 
-			await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 1.5)
+	if tutorial_sala_2_iniciado:
+		return
 
-			get_node("NPC Fullstack").limite_dialogo = 13
-			get_node("NPC Fullstack").iniciar_dialogo(10)
-			await get_node("NPC Fullstack").dialogo_finalizado
+	tutorial_sala_2_iniciado = true
 
-			await get_viewport().get_camera_2d().transitar_personagem(get_node("Bebedouro"), 2)
-			
-			for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
-				bebedouro.atirar()
-			await get_tree().create_timer(0.5).timeout
-			
-			#get_node("NPC Fullstack").limite_dialogo = 14
-			#get_node("NPC Fullstack").iniciar_dialogo(13)
-			
+	await get_tree().create_timer(0.25).timeout
+	npc.teleportar_para(posicao_inicial_2)
 
-			await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 0.5)
+	if not ta_olhando_pra_sala_2:
+		return
 
-			get_viewport().get_camera_2d().unlock_camera()
-			personagem.unlock_movimentacao()
-			
-			await get_tree().create_timer(1).timeout
-			for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
-				bebedouro.ativo = true
-			
-			
+	personagem.lock_movimentacao()
+	camera.lock_camera()
 
+	await camera.transitar_personagem(npc, 1.5)
 
-	else:
-		
-		await get_tree().create_timer(0.25).timeout
-		get_node("NPC Fullstack").teleportar_para(get_node("posicoes/final_1"))
-	
+	npc.limite_dialogo = 13
+	npc.iniciar_dialogo(10)
+
+	await npc.dialogo_finalizado
+
+	await camera.transitar_personagem(get_node("Bebedouro"), 2)
+
+	for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
+		bebedouro.atirar()
+
+	await get_tree().create_timer(0.5).timeout
+
+	await camera.transitar_personagem(personagem, 0.5)
+
+	camera.unlock_camera()
+	personagem.unlock_movimentacao()
+
+	await get_tree().create_timer(1).timeout
+
+	for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
+		bebedouro.ativo = true
+
 
 func _on_visible_on_screen_fase_2_screen_entered() -> void:
 	ta_olhando_pra_sala_2 = true
@@ -189,51 +239,84 @@ func _on_visible_on_screen_fase_2_screen_exited() -> void:
 	ta_olhando_pra_sala_2 = false
 
 
-
-var ja_viu_final_2 := false
-var jogador_na_area_final_2 := false
 func _on_visible_on_screen_final_2_screen_entered() -> void:
 	jogador_na_area_final_2 = true
 
 
 func _on_porta_2_alguem_atravessou(indo_para_fora: bool) -> void:
+	if indo_para_fora:
+		return
 
-	
 	if not jogador_na_area_final_2:
 		return
-	if indo_para_fora == false:
-		finalizar_sala_2()
-	else:
-		return
+
+	finalizar_sala_2()
 
 
 func finalizar_sala_2() -> void:
-	if ja_viu_final_2:
+	if final_sala_2_iniciado:
 		return
-	
-	ja_viu_final_2 = true
-	
-	var camera := get_viewport().get_camera_2d()
-	var npc := get_node("NPC Fullstack")
-	var posicao_final := get_node("posicoes/final_2")
-	
+
+	final_sala_2_iniciado = true
+
 	camera.lock_camera()
 	personagem.lock_movimentacao()
-	
-	npc.teleportar_para(posicao_final)
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("NPC Fullstack"), 2)
-	get_node("NPC Fullstack").limite_dialogo = 19
-	get_node("NPC Fullstack").iniciar_dialogo(15)
-	await get_node("NPC Fullstack").dialogo_finalizado
 
-	await get_viewport().get_camera_2d().transitar_personagem(get_node("personagem"), 0.5)
+	npc.teleportar_para(posicao_final_2)
 
-	get_viewport().get_camera_2d().unlock_camera()
+	await camera.transitar_personagem(npc, 2)
+
+	npc.limite_dialogo = 19
+	npc.iniciar_dialogo(15)
+
+	await npc.dialogo_finalizado
+
+	await camera.transitar_personagem(personagem, 0.5)
+
+	camera.unlock_camera()
 	personagem.unlock_movimentacao()
-	get_node("parede/porta_2").fechar_porta()
-	#ACABOU
-	#INICIAR ULTIMA FASE
+
+	porta_2.fechar_porta()
+
+	boss = cena_boss.instantiate()
+	boss.global_position = posicao_final_2.global_position
+	add_child(boss)
+	boss.fase_2_iniciar.connect(iniciar_fase_2)
+	npc.queue_free()
+	
+	
+
 
 func _on_porta_2_abriu() -> void:
 	for bebedouro in get_tree().get_nodes_in_group("bebedouro"):
 		bebedouro.ativo = false
+
+var proxima_cena := preload("res://cenas_tscn/inimigos_tscn/boss_tscn/fullstack_tscn/minigame_fullstack_rpg_cena.tscn")
+
+func iniciar_fase_2() -> void:
+	camera.lock_camera()
+	personagem.lock_movimentacao()
+	
+	camera.transitar_personagem(boss, 2)
+	await get_tree().create_timer(1.75).timeout
+	TransicaoMinigame.abrir_minigame(CAMINHO_MINIGAME)
+
+
+func _on_minigame_fechado() -> void:
+	await camera.transitar_personagem(boss, 1)
+	
+	boss.limite_dialogo = 4
+	boss.iniciar_dialogo()
+	await boss.dialogo_finalizado
+	var npc2 = npc_fullstack_cena.instantiate()
+	npc2.global_position = boss.global_position
+	add_child(npc2)
+	boss.queue_free()
+	await get_tree().create_timer(0.1).timeout
+	npc2.teleportar_para(posicao_final_1)
+	await camera.transitar_personagem(personagem, 2)
+	camera.unlock_camera()
+	personagem.unlock_movimentacao()
+	print("o minigame terminou e o tutorial voltou ao normal")
+
+	

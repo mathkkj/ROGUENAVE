@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="6_qo6df"]
 [ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="7_l7tjv"]
 [ext_resource type="PackedScene" uid="uid://bswsedbc05s0" path="res://cenas_tscn/porta.tscn" id="8_k1cq8"]
-[ext_resource type="PackedScene" uid="uid://wrp4n33sahuj" path="res://cenas_tscn/inimigos_tscn/boss_tscn/fullstack_tscn/npc_fullstack.tscn" id="15_3o0gj"]
+[ext_resource type="Texture2D" uid="uid://d1j1ftfn0xdur" path="res://placeholder/full_placeholder.png" id="13_tjtyn"]
+[ext_resource type="Script" uid="uid://cvqmru1luaju5" path="res://npc_fullstack.gd" id="14_shyub"]
+[ext_resource type="Resource" uid="uid://c4vvyui0fkv7b" path="res://tres/dialogos/tutorial.tres" id="17_01kxa"]
 [ext_resource type="PackedScene" uid="uid://ccpspxtqx53x6" path="res://cenas_tscn/inimigos_tscn/dummys_tscn/dummy.tscn" id="17_3o0gj"]
 [ext_resource type="PackedScene" uid="uid://dgvu06fdg4jja" path="res://cenas_tscn/inimigos_tscn/bebedouro_tscn/bebedouro.tscn" id="19_tjtyn"]
 
@@ -733,6 +735,9 @@ shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(47, 43)
+
 [node name="Tutorial" type="Node2D" unique_id=967104594 node_paths=PackedStringArray("personagem")]
 script = ExtResource("1_o5kxe")
 personagem = NodePath("personagem")
@@ -774,7 +779,7 @@ grow_vertical = 2
 
 [node name="personagem" parent="." unique_id=1587912254 node_paths=PackedStringArray("camera") instance=ExtResource("4_l7tjv")]
 material = SubResource("ShaderMaterial_4imha")
-position = Vector2(1426, 79)
+position = Vector2(1329, 64)
 camera = NodePath("../Camera2D")
 duracao_golpe = 0.25
 forca_golpe = 500.0
@@ -785,8 +790,25 @@ scale = Vector2(0.12339991, 0.12339991)
 texture = ExtResource("6_qo6df")
 script = ExtResource("7_l7tjv")
 
-[node name="NPC Fullstack" parent="." unique_id=1840608988 instance=ExtResource("15_3o0gj")]
+[node name="NPC Fullstack" type="CharacterBody2D" parent="." unique_id=1035677529]
 position = Vector2(286, 47)
+motion_mode = 1
+script = ExtResource("14_shyub")
+dialogo = ExtResource("17_01kxa")
+
+[node name="Sprite2D" type="Sprite2D" parent="NPC Fullstack" unique_id=485929659]
+scale = Vector2(0.09368928, 0.09368928)
+texture = ExtResource("13_tjtyn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC Fullstack" unique_id=1774554845]
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="Label" type="Label" parent="NPC Fullstack" unique_id=1810345440]
+offset_left = -183.0
+offset_top = -50.0
+offset_right = 174.0
+offset_bottom = -27.0
+horizontal_alignment = 1
 
 [node name="caixas_spanwpoints" type="Node2D" parent="." unique_id=153425924]
 

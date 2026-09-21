@@ -6,11 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hiwyg"]
 size = Vector2(600, 325)
 
-[node name="bala" type="Node2D" unique_id=1632400190]
+[node name="bala" type="Node2D" unique_id=1632400190 groups=["bala_player"]]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_hiwyg")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=2074409210]
+[node name="Area2D" type="Area2D" parent="." unique_id=2074409210 groups=["bala_player"]]
 scale = Vector2(0.26392052, 0.27457443)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1701720618]

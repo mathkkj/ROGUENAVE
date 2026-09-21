@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://b7um4g2slvhpm"]
+
+[ext_resource type="Script" uid="uid://c4gfmhrx183gj" path="res://codigo_gd/inimigo_gd/boss_gd/fullstack_gd/boss_fullstack.gd" id="1_u6x6h"]
+[ext_resource type="Script" uid="uid://dmcq5r7eg01un" path="res://codigo_gd/dialogo/DialogueLine.gd" id="2_fn5ug"]
+[ext_resource type="Material" uid="uid://6vjtligwt41q" path="res://tres/inimigo_material.tres" id="2_uwarg"]
+[ext_resource type="Script" uid="uid://bol05gybj1fh" path="res://codigo_gd/dialogo/dialogo.gd" id="3_722yf"]
+[ext_resource type="SpriteFrames" uid="uid://cneombnk5np2p" path="res://tres/spriteframes/inimigo_meele.tres" id="3_uwarg"]
+
+[sub_resource type="Resource" id="Resource_x7yui"]
+script = ExtResource("2_fn5ug")
+texto = "pera ae parça"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_tv5be"]
+script = ExtResource("2_fn5ug")
+texto = "ta boladao mesmo ne tio"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_ju3pv"]
+script = ExtResource("2_fn5ug")
+texto = "ja entendi que tu ganhou ja pz"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_mt2qk"]
+script = ExtResource("2_fn5ug")
+texto = "vaza"
+metadata/_custom_type_script = "uid://dmcq5r7eg01un"
+
+[sub_resource type="Resource" id="Resource_siwnw"]
+script = ExtResource("3_722yf")
+falas = Array[ExtResource("2_fn5ug")]([SubResource("Resource_x7yui"), SubResource("Resource_tv5be"), SubResource("Resource_ju3pv"), SubResource("Resource_mt2qk")])
+metadata/_custom_type_script = "uid://bol05gybj1fh"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a2lr6"]
+size = Vector2(15.221762, 41.402252)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_an2hr"]
+radius = 540.25415
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_an2hr"]
+size = Vector2(3.4739714, 7.0514984)
+
+[sub_resource type="Gradient" id="Gradient_g4v7s"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
+radius = 106.30756
+
+[node name="boss_fullstack" type="CharacterBody2D" unique_id=967689483 groups=["fullstack", "inimigos"]]
+scale = Vector2(1, 0.99)
+motion_mode = 1
+script = ExtResource("1_u6x6h")
+dialogo = SubResource("Resource_siwnw")
+distancia_curta = 175.0
+distancia_media = 300.0
+tempo_cooldown_serie = 0.6
+duracao_dash = 0.45
+ataques_curta = Array[StringName]([&"ataque_ioio", &"dash", &"bloqueio"])
+ataques_media = Array[StringName]([&"ataque_ioio", &"dash", &"bloqueio", &"invocar_inimigos"])
+ataques_longa = Array[StringName]([&"dash", &"invocar_inimigos", &"ataque_ioio"])
+porcentagem_fase_2 = 99.0
+delay_inicio = 0.75
+raio_bloqueio = 75.0
+tempo_bloqueio = 1.5
+metadata/_custom_type_script = "uid://dgnct4e6m2fwr"
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1982580131]
+material = ExtResource("2_uwarg")
+scale = Vector2(0.093298644, 0.091546856)
+sprite_frames = ExtResource("3_uwarg")
+animation = &"hit"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1069773565 groups=["inimigos"]]
+position = Vector2(-0.49999946, -6.02067e-07)
+scale = Vector2(3.0876844, 1.0246842)
+shape = SubResource("RectangleShape2D_a2lr6")
+
+[node name="atirar_tempo" type="Timer" parent="." unique_id=478864463]
+wait_time = 0.425
+autostart = true
+
+[node name="Raycast" type="Node2D" parent="." unique_id=1941409983]
+scale = Vector2(0.5, 0.5)
+
+[node name="RayBaixo" type="RayCast2D" parent="Raycast" unique_id=1701125451]
+target_position = Vector2(0, 57)
+
+[node name="RayDireita" type="RayCast2D" parent="Raycast" unique_id=2056210272]
+target_position = Vector2(63, 1)
+
+[node name="RayCima" type="RayCast2D" parent="Raycast" unique_id=1886523278]
+target_position = Vector2(0, -59)
+
+[node name="RayEsquerda" type="RayCast2D" parent="Raycast" unique_id=1174141446]
+target_position = Vector2(-61, 0)
+
+[node name="RayBaixoDireita" type="RayCast2D" parent="Raycast" unique_id=565274749]
+target_position = Vector2(50, 50)
+
+[node name="RayBaixoEsquerda" type="RayCast2D" parent="Raycast" unique_id=150581067]
+target_position = Vector2(-50, 50)
+
+[node name="RayCimaDireita" type="RayCast2D" parent="Raycast" unique_id=1355962918]
+target_position = Vector2(50, -50)
+
+[node name="RayCimaEsquerda" type="RayCast2D" parent="Raycast" unique_id=1749518860]
+target_position = Vector2(-50, -50)
+
+[node name="RayLOS" type="RayCast2D" parent="." unique_id=325874916]
+
+[node name="circulo_de_visao" type="Area2D" parent="." unique_id=47214053]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="circulo_de_visao" unique_id=606757170]
+scale = Vector2(1.0313972, 0.8047205)
+shape = SubResource("CircleShape2D_an2hr")
+
+[node name="Label" type="Label" parent="." unique_id=1663016738]
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=568459429 groups=["hurtbox_inimigo", "inimigos"]]
+scale = Vector2(1.0314662, 1.0777961)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=872296954 groups=["inimigos"]]
+position = Vector2(0.48474732, 0)
+scale = Vector2(15.349047, 6.1137066)
+shape = SubResource("RectangleShape2D_an2hr")
+
+[node name="buff_label" type="Label" parent="." unique_id=1785581637]
+offset_left = -17.999998
+offset_top = 50.505047
+offset_right = 22.000002
+offset_bottom = 73.50505
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1869853399]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1818763341]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1648023035]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 36.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 51.0
+grow_horizontal = 2
+value = 50.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=988685639]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -33.0
+offset_right = 33.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "fullstack"
+
+[node name="texto" type="Label" parent="." unique_id=449529280]
+offset_left = -183.0
+offset_top = -50.0
+offset_right = 174.0
+offset_bottom = -27.0
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=674218173]
+offset_left = 33.0
+offset_top = -37.373734
+offset_right = 73.0
+offset_bottom = -14.3737335
+
+[node name="Line2D" type="Line2D" parent="." unique_id=547035295]
+points = PackedVector2Array(0, 0)
+width = 2.0
+gradient = SubResource("Gradient_g4v7s")
+texture_mode = 2
+
+[node name="Bloqueio" type="Area2D" parent="." unique_id=2084666803]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloqueio" unique_id=1640855245]
+shape = SubResource("CircleShape2D_g4v7s")
+
+[connection signal="timeout" from="atirar_tempo" to="." method="_on_atirar_tempo_timeout"]
+[connection signal="body_entered" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_entered"]
+[connection signal="body_exited" from="circulo_de_visao" to="." method="_on_circulo_de_visao_body_exited"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]
+[connection signal="area_entered" from="Bloqueio" to="." method="_on_bloqueio_area_entered"]
+[connection signal="body_entered" from="Bloqueio" to="." method="_on_bloqueio_body_entered"]

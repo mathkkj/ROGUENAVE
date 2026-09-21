@@ -25,4 +25,4 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		pass
 	else:
 		emit_signal("acertou", body, direcao, forca)
-		queue_free() # destrói a bala depois de bater
+		queue_free() # destroi a bala depois de bater

@@ -89,9 +89,6 @@ var tipo_animacao : String
 func atualizar_animacao():
 	direcao_mira = ultima_direcao_mira
 
-	# prioridade para a arma
-	if arma is ArmasRanged:
-		direcao_mira = (get_global_mouse_position() - arma.global_position).normalized()
 
 
 	var angulo = rad_to_deg(direcao_mira.angle())
@@ -283,28 +280,26 @@ func atualizar_dados():
 		atirando = arma.pode_atirar
 
 func obter_direcao_mira_controle() -> Vector2:
-	var dir_esq := Input.get_vector("esquerda", "direita", "cima", "baixo")
-	var dir_dir := Input.get_vector("esquerdaAnalogicoDireito", "direitaAnalogicoDireito", "cimaAnalogicoDireito", "baixoAnalogicoDireito")
+	var direcao_direita := Input.get_vector(
+		"esquerdaAnalogicoDireito",
+		"direitaAnalogicoDireito",
+		"cimaAnalogicoDireito",
+		"baixoAnalogicoDireito"
+	)
 
-	var direcao_final := dir_dir if dir_dir.length() > 0.2 else dir_esq
+	if direcao_direita.length() > 0.2:
+		ultima_direcao_mira = direcao_direita.normalized()
 
-	if direcao_final == Vector2.ZERO:
-		return Vector2.ZERO
-
-	ultima_direcao_mira = direcao_final
 	return ultima_direcao_mira
 
 func _atualizar_ultima_direcao():
-	var direcao: Vector2
-	
-	
 	if Global.usando_controle:
-		direcao = obter_direcao_mira_controle()
+		obter_direcao_mira_controle()
 	else:
-		direcao = pivo_arma.global_position.direction_to(get_global_mouse_position())
-	
-	if direcao != Vector2.ZERO:
-		ultima_direcao_mira = direcao
+		var direcao := pivo_arma.global_position.direction_to(get_global_mouse_position())
+
+		if direcao != Vector2.ZERO:
+			ultima_direcao_mira = direcao
 
 
 
@@ -326,7 +321,7 @@ func lock_movimentacao():
 func _physics_process(delta: float) -> void:
 	if vida <= 0:
 		queue_free()
-	
+
 	if controles_bloqueados:
 		if not tipo_animacao == "idle":
 			tipo_animacao = "idle"
@@ -335,16 +330,19 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
+
+	_atualizar_ultima_direcao()
 	atualizar_animacao()
+
 	label2.text = str(stamina, vida)
-	
+
 	_stamina(delta)
 	
 	_tempo_atirar(delta)
 	
 	label.text = str(em_golpe, atirando, pode_dash, esta_andando)
 	
-	_atualizar_ultima_direcao()
+	
 	
 	if arma == null or Global.arma_atual == null:
 		return
@@ -505,21 +503,18 @@ func parar_efeitos_visuais_dash():
 
 
 func _arma_mirar():
-	
-	
 	var posicao_mira: Vector2
-	
+
 	if Global.usando_controle:
-		var direcao_final := obter_direcao_mira_controle()
-		if direcao_final == Vector2.ZERO:
+		if ultima_direcao_mira == Vector2.ZERO:
 			return
-		
+
 		posicao_mira = pivo_arma.global_position + ultima_direcao_mira * 100
 	else:
 		posicao_mira = get_global_mouse_position()
-	
+
 	direcao_mira = pivo_arma.global_position.direction_to(posicao_mira)
-	
+
 	if arma is ArmaMeele:
 		var lado := Vector2.ZERO
 		var rotacao := 0.0
@@ -528,66 +523,64 @@ func _arma_mirar():
 			return
 
 		var angulo := rad_to_deg(direcao_mira.angle())
+
 		if angulo < 0:
 			angulo += 360.0
+
 		var offset_lado = 40
-		# dividir o circulo em 8 direções
+
 		match int(round(angulo / 45.0)) % 8:
 			0:
-				# direita
 				lado = Vector2.RIGHT
 				rotacao = 0
-				
+
 			1:
-				# direita + baixo
 				lado = Vector2(1, 1).normalized()
 				rotacao = 45
-				
+
 			2:
-				# baixo
 				lado = Vector2.DOWN
 				rotacao = 90
-				
+
 			3:
-				# esquerda + baixo
 				lado = Vector2(-1, 1).normalized()
 				rotacao = 135
-				
+
 			4:
-				# esquerda
 				lado = Vector2.LEFT
 				rotacao = 180
-				
+
 			5:
-				# esquerda + cima
 				lado = Vector2(-1, -1).normalized()
 				rotacao = 225
-				
+
 			6:
-				# cima
 				lado = Vector2.UP
 				rotacao = 270
-				
+
 			7:
-				# direita + cima
 				lado = Vector2(1, -1).normalized()
 				rotacao = 315
-				
-		print("eu ataquei para o ", lado)
-		
-		
+
 		arma.position = pivo_machado.position + lado * offset_lado
 		arma.rotation = deg_to_rad(rotacao)
-		#arma.rotation_degrees = rotacao
 		arma.scale.y = escala_original_arma.y
 
 	else:
 		var angulo = direcao_mira.angle()
 		var distancia = 0
-				
+
 		arma.global_position = pivo_arma.global_position + Vector2(cos(angulo), sin(angulo)) * distancia
-		arma.rotation = lerp_angle(arma.rotation, angulo, 18.0 * get_process_delta_time())
-		arma.scale.y = escala_original_arma.y if direcao_mira.x > 0 else -escala_original_arma.y
+		arma.rotation = lerp_angle(
+			arma.rotation,
+			angulo,
+			18.0 * get_process_delta_time()
+		)
+
+		if direcao_mira.x > 0:
+			arma.scale.y = escala_original_arma.y
+		else:
+			arma.scale.y = -escala_original_arma.y
 
 
 func _on_golpe_executado(golpe: int) -> void:
