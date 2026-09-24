@@ -23,11 +23,11 @@ script = ExtResource("1_ox65k")
 [node name="personagem" parent="." unique_id=1587912254 instance=ExtResource("2_48qjp")]
 position = Vector2(100, 125)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=640762388 node_paths=PackedStringArray("personagem")]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=640762388]
+position = Vector2(279, 154)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 script = ExtResource("3_it7vk")
-personagem = NodePath("")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=709357810]
 
@@ -38,6 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="mira" type="Sprite2D" parent="." unique_id=1642113098]
 z_index = 2
