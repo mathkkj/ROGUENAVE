@@ -1,6 +1,6 @@
 extends Control
 
-const CAMINHO_TUTORIAL := "res://cenas_tscn/fases/tutorial.tscn"
+var CAMINHO_TUTORIAL := "res://cenas_tscn/fases/tutorial.tscn"
 
 
 @onready var mira = $mira
@@ -34,16 +34,16 @@ const CAMINHO_TUTORIAL := "res://cenas_tscn/fases/tutorial.tscn"
 
 ## sprites e valores basicos
 
-const SPRITE_PROGRAMADOR = preload("res://tres/spriteframes/minigame_fullstack/prog.tres")
-const SPRITE_MULTIMIDIA = preload("res://tres/spriteframes/minigame_fullstack/mult.tres")
+var SPRITE_PROGRAMADOR = preload("res://tres/spriteframes/minigame_fullstack/prog.tres")
+var SPRITE_MULTIMIDIA = preload("res://tres/spriteframes/minigame_fullstack/mult.tres")
 
-const VIDA_PROGRAMADOR := 100
-const VIDA_MULTIMIDIA := 100
-const VIDA_FULLSTACK := 100
+var VIDA_PROGRAMADOR := 100
+var VIDA_MULTIMIDIA := 100
+var VIDA_FULLSTACK := 100
 
-const VELOCIDADE_PROGRAMADOR := 100
-const VELOCIDADE_MULTIMIDIA := 100
-const VELOCIDADE_FULLSTACK := 80
+var VELOCIDADE_PROGRAMADOR := 100
+var VELOCIDADE_MULTIMIDIA := 100
+var VELOCIDADE_FULLSTACK := 80
 
 
 ## estados da batalha

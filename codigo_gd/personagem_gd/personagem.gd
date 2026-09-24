@@ -86,35 +86,61 @@ var lista_sprite_frames : Array[SpriteFrames] = [
 
 var controles_bloqueados := false
 var tipo_animacao : String
+
 func atualizar_animacao():
 	direcao_mira = ultima_direcao_mira
-
-
 
 	var angulo = rad_to_deg(direcao_mira.angle())
 
 	if angulo < 0:
 		angulo += 360
-	
+
 	var direcao_animacao = ""
-	match int(round(angulo / 90.0)) % 4:
-		0:
-			direcao_animacao = "direita"
 
-		1:
-			direcao_animacao = "baixo"
+	# programador usa 4 direcoes
+	if classe_personagem == 0:
+		match int(round(angulo / 90.0)) % 4:
+			0:
+				direcao_animacao = "direita"
 
-		2:
-			direcao_animacao = "esquerda"
+			1:
+				direcao_animacao = "baixo"
 
-		3:
-			direcao_animacao = "cima"
-	
-	
-	
-	
+			2:
+				direcao_animacao = "esquerda"
+
+			3:
+				direcao_animacao = "cima"
+
+	# multimidia usa 8 direcoes
+	elif classe_personagem == 1:
+		match int(round(angulo / 45.0)) % 8:
+			0:
+				direcao_animacao = "direita"
+
+			1:
+				direcao_animacao = "baixo_direita"
+
+			2:
+				direcao_animacao = "baixo"
+
+			3:
+				direcao_animacao = "baixo_esquerda"
+
+			4:
+				direcao_animacao = "esquerda"
+
+			5:
+				direcao_animacao = "cima_esquerda"
+
+			6:
+				direcao_animacao = "cima"
+
+			7:
+				direcao_animacao = "cima_direita"
+
 	var animacao = tipo_animacao + "_" + direcao_animacao
-	
+
 	if controles_bloqueados:
 		tipo_animacao = "idle"
 		animacao = tipo_animacao + "_" + direcao_animacao
@@ -122,73 +148,63 @@ func atualizar_animacao():
 	if esta_andando:
 		tipo_animacao = "walk"
 		animacao = tipo_animacao + "_" + direcao_animacao
-	
 
 	elif em_golpe:
 		tipo_animacao = "golpe"
-		match int(round(angulo / 45.0)) % 8:
-			0:
-				direcao_animacao = "leste"
-				
-			1:
-				direcao_animacao = "sudeste"
-				
-			2:
-				direcao_animacao = "sul"
-				
-			3:
-				direcao_animacao = "sudoeste"
-				
-			4:
-				direcao_animacao = "oeste"
-				
-			5:
-				direcao_animacao = "noroeste"
-				
-			6:
-				direcao_animacao = "norte"
-				
-			7:
-				direcao_animacao = "nordeste"
 		animacao = tipo_animacao + "_" + direcao_animacao + "_" + str(indice_golpe_anim)
-		
 
-	
 	else:
 		tipo_animacao = "idle"
 		animacao = tipo_animacao + "_" + direcao_animacao
-		
-		
-	
-		
+
 	if sprite.animation != animacao:
 		var reverso = false
 
-		if animacao == "walk_direita" and direcao_mira.x < 0:
-			reverso = true
+		if tipo_animacao == "walk":
+			match direcao_animacao:
+				"direita":
+					reverso = direcao_mira.x < 0
 
-		elif animacao == "walk_esquerda" and direcao_mira.x > 0:
-			reverso = true
+				"baixo_direita":
+					reverso = false
 
-		elif animacao == "walk_cima" and direcao_mira.y > 0:
-			reverso = true
+				"baixo":
+					reverso = direcao_mira.y < 0
 
-		elif animacao == "walk_baixo" and direcao_mira.y < 0:
-			reverso = true
+				"baixo_esquerda":
+					reverso = false
+
+				"esquerda":
+					reverso = direcao_mira.x > 0
+
+				"cima_esquerda":
+					reverso = false
+
+				"cima":
+					reverso = direcao_mira.y > 0
+
+				"cima_direita":
+					reverso = false
 
 		if controles_bloqueados == true:
 			tipo_animacao = "idle"
-			
+
 		if reverso:
 			sprite.play_backwards(animacao)
 		else:
 			sprite.play(animacao)
-			
+
 		print(animacao)
-	# arma atrás quando olha para cima
+
+	# arma atras quando olha para cima
 	if arma is ArmasRanged:
 		var sprite_arma = arma.get_node("Sprite2D")
-		sprite_arma.z_index = -1 if direcao_animacao == "cima" else 1
+
+		if direcao_animacao == "cima" or direcao_animacao == "cima_esquerda" or direcao_animacao == "cima_direita":
+			sprite_arma.z_index = -1
+		else:
+			sprite_arma.z_index = 1
+
 
 func perder_vida(dano, DIR, forca) -> float:
 	if invencivel:

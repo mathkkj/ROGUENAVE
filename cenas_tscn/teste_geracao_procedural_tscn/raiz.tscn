@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://ccg00g2o5q3uq"]
+
+[ext_resource type="Script" uid="uid://b06i6rraopbc3" path="res://codigo_gd/teste_geracao_procedural_gd/raiz.gd" id="1_ox65k"]
+[ext_resource type="PackedScene" uid="uid://by4q75nrxtdxj" path="res://cenas_tscn/personagem.tscn" id="2_48qjp"]
+[ext_resource type="Script" uid="uid://cqt6t2sexfgvc" path="res://codigo_gd/personagem_gd/camera.gd" id="3_it7vk"]
+[ext_resource type="Shader" uid="uid://b7314vsk4stnc" path="res://shader_gdshader/crt.gdshader" id="4_fxmwk"]
+[ext_resource type="Texture2D" uid="uid://c28wq0mh1i85y" path="res://placeholder/mira.png" id="5_8rj43"]
+[ext_resource type="Script" uid="uid://nhicgyskphcw" path="res://codigo_gd/personagem_gd/mira.gd" id="6_4aeen"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqff3"]
+shader = ExtResource("4_fxmwk")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.10000000475
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[node name="raiz" type="Node2D" unique_id=656455553]
+script = ExtResource("1_ox65k")
+
+[node name="personagem" parent="." unique_id=1587912254 instance=ExtResource("2_48qjp")]
+position = Vector2(100, 125)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=640762388 node_paths=PackedStringArray("personagem")]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("3_it7vk")
+personagem = NodePath("")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" unique_id=709357810]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D/CanvasLayer" unique_id=280024596]
+material = SubResource("ShaderMaterial_qqff3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="mira" type="Sprite2D" parent="." unique_id=1642113098]
+z_index = 2
+scale = Vector2(0.12339991, 0.12339991)
+texture = ExtResource("5_8rj43")
+script = ExtResource("6_4aeen")
